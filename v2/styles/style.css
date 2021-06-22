@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+}
+
+#aux {
+    display: none;
+}
+
+#chat_container {
+    width: calc(100% - 20px);
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+    background-color: transparent;
+    color: white;
+    font-weight: 800;
+    word-break: break-word;
+}
+
+.user_info {
+    display: inline-block;
+}
+
+.badge {
+    vertical-align: middle;
+}
+
+.cheer_bits {
+    font-size: 0.6em;
+    -webkit-text-stroke: 1px black;
+}
+
+.emote {
+    vertical-align: middle;
+}
+
+.emoji {
+    vertical-align: middle;
+}
