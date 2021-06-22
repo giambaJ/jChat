@@ -1,1 +1,1 @@
-# jChat [![GitHub version](https://img.shields.io/badge/version-1.1-blue)()] [![GitHub license](https://img.shields.io/github/license/giambaJ/jChat)](https://github.com/giambaJ/jChat/blob/main/LICENSE)
+# jChat [![GitHub version](https://img.shields.io/badge/version-1.1-blue)](https://github.com/giambaJ/jChat) [![Website giambaj.it](https://img.shields.io/website-up-down-green-red/https/giambaj.it.svg)](https://www.giambaj.it/twitch/jchat/) [![GitHub license](https://img.shields.io/github/license/giambaJ/jChat)](https://github.com/giambaJ/jChat/blob/main/LICENSE)
