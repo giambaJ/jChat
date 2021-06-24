@@ -16,7 +16,7 @@ function sizeUpdate(event) {
                 rel: "stylesheet",
                 type: "text/css",
                 class: "size",
-                href: "styles/style_small.css"
+                href: "styles/size_small.css"
             }).appendTo("head");
             break;
         case '2':
@@ -24,7 +24,7 @@ function sizeUpdate(event) {
                 rel: "stylesheet",
                 type: "text/css",
                 class: "size",
-                href: "styles/style_medium.css"
+                href: "styles/size_medium.css"
             }).appendTo("head");
             break;
         case '3':
@@ -32,7 +32,7 @@ function sizeUpdate(event) {
                 rel: "stylesheet",
                 type: "text/css",
                 class: "size",
-                href: "styles/style_large.css"
+                href: "styles/size_large.css"
             }).appendTo("head");
             break;
     }

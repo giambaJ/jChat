@@ -2,44 +2,41 @@
     font-size: 34px;
 }
 
-.chat_line {
+#example .chat_line {
     line-height: 55px;
 }
 
-.badge {
+#example .badge {
     width: 28px;
     height: 28px;
     margin-right: 4px;
     margin-bottom: 6px;
 }
 
-.nick {
+#example .nick {
     margin-left: 6px;
 }
 
-.colon {
+#example .colon {
     margin-right: 14px;
 }
 
-.cheer_bits {
+#example .cheer_bits {
     font-weight: 600;
     margin-right: 7px;
 }
 
-.cheer_emote {
+#example .cheer_emote {
     max-height: 42px;
     margin-bottom: -10px;
 }
 
-.emote {
+#example .emote {
     max-width: 128px;
     height: 42px;
     margin-right: -6px;
-    margin-bottom: -10px;
 }
 
-.emoji {
-    width: 39px;
-    height: auto;
-    margin-bottom: -10px;
+#example .emoji {
+    height: 39px;
 }

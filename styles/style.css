@@ -255,6 +255,14 @@ input:focus {
     -webkit-text-stroke: 1px black;
 }
 
+#example .emote {
+    vertical-align: middle;
+}
+
+#example .emoji {
+    vertical-align: middle;
+}
+
 input[type="submit"],
 input[type="button"] {
     width: 150px;
