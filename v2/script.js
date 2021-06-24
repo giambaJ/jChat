@@ -382,7 +382,9 @@ Chat = {
                 info.emotes.split('/').forEach(emoteData => {
                     var twitchEmote = emoteData.split(':');
                     var indexes = twitchEmote[1].split(',')[0].split('-');
-                    var emoteCode = message.substr(indexes[0], indexes[1] - indexes[0] + 1);
+                    var emojis = new RegExp('[\u1000-\uFFFF]+', 'g');
+                    var aux = message.replace(emojis, ' ');
+                    var emoteCode = aux.substr(indexes[0], indexes[1] - indexes[0] + 1);
                     replacements[emoteCode] = '<img class="emote" src="https://static-cdn.jtvnw.net/emoticons/v2/' + twitchEmote[0] + '/default/dark/3.0" />';
                 });
             }
