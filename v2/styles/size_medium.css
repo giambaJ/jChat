@@ -34,8 +34,12 @@
 
 .emote {
     max-width: 128px;
-    height: 42px;
+    max-height: 42px;
     margin-right: -6px;
+}
+
+.upscale {
+    height: 42px;
 }
 
 .emoji {

@@ -42,8 +42,8 @@ Chat = {
         stroke: ('stroke' in $.QueryString ? parseInt($.QueryString.stroke) : false),
         shadow: ('shadow' in $.QueryString ? parseInt($.QueryString.shadow) : false),
         smallCaps: ('small_caps' in $.QueryString ? ($.QueryString.small_caps.toLowerCase() === 'true') : false),
-        badges: {},
         emotes: {},
+        badges: {},
         cheers: {},
         lines: []
     },
@@ -54,9 +54,17 @@ Chat = {
         ['emotes/global', 'users/twitch/' + encodeURIComponent(channelID)].forEach(endpoint => {
             $.getJSON('https://api.betterttv.net/3/cached/frankerfacez/' + endpoint).done(function(res) {
                 res.forEach(emote => {
+                    if (emote.images['4x']) {
+                        var imageUrl = emote.images['4x'];
+                        var upscale = false;
+                    } else {
+                        var imageUrl = emote.images['2x'] || emote.images['1x'];
+                        var upscale = true;
+                    }
                     Chat.info.emotes[emote.code] = {
                         id: emote.id,
-                        image: emote.images['4x'] || emote.images['2x'] || emote.images['1x']
+                        image: imageUrl,
+                        upscale: upscale
                     };
                 });
             });
@@ -322,22 +330,6 @@ Chat = {
     }, 200),
 
     write: function(nick, info, message) {
-        if (message.toLowerCase() === "!refreshoverlay" && typeof(info.badges) === 'string') {
-            var flag = false;
-            info.badges.split(',').forEach(badge => {
-                badge = badge.split('/');
-                if (badge[0] === "moderator" || badge[0] === "broadcaster") {
-                    flag = true;
-                    return;
-                }
-            });
-            if (flag) {
-                Chat.loadEmotes(Chat.info.channelID);
-                console.log('jChat: Refreshing emotes...');
-                return;
-            }
-        }
-
         var $chatLine = $('<div></div>');
         $chatLine.addClass('chat_line');
         $chatLine.attr('data-nick', nick);
@@ -397,7 +389,8 @@ Chat = {
 
             Object.entries(Chat.info.emotes).forEach(emote => {
                 if (message.search(emote[0]) > -1) {
-                    replacements[emote[0]] = '<img class="emote" src="' + emote[1].image + '" />';
+                    if (emote[1].upscale) replacements[emote[0]] = '<img class="emote upscale" src="' + emote[1].image + '" />'
+                    else replacements[emote[0]] = '<img class="emote" src="' + emote[1].image + '" />';
                 }
             });
 
@@ -514,6 +507,22 @@ Chat = {
                             if (!Chat.info.bots) {
                                 const bots = ['streamelements', 'streamlabs', 'nightbot', 'moobot'];
                                 if (bots.includes(nick)) return;
+                            }
+
+                            if (message.params[1].toLowerCase() === "!refreshoverlay" && typeof(message.tags.badges) === 'string') {
+                                var flag = false;
+                                message.tags.badges.split(',').forEach(badge => {
+                                    badge = badge.split('/');
+                                    if (badge[0] === "moderator" || badge[0] === "broadcaster") {
+                                        flag = true;
+                                        return;
+                                    }
+                                });
+                                if (flag) {
+                                    Chat.loadEmotes(Chat.info.channelID);
+                                    console.log('jChat: Refreshing emotes...');
+                                    return;
+                                }
                             }
 
                             Chat.write(nick, message.tags, message.params[1]);
