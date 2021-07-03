@@ -5,10 +5,6 @@ body {
     position: relative;
 }
 
-#aux {
-    display: none;
-}
-
 #chat_container {
     width: calc(100% - 20px);
     padding: 10px;
@@ -40,4 +36,8 @@ body {
 
 .emoji {
     vertical-align: middle;
+}
+
+.hidden {
+    display: none;
 }

@@ -1,4 +1,4 @@
-(function($) { // Thank to BrunoLM (https://stackoverflow.com/a/3855394)
+(function($) { // Thanks to BrunoLM (https://stackoverflow.com/a/3855394)
     $.QueryString = (function(paramsArray) {
         let params = {};
 
@@ -50,7 +50,7 @@ Chat = {
 
     loadEmotes: function(channelID) {
         Chat.info.emotes = {};
-        // Load BTTV, FFZ and 7tv emotes
+        // Load BTTV, FFZ and 7TV emotes
         ['emotes/global', 'users/twitch/' + encodeURIComponent(channelID)].forEach(endpoint => {
             $.getJSON('https://api.betterttv.net/3/cached/frankerfacez/' + endpoint).done(function(res) {
                 res.forEach(emote => {
@@ -287,7 +287,10 @@ Chat = {
                 res.actions.forEach(action => {
                     Chat.info.cheers[action.prefix] = {}
                     action.tiers.forEach(tier => {
-                        Chat.info.cheers[action.prefix][tier.min_bits] = tier.images.light.animated['4'];
+                        Chat.info.cheers[action.prefix][tier.min_bits] = {
+                            image: tier.images.light.animated['4'],
+                            color: tier.color
+                        };
                     });
                 });
             });
@@ -301,9 +304,11 @@ Chat = {
             var lines = Chat.info.lines.join('');
 
             if (Chat.info.animate) {
-                $('#aux').append(lines);
-                var auxHeight = $('#aux').height();
-                $('#aux').html('');
+                var $auxDiv = $('<div></div>', { class: "hidden" }).appendTo("#chat_container");
+                $auxDiv.append(lines);
+                var auxHeight = $auxDiv.height();
+                $auxDiv.remove();
+
                 var $animDiv = $('<div></div>');
                 $('#chat_container').append($animDiv);
                 $animDiv.animate({ "height": auxHeight }, 150, function() {
@@ -330,11 +335,11 @@ Chat = {
     }, 200),
 
     write: function(nick, info, message) {
-        var $chatLine = $('<div></div>');
-        $chatLine.addClass('chat_line');
-        $chatLine.attr('data-nick', nick);
-        $chatLine.attr('data-time', Date.now());
         if (info) {
+            var $chatLine = $('<div></div>');
+            $chatLine.addClass('chat_line');
+            $chatLine.attr('data-nick', nick);
+            $chatLine.attr('data-time', Date.now());
             $chatLine.attr('data-id', info.id);
             var $userInfo = $('<span></span>');
             $userInfo.addClass('user_info');
@@ -391,7 +396,7 @@ Chat = {
 
             Object.entries(Chat.info.emotes).forEach(emote => {
                 if (message.search(emote[0]) > -1) {
-                    if (emote[1].upscale) replacements[emote[0]] = '<img class="emote upscale" src="' + emote[1].image + '" />'
+                    if (emote[1].upscale) replacements[emote[0]] = '<img class="emote upscale" src="' + emote[1].image + '" />';
                     else replacements[emote[0]] = '<img class="emote" src="' + emote[1].image + '" />';
                 }
             });
@@ -400,38 +405,21 @@ Chat = {
 
             if (info.bits && parseInt(info.bits) > 0) {
                 var bits = parseInt(info.bits);
+                var parsed = false;
                 for (cheerType of Object.entries(Chat.info.cheers)) {
                     var regex = new RegExp(cheerType[0] + "\\d+\\s*", 'ig');
                     if (message.search(regex) > -1) {
                         message = message.replace(regex, '');
 
-                        var closest = 1;
-                        for (cheerTier of Object.keys(cheerType[1]).map(Number).sort((a, b) => a - b)) {
-                            if (bits >= cheerTier) closest = cheerTier;
-                            else break;
+                        if (!parsed) {
+                            var closest = 1;
+                            for (cheerTier of Object.keys(cheerType[1]).map(Number).sort((a, b) => a - b)) {
+                                if (bits >= cheerTier) closest = cheerTier;
+                                else break;
+                            }
+                            message = '<img class="cheer_emote" src="' + cheerType[1][closest].image + '" /><span class="cheer_bits" style="color: ' + cheerType[1][closest].color + ';">' + bits + '</span> ' + message;
+                            parsed = true;
                         }
-                        switch (closest) {
-                            case 1:
-                                var color_bits = "#979797";
-                                break;
-                            case 100:
-                                var color_bits = "#9c3ee8";
-                                break;
-                            case 1000:
-                                var color_bits = "#1db2a5";
-                                break;
-                            case 5000:
-                                var color_bits = "#0099fe";
-                                break;
-                            case 10000:
-                                var color_bits = "#f43021";
-                                break;
-                            default:
-                                var color_bits = "#9c3ee8";
-                                break;
-                        }
-                        message = '<img class="cheer_emote" src="' + cheerType[1][closest] + '" /><span class="cheer_bits" style="color: ' + color_bits + ';">' + bits + '</span> ' + message;
-                        break;
                     }
                 }
             }
@@ -507,7 +495,7 @@ Chat = {
                             var nick = message.prefix.split('@')[0].split('!')[0];
 
                             if (!Chat.info.bots) {
-                                const bots = ['streamelements', 'streamlabs', 'nightbot', 'moobot'];
+                                const bots = ['streamelements', 'streamlabs', 'nightbot', 'moobot', 'fossabot'];
                                 if (bots.includes(nick)) return;
                             }
 
