@@ -279,6 +279,14 @@ Chat = {
                             Chat.info.badges[badge[0] + ':' + v[0]] = v[1].image_url_4x;
                         });
                     });
+                    $.getJSON('https://api.frankerfacez.com/v1/_room/id/' + encodeURIComponent(Chat.info.channelID)).done(function(res) {
+                        if (res.room.moderator_badge) {
+                            Chat.info.badges['moderator:1'] = 'https://cdn.frankerfacez.com/room-badge/mod/' + Chat.info.channel + '/4/rounded';
+                        }
+                        if (res.room.vip_badge) {
+                            Chat.info.badges['vip:1'] = 'https://cdn.frankerfacez.com/room-badge/vip/' + Chat.info.channel + '/4';
+                        }
+                    });
                 });
             });
 
@@ -395,7 +403,7 @@ Chat = {
             }
 
             Object.entries(Chat.info.emotes).forEach(emote => {
-                if (message.search(emote[0]) > -1) {
+                if (message.search(escapeRegExp(emote[0])) > -1) {
                     if (emote[1].upscale) replacements[emote[0]] = '<img class="emote upscale" src="' + emote[1].image + '" />';
                     else replacements[emote[0]] = '<img class="emote" src="' + emote[1].image + '" />';
                 }

@@ -23,6 +23,7 @@ body {
 
 .badge {
     vertical-align: middle;
+    border-radius: 10%;
 }
 
 .cheer_bits {
