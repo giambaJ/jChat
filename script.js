@@ -269,6 +269,7 @@ function resetForm(event) {
     $small_caps.prop('checked', false);
     $badges.prop('checked', false);
     $('link[class="small_caps"]').remove();
+    $('img[class="badge special hidden"]').removeClass('hidden');
     $result.addClass('hidden');
     $generator.removeClass('hidden');
     showUrl();
