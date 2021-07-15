@@ -70,7 +70,7 @@ a:hover {
 }
 
 form[name="generator"] {
-    width: 950px;
+    width: 1050px;
     margin: 15px;
     padding: 25px;
     border-radius: 15px;
@@ -90,7 +90,7 @@ form[name="generator"] {
 }
 
 .form_col {
-    width: 300px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -183,7 +183,7 @@ input[type="checkbox"]:checked:after {
 }
 
 select {
-    width: 180px;
+    width: 200px;
     height: 25px;
     font-family: 'Montserrat', 'Segoe UI', sans-serif;
     font-size: 0.7em;
@@ -214,7 +214,7 @@ input:focus {
 }
 
 .preview {
-    margin-top: 20px;
+    margin-top: 30px;
     display: flex;
 }
 
@@ -247,6 +247,7 @@ input:focus {
 
 #example .badge {
     vertical-align: middle;
+    border-radius: 10%;
 }
 
 #example .cheer_bits {
@@ -362,11 +363,17 @@ footer {
 footer p {
     font-size: 0.8em;
     font-weight: 200;
-    margin: 0;
+    margin: 5px;
 }
 
 footer a {
     font-weight: 400;
+}
+
+.github {
+    height: 20px;
+    margin-left: 5px;
+    vertical-align: middle;
 }
 
 

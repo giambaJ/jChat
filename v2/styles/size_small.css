@@ -13,8 +13,8 @@
     margin-bottom: 3px;
 }
 
-.nick {
-    margin-left: 3px;
+.badge:last-of-type {
+    margin-right: 3px;
 }
 
 .colon {

@@ -28,8 +28,8 @@
         <p>
             <em>jChat</em> is an overlay that allows you to show your Twitch chat on screen with OBS, XSplit, and any other streaming software that supports browser sources. It supports your
             <a href="https://betterttv.com/" target="_blank">BetterTTV</a>, <a href="https://www.frankerfacez.com/" target="_blank">FrankerFaceZ</a> and
-            <a href="https://7tv.app/" target="_blank">7TV</a> emotes, always at the best available quality. You can choose to activate a smooth animation, show bots messages and fade old ones after some time. It comes with many fonts and styling options
-            that can be combined as desired.
+            <a href="https://7tv.app/" target="_blank">7TV</a> emotes, always at the best available quality. You have many options to customize your chat, like enabling a smooth animation for new messages, or fading old ones after some time. If you have
+            a chat full of !gamble addicts, you can choose to hide bots and commands messages. It also comes with many fonts and styling options that can be combined as desired.
         </p>
 
 
@@ -63,7 +63,23 @@
                         </select>
                         <label for="font">Font</label>
                     </div>
+                    <br>
                     <div class="form_row left">
+                        <input type="checkbox" name="bots">
+                        <label for="bots">Show bots</label>
+                    </div>
+                    <div class="form_row left">
+                        <input type="checkbox" name="commands">
+                        <label for="commands">Hide commands</label>
+                    </div>
+                    <div class="form_row left">
+                        <input type="checkbox" name="badges">
+                        <label for="badges">Hide special badges</label>
+                    </div>
+                </div>
+                <div class="form_col">
+                    <div class="form_row right">
+                        <label for="stroke">Stroke</label>
                         <select name="stroke">
                             <option value="0" selected>Off</option>
                             <option value="1">Thin</option>
@@ -71,26 +87,20 @@
                             <option value="3">Thick</option>
                             <option value="4">Thicker</option>
                         </select>
-                        <label for="stroke">Stroke</label>
                     </div>
-                    <div class="form_row left">
+                    <div class="form_row right">
+                        <label for="shadow">Shadow</label>
                         <select name="shadow">
                             <option value="0" selected>Off</option>
                             <option value="1">Small</option>
                             <option value="2">Medium</option>
                             <option value="3">Large</option>
                         </select>
-                        <label for="shadow">Shadow</label>
                     </div>
-                </div>
-                <div class="form_col">
+                    <br>
                     <div class="form_row right">
                         <label for="animate">Animate</label>
                         <input type="checkbox" name="animate">
-                    </div>
-                    <div class="form_row right">
-                        <label for="bots">Show bots</label>
-                        <input type="checkbox" name="bots">
                     </div>
                     <div class="form_row right">
                         <label for="fade">Fade</label>
@@ -107,9 +117,9 @@
             <div id="submit_container">
                 <div class="preview"><img id="brightness" src="img/light.png"> <label>Preview:</label></div>
                 <div id="example">
-                    <div class="chat_line"><span class="user_info"><img class="badge" src="https://static-cdn.jtvnw.net/badges/v1/bbbe0db0-a598-423e-86d0-f9fb98ca1933/3"><span class="nick" style="color: rgb(38, 255, 0);">giambaJ</span>
-                        <span class="colon">:</span></span><span class="message"><img class="cheer_emote" src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/light/animated/100/4.gif"><span class="cheer_bits">100</span> Nice chat <img class="emote"
-                            src="https://cdn.betterttv.net/frankerfacez_emote/341767/4"> <img class="emote" src="https://cdn.7tv.app/emote/6040aacfcf6746000db1034f/4x"></span>
+                    <div class="chat_line"><span class="user_info"><img class="badge special" src="https://cdn.frankerfacez.com/badge/3/4" style="background-color: rgb(117, 80, 0);"><img class="badge special" src="https://cdn.7tv.app/badge/60d5998fb0ac44b85331fe2b/3x"><img class="badge" src="https://static-cdn.jtvnw.net/badges/v1/3158e758-3cb4-43c5-94b3-7639810451c5/3"><span class="nick" style="color: rgb(38, 255, 0);">giambaJ</span>
+                        <span class="colon">:</span>
+                        </span><span class="message"><img class="cheer_emote" src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/light/animated/100/4.gif"><span class="cheer_bits">100</span> Nice chat <img class="emote" src="https://cdn.betterttv.net/frankerfacez_emote/341767/4">                        <img class="emote" src="https://cdn.7tv.app/emote/6040aacfcf6746000db1034f/4x"></span>
                     </div>
                 </div>
                 <input type="submit" value="Generate">
@@ -135,8 +145,10 @@
     </section>
 
     <footer>
-        <p>Made with &#10084; by <a href="mailto:me@giambaj.it">giambaJ</a></p>
-        <p>This application is not affiliated with <a href="https://www.twitch.tv/">Twitch</a></p>
+        <p>Made with &#10084; by <a href="mailto:me@giambaj.it">giambaJ</a>
+            <a href="https://github.com/giambaJ/jChat" target="_blank"><img class="github" src="img/github.png"></a>
+        </p>
+        <p>This application is not affiliated with <a href="https://www.twitch.tv/" target="_blank">Twitch</a></p>
     </footer>
 </body>
 

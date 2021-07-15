@@ -205,6 +205,14 @@ function capsUpdate(event) {
     }
 }
 
+function badgesUpdate(event) {
+    if ($badges.is(':checked')) {
+        $('img[class="badge special"]').addClass('hidden');
+    } else {
+        $('img[class="badge special hidden"]').removeClass('hidden');
+    }
+}
+
 function generateURL(event) {
     event.preventDefault();
 
@@ -212,6 +220,8 @@ function generateURL(event) {
     if ($animate.is(':checked')) generatedUrl += '&animate=true';
     if ($bots.is(':checked')) generatedUrl += '&bots=true';
     if ($fade_bool.is(':checked')) generatedUrl += '&fade=' + $fade.val();
+    if ($commands.is(':checked')) generatedUrl += '&hide_commands=true';
+    if ($badges.is(':checked')) generatedUrl += '&hide_badges=true';
     generatedUrl += '&size=' + $size.val();
     generatedUrl += '&font=' + $font.val();
     if ($stroke.val() != '0') generatedUrl += '&stroke=' + $stroke.val();
@@ -255,7 +265,9 @@ function resetForm(event) {
     $fade.addClass('hidden');
     $fade_seconds.addClass('hidden');
     $fade.val("30");
+    $commands.prop('checked', false);
     $small_caps.prop('checked', false);
+    $badges.prop('checked', false);
     $('link[class="small_caps"]').remove();
     $result.addClass('hidden');
     $generator.removeClass('hidden');
@@ -269,7 +281,9 @@ const $bots = $('input[name="bots"]');
 const $fade_bool = $("input[name='fade_bool']");
 const $fade = $("input[name='fade']");
 const $fade_seconds = $("#fade_seconds");
+const $commands = $("input[name='commands']");
 const $small_caps = $("input[name='small_caps']");
+const $badges = $("input[name='badges']");
 const $size = $("select[name='size']");
 const $font = $("select[name='font']");
 const $stroke = $("select[name='stroke']");
@@ -287,6 +301,7 @@ $font.change(fontUpdate);
 $stroke.change(strokeUpdate);
 $shadow.change(shadowUpdate);
 $small_caps.change(capsUpdate);
+$badges.change(badgesUpdate);
 $generator.submit(generateURL);
 $brightness.click(changePreview);
 $url.click(copyUrl);
