@@ -51,6 +51,7 @@ Chat = {
         seventvBadges: null,
         cheers: {},
         lines: [],
+        blockedUsers: ('block' in $.QueryString ? $.QueryString.block.toLowerCase().split(',') : false),
         bots: ['streamelements', 'streamlabs', 'nightbot', 'moobot', 'fossabot']
     },
 
@@ -621,6 +622,10 @@ Chat = {
 
                             if (!Chat.info.showBots) {
                                 if (Chat.info.bots.includes(nick)) return;
+                            }
+
+                            if (Chat.info.blockedUsers) {
+                                if (Chat.info.blockedUsers.includes(nick)) return;
                             }
 
                             if (!Chat.info.hideBadges) {
