@@ -49,6 +49,7 @@ Chat = {
         userBadges: {},
         bttvBadges: null,
         seventvBadges: null,
+        chatterinoBadges: null,
         cheers: {},
         lines: [],
         blockedUsers: ('block' in $.QueryString ? $.QueryString.block.toLowerCase().split(',') : false),
@@ -304,6 +305,9 @@ Chat = {
                 $.getJSON('https://api.7tv.app/v2/badges?user_identifier=login').done(function(res) {
                     Chat.info.seventvBadges = res.badges;
                 });
+                $.getJSON('https://api.chatterino.com/badges').done(function(res) {
+                    Chat.info.chatterinoBadges = res.badges;
+                });
             }
 
             // Load cheers images
@@ -358,32 +362,47 @@ Chat = {
         }
     }, 200),
 
-    loadUserBadges: function(nick) {
+    loadUserBadges: function(nick, userId) {
+        Chat.info.userBadges[nick] = [];
         $.getJSON('https://api.frankerfacez.com/v1/user/' + nick).always(function(res) {
             if (res.badges) {
                 Object.entries(res.badges).forEach(badge => {
-                    (Chat.info.userBadges[nick] || (Chat.info.userBadges[nick] = [])).push({
+                    var userBadge = {
                         description: badge[1].title,
                         url: 'https:' + badge[1].urls['4'],
                         color: badge[1].color
-                    });
+                    };
+                    if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
                 });
             }
             Chat.info.bttvBadges.forEach(user => {
                 if (user.name === nick) {
-                    (Chat.info.userBadges[user.name] || (Chat.info.userBadges[user.name] = [])).push({
+                    var userBadge = {
                         description: user.badge.description,
                         url: user.badge.svg
-                    });
+                    };
+                    if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
                 }
             });
             Chat.info.seventvBadges.forEach(badge => {
                 badge.users.forEach(user => {
                     if (user === nick) {
-                        (Chat.info.userBadges[user] || (Chat.info.userBadges[user] = [])).push({
+                        var userBadge = {
                             description: badge.tooltip,
                             url: badge.urls[2][1]
-                        });
+                        };
+                        if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
+                    }
+                });
+            });
+            Chat.info.chatterinoBadges.forEach(badge => {
+                badge.users.forEach(user => {
+                    if (user === userId) {
+                        var userBadge = {
+                            description: badge.tooltip,
+                            url: badge.image3 || badge.image2 || badge.image1
+                        };
+                        if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
                     }
                 });
             });
@@ -629,7 +648,7 @@ Chat = {
                             }
 
                             if (!Chat.info.hideBadges) {
-                                if (Chat.info.bttvBadges && Chat.info.seventvBadges && !Chat.info.userBadges[nick]) Chat.loadUserBadges(nick);
+                                if (Chat.info.bttvBadges && Chat.info.seventvBadges && Chat.info.chatterinoBadges && !Chat.info.userBadges[nick]) Chat.loadUserBadges(nick, message.tags['user-id']);
                             }
 
                             Chat.write(nick, message.tags, message.params[1]);
