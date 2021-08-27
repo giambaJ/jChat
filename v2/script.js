@@ -316,7 +316,7 @@ Chat = {
                     Chat.info.cheers[action.prefix] = {}
                     action.tiers.forEach(tier => {
                         Chat.info.cheers[action.prefix][tier.min_bits] = {
-                            image: tier.images.light.animated['4'],
+                            image: tier.images.dark.animated['4'],
                             color: tier.color
                         };
                     });
