@@ -7,7 +7,7 @@
 - Custom channel badges
 - Lots of fonts and styling options
 - Twitter emojis
-- 7TV, BTTV, FFZ and Chatterino user badges (on/off)
+- 7TV, BTTV, FFZ, FFZ:AP and Chatterino user badges (on/off)
 - Smooth animation (on/off)
 - Fade old messages (on/off)
 - Hide bots messages (on/off)

@@ -47,6 +47,7 @@ Chat = {
         emotes: {},
         badges: {},
         userBadges: {},
+        ffzapBadges: null,
         bttvBadges: null,
         seventvBadges: null,
         chatterinoBadges: null,
@@ -315,6 +316,13 @@ Chat = {
             });
 
             if (!Chat.info.hideBadges) {
+                $.getJSON('https://api.ffzap.com/v1/supporters')
+                    .done(function(res) {
+                        Chat.info.ffzapBadges = res;
+                    })
+                    .fail(function() {
+                        Chat.info.ffzapBadges = [];
+                    });
                 $.getJSON('https://api.betterttv.net/3/cached/badges')
                     .done(function(res) {
                         Chat.info.bttvBadges = res;
@@ -338,7 +346,6 @@ Chat = {
                     .fail(function() {
                         Chat.info.chatterinoBadges = [];
                     });
-
             }
 
             // Load cheers images
@@ -406,6 +413,22 @@ Chat = {
                     if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
                 });
             }
+            Chat.info.ffzapBadges.forEach(user => {
+                if (user.id.toString() === userId) {
+                    var color = '#755000';
+                    if (user.tier == 2) color = (user.badge_color || '#755000');
+                    else if (user.tier == 3) {
+                        if (user.badge_is_colored == 0) color = (user.badge_color || '#755000');
+                        else color = false;
+                    }
+                    var userBadge = {
+                        description: 'FFZ:AP Badge',
+                        url: 'https://api.ffzap.com/v1/user/badge/' + userId + '/3',
+                        color: color
+                    };
+                    if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
+                }
+            });
             Chat.info.bttvBadges.forEach(user => {
                 if (user.name === nick) {
                     var userBadge = {
@@ -693,7 +716,7 @@ Chat = {
                             }
 
                             if (!Chat.info.hideBadges) {
-                                if (Chat.info.bttvBadges && Chat.info.seventvBadges && Chat.info.chatterinoBadges && !Chat.info.userBadges[nick]) Chat.loadUserBadges(nick, message.tags['user-id']);
+                                if (Chat.info.bttvBadges && Chat.info.seventvBadges && Chat.info.chatterinoBadges && Chat.info.ffzapBadges && !Chat.info.userBadges[nick]) Chat.loadUserBadges(nick, message.tags['user-id']);
                             }
 
                             Chat.write(nick, message.tags, message.params[1]);
@@ -701,7 +724,6 @@ Chat = {
                     }
                 });
             };
-
         });
     }
 };
