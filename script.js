@@ -121,6 +121,22 @@ function fontUpdate(event) {
                 href: "styles/font_IndieFlower.css"
             }).appendTo("head");
             break;
+        case '10':
+            $("<link/>", {
+                rel: "stylesheet",
+                type: "text/css",
+                class: "font",
+                href: "styles/font_PressStart2P.css"
+            }).appendTo("head");
+            break;
+        case '11':
+            $("<link/>", {
+                rel: "stylesheet",
+                type: "text/css",
+                class: "font",
+                href: "styles/font_Wallpoet.css"
+            }).appendTo("head");
+            break;
     }
 }
 

@@ -26,6 +26,13 @@ body {
     border-radius: 10%;
 }
 
+.zero-width_container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
 .cheer_bits {
     font-size: 0.6em;
     -webkit-text-stroke: 1px black;
@@ -33,6 +40,10 @@ body {
 
 .emote {
     vertical-align: middle;
+}
+
+.zero-width {
+    position: absolute;
 }
 
 .emoji {

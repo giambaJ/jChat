@@ -86,7 +86,8 @@ Chat = {
                 res.forEach(emote => {
                     Chat.info.emotes[emote.code] = {
                         id: emote.id,
-                        image: 'https://cdn.betterttv.net/emote/' + emote.id + '/3x'
+                        image: 'https://cdn.betterttv.net/emote/' + emote.id + '/3x',
+                        zeroWidth: ["5e76d338d6581c3724c0f0b2", "5e76d399d6581c3724c0f0b8"].includes(emote.id) // "5e76d338d6581c3724c0f0b2" => cvHazmat, "5e76d399d6581c3724c0f0b8" => cvMask
                     };
                 });
             });
@@ -97,7 +98,8 @@ Chat = {
                 res.forEach(emote => {
                     Chat.info.emotes[emote.name] = {
                         id: emote.id,
-                        image: emote.urls[emote.urls.length - 1][1]
+                        image: emote.urls[emote.urls.length - 1][1],
+                        zeroWidth: emote.visibility_simple.includes("ZERO_WIDTH")
                     };
                 });
             });
@@ -196,6 +198,20 @@ Chat = {
                         rel: "stylesheet",
                         type: "text/css",
                         href: "styles/font_IndieFlower.css"
+                    }).appendTo("head");
+                    break;
+                case 10:
+                    $("<link/>", {
+                        rel: "stylesheet",
+                        type: "text/css",
+                        href: "styles/font_PressStart2P.css"
+                    }).appendTo("head");
+                    break;
+                case 11:
+                    $("<link/>", {
+                        rel: "stylesheet",
+                        type: "text/css",
+                        href: "styles/font_Wallpoet.css"
                     }).appendTo("head");
                     break;
                 default:
@@ -299,15 +315,30 @@ Chat = {
             });
 
             if (!Chat.info.hideBadges) {
-                $.getJSON('https://api.betterttv.net/3/cached/badges').done(function(res) {
-                    Chat.info.bttvBadges = res;
-                });
-                $.getJSON('https://api.7tv.app/v2/badges?user_identifier=login').done(function(res) {
-                    Chat.info.seventvBadges = res.badges;
-                });
-                $.getJSON('https://api.chatterino.com/badges').done(function(res) {
-                    Chat.info.chatterinoBadges = res.badges;
-                });
+                $.getJSON('https://api.betterttv.net/3/cached/badges')
+                    .done(function(res) {
+                        Chat.info.bttvBadges = res;
+                    })
+                    .fail(function() {
+                        Chat.info.bttvBadges = [];
+                    });
+
+                $.getJSON('https://api.7tv.app/v2/badges?user_identifier=login')
+                    .done(function(res) {
+                        Chat.info.seventvBadges = res.badges;
+                    })
+                    .fail(function() {
+                        Chat.info.seventvBadges = [];
+                    });
+
+                $.getJSON('https://api.chatterino.com/badges')
+                    .done(function(res) {
+                        Chat.info.chatterinoBadges = res.badges;
+                    })
+                    .fail(function() {
+                        Chat.info.chatterinoBadges = [];
+                    });
+
             }
 
             // Load cheers images
@@ -519,6 +550,7 @@ Chat = {
             Object.entries(Chat.info.emotes).forEach(emote => {
                 if (message.search(escapeRegExp(emote[0])) > -1) {
                     if (emote[1].upscale) replacements[emote[0]] = '<img class="emote upscale" src="' + emote[1].image + '" />';
+                    else if (emote[1].zeroWidth) replacements[emote[0]] = '<img class="emote" data-zw="true" src="' + emote[1].image + '" />';
                     else replacements[emote[0]] = '<img class="emote" src="' + emote[1].image + '" />';
                 }
             });
@@ -558,6 +590,19 @@ Chat = {
 
             message = twemoji.parse(message);
             $message.html(message);
+
+            // Writing zero-width emotes
+            messageNodes = $message.children();
+            messageNodes.each(function(i) {
+                if (i != 0 && $(this).data('zw') && ($(messageNodes[i - 1]).hasClass('emote') || $(messageNodes[i - 1]).hasClass('emoji')) && !$(messageNodes[i - 1]).data('zw')) {
+                    var $container = $('<span></span>');
+                    $container.addClass('zero-width_container');
+                    $(this).addClass('zero-width');
+                    $(this).before($container);
+                    $container.append(messageNodes[i - 1], this);
+                }
+            });
+            $message.html($message.html().trim());
             $chatLine.append($message);
             Chat.info.lines.push($chatLine.wrap('<div>').parent().html());
         }
