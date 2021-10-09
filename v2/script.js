@@ -22,7 +22,7 @@ const sizes = ['small', 'medium', 'large']
 const strokes = ['thin', 'medium', 'thick', 'thicker']
 const shadows = ['small', 'medium', 'large']
 
-function loadCSS(file){
+function appendCSS(file){
     $("<link/>", {
         rel: "stylesheet",
         type: "text/css",
@@ -128,39 +128,37 @@ Chat = {
             Chat.loadEmotes(Chat.info.channelID);
 
             // Load CSS
+
+            // With default css
+            
             let size = 'large';
             let font = 'BalooTammudu';
 
-            // with default css
-            
+
             if (Chat.info.size){
-                size = sizes[Chat.info.size] + 1;
+                size = sizes[Chat.info.size - 1];
             } 
             
             if (Chat.info.font) {
-                font = fonts[Chat.info.font] + 1;
+                font = fonts[Chat.info.font - 1];
             }
 
             appendCSS(`size_${size}`)
             appendCSS(`font_${font}`)
 
-            // without default css
+            // Without default css
 
             if (Chat.info.stroke && Chat.info.stroke > 0) {
-                appendCSS(`stroke_${strokes[Chat.info.stroke] + 1 }`) 
+                appendCSS(`stroke_${strokes[Chat.info.stroke - 1] }`) 
             }
 
             if (Chat.info.shadow && Chat.info.shadow > 0){
-                appendCSS(`shadow_${strokes[Chat.info.shadow] + 1 }`)
+                appendCSS(`shadow_${strokes[Chat.info.shadow - 1] }`)
             } 
 
             if (Chat.info.smallCaps){
                 appendCSS(`variant_SmallCaps`)
             } 
-            
-
-            
-            
 
             // Load badges
             TwitchAPI('https://badges.twitch.tv/v1/badges/global/display').done(function(global) {
