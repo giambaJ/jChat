@@ -22,6 +22,15 @@ const sizes = ['small', 'medium', 'large']
 const strokes = ['thin', 'medium', 'thick', 'thicker']
 const shadows = ['small', 'medium', 'large']
 
+function loadCSS(file){
+    $("<link/>", {
+        rel: "stylesheet",
+        type: "text/css",
+        class: "size",
+        href: `styles/${file}.css`
+    }).appendTo("head");
+}
+
 function escapeRegExp(string) { // Thanks to coolaj86 and Darren Cook (https://stackoverflow.com/a/6969486)
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -119,54 +128,39 @@ Chat = {
             Chat.loadEmotes(Chat.info.channelID);
 
             // Load CSS
-            if(Chat.info.size){
-                const size = sizes[Chat.info.size]
-                
-                $("<link/>", {
-                    rel: "stylesheet",
-                    type: "text/css",
-                    class: "size",
-                    href: `styles/size_${size}.css`
-                }).appendTo("head");
-            }
-            if(Chat.info.font){
-                const font = fonts[Chat.info.font]
-                
-                $("<link/>", {
-                    rel: "stylesheet",
-                    type: "text/css",
-                    class: "font",
-                    href: `styles/font_${font}.css`
-                }).appendTo("head");
-            }
-            if(Chat.info.stroke){
-                const stroke = strokes[Chat.info.stroke]
-                
-                $("<link/>", {
-                    rel: "stylesheet",
-                    type: "text/css",
-                    class: "stroke",
-                    href: `styles/stroke_${stroke}.css`
-                }).appendTo("head");
-            }
-            if(Chat.info.shadow){
-                const shadow = shadows[Chat.info.shadow]
-                
-                $("<link/>", {
-                    rel: "stylesheet",
-                    type: "text/css",
-                    class: "shadow",
-                    href:  `styles/shadow_${shadow}.css`
-                }).appendTo("head");
-            }
+            let size = 'large';
+            let font = 'BalooTammudu';
+
+            // with default css
             
-            if (Chat.info.smallCaps) {
-                $("<link/>", {
-                    rel: "stylesheet",
-                    type: "text/css",
-                    href: "styles/variant_SmallCaps.css"
-                }).appendTo("head");
+            if (Chat.info.size){
+                size = sizes[Chat.info.size] + 1;
+            } 
+            
+            if (Chat.info.font) {
+                font = fonts[Chat.info.font] + 1;
             }
+
+            appendCSS(`size_${size}`)
+            appendCSS(`font_${font}`)
+
+            // without default css
+
+            if (Chat.info.stroke && Chat.info.stroke > 0) {
+                appendCSS(`stroke_${strokes[Chat.info.stroke] + 1 }`) 
+            }
+
+            if (Chat.info.shadow && Chat.info.shadow > 0){
+                appendCSS(`shadow_${strokes[Chat.info.shadow] + 1 }`)
+            } 
+
+            if (Chat.info.smallCaps){
+                appendCSS(`variant_SmallCaps`)
+            } 
+            
+
+            
+            
 
             // Load badges
             TwitchAPI('https://badges.twitch.tv/v1/badges/global/display').done(function(global) {

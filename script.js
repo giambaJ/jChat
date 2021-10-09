@@ -1,3 +1,12 @@
+function appendCSS(file){
+    $("<link/>", {
+        rel: "stylesheet",
+        type: "text/css",
+        class: "size",
+        href: `styles/${file}.css`
+    }).appendTo("head");
+}
+
 function fadeOption(event) {
     if ($fade_bool.is(':checked')) {
         $fade.removeClass('hidden');
@@ -11,28 +20,13 @@ function fadeOption(event) {
 function sizeUpdate(event) {
     $('link[class="size"]').remove();
 
-    const size = sizes[Number($size.val())]
-
-    $("<link/>", {
-        rel: "stylesheet",
-        type: "text/css",
-        class: "size",
-        href: `styles/size_${size}.css`
-    }).appendTo("head");
+    appendCSS(`size_${sizes[Number($size.val()) -1]}`)
 }
 
 function fontUpdate(event) {
     $('link[class="font"]').remove();
-
-    const font = fonts[Number($font.val())]
-
-    $("<link/>", {
-        rel: "stylesheet",
-        type: "text/css",
-        class: "font",
-        href: `styles/font_${font}.css`
-    }).appendTo("head");
-
+    
+    appendCSS(`font_${fonts[Number($font.val())]}`)
 }
 
 function strokeUpdate(event) {
@@ -40,14 +34,7 @@ function strokeUpdate(event) {
 
     if ($stroke.val() == "0") return // if "off is selected"
 
-    const stroke = strokes[Number($stroke.val()) - 1]
-
-    $("<link/>", {
-        rel: "stylesheet",
-        type: "text/css",
-        class: "stroke",
-        href: `styles/stroke_${stroke}.css`
-    }).appendTo("head");
+    appendCSS(`stroke_${strokes[Number($stroke.val()) - 1]}`)
 }
 
 function shadowUpdate(event) {
@@ -55,24 +42,13 @@ function shadowUpdate(event) {
 
     if ($shadow.val() == "0") return // if "off is selected"
 
-    const shadow =  shadows[Number($shadow.val()) -1]
+    appendCSS(`shadow_${shadows[Number($shadow.val()) - 1]}`)
 
-    $("<link/>", {
-        rel: "stylesheet",
-        type: "text/css",
-        class: "shadow",
-        href:  `styles/shadow_${shadow}.css`
-    }).appendTo("head");
 }
 
 function capsUpdate(event) {
     if ($small_caps.is(':checked')) {
-        $("<link/>", {
-            rel: "stylesheet",
-            type: "text/css",
-            class: "small_caps",
-            href: "styles/variant_SmallCaps.css"
-        }).appendTo("head");
+        appendCSS('variant_SmallCaps')
     } else {
         $('link[class="small_caps"]').remove();
     }
