@@ -1,3 +1,12 @@
+// https://stackoverflow.com/questions/111529/how-to-create-query-parameters-in-javascript
+
+function encodeQueryData(data) {
+    const ret = [];
+    for (let d in data)
+      ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+    return ret.join('&');
+}
+
 function appendCSS(file){
     $("<link/>", {
         rel: "stylesheet",
@@ -65,19 +74,26 @@ function badgesUpdate(event) {
 function generateURL(event) {
     event.preventDefault();
 
-    var generatedUrl = 'https://www.giambaj.it/twitch/jchat/v2/?channel=' + $channel.val();
-    if ($animate.is(':checked')) generatedUrl += '&animate=true';
-    if ($bots.is(':checked')) generatedUrl += '&bots=true';
-    if ($fade_bool.is(':checked')) generatedUrl += '&fade=' + $fade.val();
-    if ($commands.is(':checked')) generatedUrl += '&hide_commands=true';
-    if ($badges.is(':checked')) generatedUrl += '&hide_badges=true';
-    generatedUrl += '&size=' + $size.val();
-    generatedUrl += '&font=' + $font.val();
-    if ($stroke.val() != '0') generatedUrl += '&stroke=' + $stroke.val();
-    if ($shadow.val() != '0') generatedUrl += '&shadow=' + $shadow.val();
-    if ($small_caps.is(':checked')) generatedUrl += '&small_caps=true';
+    const generatedUrl = 'https://www.giambaj.it/twitch/jchat/v2/?channel=' + $channel.val();
 
-    $url.val(generatedUrl);
+    let data = {
+        animate: $animate.is(':checked'),
+        bots: $bots.is(':checked'),
+        fade: $fade_bool.is(':checked'),
+        hide_commands: $commands.is(':checked'),
+        hide_badges: $badges.is(':checked'),
+        size: $size.val(),
+        font: $font.val(),
+        small_caps: $small_caps.is(':checked')
+    }
+
+    if ($stroke.val() != '0') data.stroke = $stroke.val();
+    if ($shadow.val() != '0') data.shadow = $shadow.val();
+
+    const params = encodeQueryData(data)
+
+    $url.val(generatedUrl + '?' + params);
+
     $generator.addClass('hidden');
     $result.removeClass('hidden');
 }
