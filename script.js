@@ -10,202 +10,59 @@ function fadeOption(event) {
 
 function sizeUpdate(event) {
     $('link[class="size"]').remove();
-    switch ($size.val()) {
-        case '1':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "size",
-                href: "styles/size_small.css"
-            }).appendTo("head");
-            break;
-        case '2':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "size",
-                href: "styles/size_medium.css"
-            }).appendTo("head");
-            break;
-        case '3':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "size",
-                href: "styles/size_large.css"
-            }).appendTo("head");
-            break;
-    }
+
+    const size = sizes[Number($size.val())]
+
+    $("<link/>", {
+        rel: "stylesheet",
+        type: "text/css",
+        class: "size",
+        href: `styles/size_${size}.css`
+    }).appendTo("head");
 }
 
 function fontUpdate(event) {
     $('link[class="font"]').remove();
-    switch ($font.val()) {
-        case '0':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_BalooTammudu.css"
-            }).appendTo("head");
-            break;
-        case '1':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_SegoeUI.css"
-            }).appendTo("head");
-            break;
-        case '2':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_Roboto.css"
-            }).appendTo("head");
-            break;
-        case '3':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_Lato.css"
-            }).appendTo("head");
-            break;
-        case '4':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_NotoSans.css"
-            }).appendTo("head");
-            break;
-        case '5':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_SourceCodePro.css"
-            }).appendTo("head");
-            break;
-        case '6':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_Impact.css"
-            }).appendTo("head");
-            break;
-        case '7':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_Comfortaa.css"
-            }).appendTo("head");
-            break;
-        case '8':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_DancingScript.css"
-            }).appendTo("head");
-            break;
-        case '9':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_IndieFlower.css"
-            }).appendTo("head");
-            break;
-        case '10':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_PressStart2P.css"
-            }).appendTo("head");
-            break;
-        case '11':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "font",
-                href: "styles/font_Wallpoet.css"
-            }).appendTo("head");
-            break;
-    }
+
+    const font = fonts[Number($font.val())]
+
+    $("<link/>", {
+        rel: "stylesheet",
+        type: "text/css",
+        class: "font",
+        href: `styles/font_${font}.css`
+    }).appendTo("head");
+
 }
 
 function strokeUpdate(event) {
     $('link[class="stroke"]').remove();
-    switch ($stroke.val()) {
-        case '1':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "stroke",
-                href: "styles/stroke_thin.css"
-            }).appendTo("head");
-            break;
-        case '2':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "stroke",
-                href: "styles/stroke_medium.css"
-            }).appendTo("head");
-            break;
-        case '3':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "stroke",
-                href: "styles/stroke_thick.css"
-            }).appendTo("head");
-            break;
-        case '4':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "stroke",
-                href: "styles/stroke_thicker.css"
-            }).appendTo("head");
-            break;
-    }
+
+    if ($stroke.val() == "0") return // if "off is selected"
+
+    const stroke = strokes[Number($stroke.val()) - 1]
+
+    $("<link/>", {
+        rel: "stylesheet",
+        type: "text/css",
+        class: "stroke",
+        href: `styles/stroke_${stroke}.css`
+    }).appendTo("head");
 }
 
 function shadowUpdate(event) {
     $('link[class="shadow"]').remove();
-    switch ($shadow.val()) {
-        case '1':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "shadow",
-                href: "styles/shadow_small.css"
-            }).appendTo("head");
-            break;
-        case '2':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "shadow",
-                href: "styles/shadow_medium.css"
-            }).appendTo("head");
-            break;
-        case '3':
-            $("<link/>", {
-                rel: "stylesheet",
-                type: "text/css",
-                class: "shadow",
-                href: "styles/shadow_large.css"
-            }).appendTo("head");
-            break;
-    }
+
+    if ($shadow.val() == "0") return // if "off is selected"
+
+    const shadow =  shadows[Number($shadow.val()) -1]
+
+    $("<link/>", {
+        rel: "stylesheet",
+        type: "text/css",
+        class: "shadow",
+        href:  `styles/shadow_${shadow}.css`
+    }).appendTo("head");
 }
 
 function capsUpdate(event) {
@@ -290,6 +147,12 @@ function resetForm(event) {
     $generator.removeClass('hidden');
     showUrl();
 }
+
+const fonts = [ 'BalooTammudu', 'SegoeUI', 'Roboto', 'Lato', 'NotoSans', 'SourceCodePro',
+'Impact', 'Comfortaa', 'DancingScript', 'IndieFlower', 'PressStart2P', 'Wallpoet']
+const sizes = ['small', 'medium', 'large']
+const strokes = ['thin', 'medium', 'thick', 'thicker']
+const shadows = ['small', 'medium', 'large']
 
 const $generator = $("form[name='generator']");
 const $channel = $('input[name="channel"]');
