@@ -16,21 +16,6 @@
     })(window.location.search.substr(1).split('&'))
 })(jQuery);
 
-function escapeRegExp(string) { // Thanks to coolaj86 and Darren Cook (https://stackoverflow.com/a/6969486)
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function escapeHtml(message) {
-    return message
-        .replace(/&/g, "&amp;")
-        .replace(/(<)(?!3)/g, "&lt;")
-        .replace(/(>)(?!\()/g, "&gt;");
-}
-
-function TwitchAPI(url) {
-    return $.getJSON(url + (url.search(/\?/) > -1 ? '&' : '?') + 'client_id=' + client_id);
-}
-
 Chat = {
     info: {
         channel: null,
@@ -113,182 +98,21 @@ Chat = {
             Chat.loadEmotes(Chat.info.channelID);
 
             // Load CSS
-            switch (Chat.info.size) {
-                case 1:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/size_small.css"
-                    }).appendTo("head");
-                    break;
-                case 2:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/size_medium.css"
-                    }).appendTo("head");
-                    break;
-                default:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/size_large.css"
-                    }).appendTo("head");
-                    break;
-            }
+            let size = sizes[Chat.info.size - 1];
+            let font = fonts[Chat.info.font - 1];
+            appendCSS('size', size);
+            appendCSS('font', font);
 
-            switch (Chat.info.font) {
-                case 1:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_SegoeUI.css"
-                    }).appendTo("head");
-                    break;
-                case 2:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_Roboto.css"
-                    }).appendTo("head");
-                    break;
-                case 3:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_Lato.css"
-                    }).appendTo("head");
-                    break;
-                case 4:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_NotoSans.css"
-                    }).appendTo("head");
-                    break;
-                case 5:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_SourceCodePro.css"
-                    }).appendTo("head");
-                    break;
-                case 6:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_Impact.css"
-                    }).appendTo("head");
-                    break;
-                case 7:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_Comfortaa.css"
-                    }).appendTo("head");
-                    break;
-                case 8:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_DancingScript.css"
-                    }).appendTo("head");
-                    break;
-                case 9:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_IndieFlower.css"
-                    }).appendTo("head");
-                    break;
-                case 10:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_PressStart2P.css"
-                    }).appendTo("head");
-                    break;
-                case 11:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_Wallpoet.css"
-                    }).appendTo("head");
-                    break;
-                default:
-                    $("<link/>", {
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "styles/font_BalooTammudu.css"
-                    }).appendTo("head");
-                    break;
+            if (Chat.info.stroke && Chat.info.stroke > 0) {
+                let stroke = strokes[Chat.info.stroke - 1];
+                appendCSS('stroke', stroke);
             }
-
-            if (Chat.info.stroke) {
-                switch (Chat.info.stroke) {
-                    case 1:
-                        $("<link/>", {
-                            rel: "stylesheet",
-                            type: "text/css",
-                            href: "styles/stroke_thin.css"
-                        }).appendTo("head");
-                        break;
-                    case 2:
-                        $("<link/>", {
-                            rel: "stylesheet",
-                            type: "text/css",
-                            href: "styles/stroke_medium.css"
-                        }).appendTo("head");
-                        break;
-                    case 3:
-                        $("<link/>", {
-                            rel: "stylesheet",
-                            type: "text/css",
-                            href: "styles/stroke_thick.css"
-                        }).appendTo("head");
-                        break;
-                    case 4:
-                        $("<link/>", {
-                            rel: "stylesheet",
-                            type: "text/css",
-                            href: "styles/stroke_thicker.css"
-                        }).appendTo("head");
-                        break;
-                }
+            if (Chat.info.shadow && Chat.info.shadow > 0) {
+                let shadow = shadows[Chat.info.shadow - 1];
+                appendCSS('shadow', shadow);
             }
-
-            if (Chat.info.shadow) {
-                switch (Chat.info.shadow) {
-                    case 1:
-                        $("<link/>", {
-                            rel: "stylesheet",
-                            type: "text/css",
-                            href: "styles/shadow_small.css"
-                        }).appendTo("head");
-                        break;
-                    case 2:
-                        $("<link/>", {
-                            rel: "stylesheet",
-                            type: "text/css",
-                            href: "styles/shadow_medium.css"
-                        }).appendTo("head");
-                        break;
-                    case 3:
-                        $("<link/>", {
-                            rel: "stylesheet",
-                            type: "text/css",
-                            href: "styles/shadow_large.css"
-                        }).appendTo("head");
-                        break;
-                }
-            }
-
             if (Chat.info.smallCaps) {
-                $("<link/>", {
-                    rel: "stylesheet",
-                    type: "text/css",
-                    href: "styles/variant_SmallCaps.css"
-                }).appendTo("head");
+                appendCSS('variant', 'SmallCaps');
             }
 
             // Load badges
