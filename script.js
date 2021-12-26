@@ -1,21 +1,3 @@
-// https://stackoverflow.com/questions/111529/how-to-create-query-parameters-in-javascript
-
-function encodeQueryData(data) {
-    const ret = [];
-    for (let d in data)
-      ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
-    return ret.join('&');
-}
-
-function appendCSS(file){
-    $("<link/>", {
-        rel: "stylesheet",
-        type: "text/css",
-        class: "size",
-        href: `styles/${file}.css`
-    }).appendTo("head");
-}
-
 function fadeOption(event) {
     if ($fade_bool.is(':checked')) {
         $fade.removeClass('hidden');
@@ -27,39 +9,34 @@ function fadeOption(event) {
 }
 
 function sizeUpdate(event) {
-    $('link[class="size"]').remove();
-
-    appendCSS(`size_${sizes[Number($size.val()) -1]}`)
+    let size = sizes[Number($size.val()) - 1];
+    removeCSS('size');
+    appendCSS('size', size);
 }
 
 function fontUpdate(event) {
-    $('link[class="font"]').remove();
-    
-    appendCSS(`font_${fonts[Number($font.val())]}`)
+    let font = fonts[Number($font.val())];
+    removeCSS('font');
+    appendCSS('font', font);
 }
 
 function strokeUpdate(event) {
-    $('link[class="stroke"]').remove();
-
-    if ($stroke.val() == "0") return // if "off is selected"
-
-    appendCSS(`stroke_${strokes[Number($stroke.val()) - 1]}`)
+    removeCSS('stroke');
+    if ($stroke.val() == "0")
+        return;
+    else {
+        let stroke = strokes[Number($stroke.val()) - 1];
+        appendCSS('stroke', stroke);
+    }
 }
 
 function shadowUpdate(event) {
-    $('link[class="shadow"]').remove();
-
-    if ($shadow.val() == "0") return // if "off is selected"
-
-    appendCSS(`shadow_${shadows[Number($shadow.val()) - 1]}`)
-
-}
-
-function capsUpdate(event) {
-    if ($small_caps.is(':checked')) {
-        appendCSS('variant_SmallCaps')
-    } else {
-        $('link[class="small_caps"]').remove();
+    removeCSS('shadow');
+    if ($shadow.val() == "0")
+        return;
+    else {
+        let shadow = shadows[Number($shadow.val()) - 1];
+        appendCSS('shadow', shadow);
     }
 }
 
@@ -71,28 +48,35 @@ function badgesUpdate(event) {
     }
 }
 
+function capsUpdate(event) {
+    if ($small_caps.is(':checked')) {
+        appendCSS('variant', 'SmallCaps');
+    } else {
+        removeCSS('variant');
+    }
+}
+
 function generateURL(event) {
     event.preventDefault();
 
     const generatedUrl = 'https://www.giambaj.it/twitch/jchat/v2/?channel=' + $channel.val();
 
     let data = {
-        animate: $animate.is(':checked'),
-        bots: $bots.is(':checked'),
-        fade: $fade_bool.is(':checked'),
-        hide_commands: $commands.is(':checked'),
-        hide_badges: $badges.is(':checked'),
         size: $size.val(),
         font: $font.val(),
+        stroke: ($stroke.val() != '0' ? $stroke.val() : false),
+        shadow: ($shadow.val() != '0' ? $shadow.val() : false),
+        bots: $bots.is(':checked'),
+        hide_commands: $commands.is(':checked'),
+        hide_badges: $badges.is(':checked'),
+        animate: $animate.is(':checked'),
+        fade: ($fade_bool.is(':checked') ? $fade.val() : false),
         small_caps: $small_caps.is(':checked')
-    }
+    };
 
-    if ($stroke.val() != '0') data.stroke = $stroke.val();
-    if ($shadow.val() != '0') data.shadow = $shadow.val();
+    const params = encodeQueryData(data);
 
-    const params = encodeQueryData(data)
-
-    $url.val(generatedUrl + '?' + params);
+    $url.val(generatedUrl + '&' + params);
 
     $generator.addClass('hidden');
     $result.removeClass('hidden');
@@ -123,28 +107,41 @@ function showUrl(event) {
 }
 
 function resetForm(event) {
-    $channel.val("");
-    $animate.prop('checked', false);
+    $channel.val('');
+    $size.val('3');
+    $font.val('0');
+    $stroke.val('0');
+    $shadow.val('0');
     $bots.prop('checked', false);
+    $commands.prop('checked', false);
+    $badges.prop('checked', false);
+    $animate.prop('checked', false);
     $fade_bool.prop('checked', false);
     $fade.addClass('hidden');
     $fade_seconds.addClass('hidden');
     $fade.val("30");
-    $commands.prop('checked', false);
     $small_caps.prop('checked', false);
-    $badges.prop('checked', false);
-    $('link[class="small_caps"]').remove();
-    $('img[class="badge special hidden"]').removeClass('hidden');
+
+    sizeUpdate();
+    fontUpdate();
+    strokeUpdate();
+    shadowUpdate();
+    badgesUpdate();
+    capsUpdate();
+    if ($example.hasClass("white"))
+        changePreview();
+
     $result.addClass('hidden');
     $generator.removeClass('hidden');
     showUrl();
 }
 
-const fonts = [ 'BalooTammudu', 'SegoeUI', 'Roboto', 'Lato', 'NotoSans', 'SourceCodePro',
-'Impact', 'Comfortaa', 'DancingScript', 'IndieFlower', 'PressStart2P', 'Wallpoet']
-const sizes = ['small', 'medium', 'large']
-const strokes = ['thin', 'medium', 'thick', 'thicker']
-const shadows = ['small', 'medium', 'large']
+const fonts = ['BalooTammudu', 'SegoeUI', 'Roboto', 'Lato', 'NotoSans', 'SourceCodePro',
+    'Impact', 'Comfortaa', 'DancingScript', 'IndieFlower', 'PressStart2P', 'Wallpoet'
+];
+const sizes = ['small', 'medium', 'large'];
+const strokes = ['thin', 'medium', 'thick', 'thicker'];
+const shadows = ['small', 'medium', 'large'];
 
 const $generator = $("form[name='generator']");
 const $channel = $('input[name="channel"]');

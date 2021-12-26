@@ -1,4 +1,4 @@
-function appendCSS(file){
+function appendCSS(file) {
     $("<link/>", {
         rel: "stylesheet",
         type: "text/css",
