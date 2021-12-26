@@ -1,9 +1,9 @@
-function appendCSS(file) {
+function appendCSS(type, name) {
     $("<link/>", {
         rel: "stylesheet",
         type: "text/css",
-        class: "size",
-        href: `styles/${file}.css`
+        class: `chat_${type}`,
+        href: `styles/${type}_${name}.css`
     }).appendTo("head");
 }
 

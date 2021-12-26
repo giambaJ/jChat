@@ -16,14 +16,6 @@
     })(window.location.search.substr(1).split('&'))
 })(jQuery);
 
-const fonts = ['BalooTammudu', 'SegoeUI', 'Roboto', 'Lato', 'NotoSans', 'SourceCodePro',
-    'Impact', 'Comfortaa', 'DancingScript', 'IndieFlower', 'PressStart2P', 'Wallpoet'
-];
-
-const sizes = ['small', 'medium', 'large'];
-const strokes = ['thin', 'medium', 'thick', 'thicker'];
-const shadows = ['small', 'medium', 'large'];
-
 Chat = {
     info: {
         channel: null,
@@ -106,32 +98,21 @@ Chat = {
             Chat.loadEmotes(Chat.info.channelID);
 
             // Load CSS
-            let size = 'large';
-            let font = 'BalooTammudu';
-
-            if (Chat.info.size) {
-                size = sizes[Chat.info.size - 1];
-            }
-
-            if (Chat.info.font) {
-                font = fonts[Chat.info.font - 1];
-            }
-
-            appendCSS(`size_${size}`)
-            appendCSS(`font_${font}`)
-
-            // Without default css
+            let size = sizes[Chat.info.size - 1];
+            let font = fonts[Chat.info.font - 1];
+            appendCSS('size', size);
+            appendCSS('font', font);
 
             if (Chat.info.stroke && Chat.info.stroke > 0) {
-                appendCSS(`stroke_${strokes[Chat.info.stroke - 1] }`)
+                let stroke = strokes[Chat.info.stroke - 1];
+                appendCSS('stroke', stroke);
             }
-
             if (Chat.info.shadow && Chat.info.shadow > 0) {
-                appendCSS(`shadow_${strokes[Chat.info.shadow - 1] }`)
+                let shadow = shadows[Chat.info.shadow - 1];
+                appendCSS('shadow', shadow);
             }
-
             if (Chat.info.smallCaps) {
-                appendCSS(`variant_SmallCaps`)
+                appendCSS('variant', 'SmallCaps');
             }
 
             // Load badges
