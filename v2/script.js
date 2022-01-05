@@ -29,6 +29,7 @@ Chat = {
         stroke: ('stroke' in $.QueryString ? parseInt($.QueryString.stroke) : false),
         shadow: ('shadow' in $.QueryString ? parseInt($.QueryString.shadow) : false),
         smallCaps: ('small_caps' in $.QueryString ? ($.QueryString.small_caps.toLowerCase() === 'true') : false),
+        inverted: ('inverted' in $.QueryString ? ($.QueryString.inverted.toLowerCase() === 'true') : false),
         emotes: {},
         badges: {},
         userBadges: {},
@@ -98,8 +99,8 @@ Chat = {
             Chat.loadEmotes(Chat.info.channelID);
 
             // Load CSS
-            let size = sizes[Chat.info.size - 1];
-            let font = fonts[Chat.info.font - 1];
+            let size = sizes[Chat.info.size];
+            let font = fonts[Chat.info.font];
             appendCSS('size', size);
             appendCSS('font', font);
 
@@ -113,6 +114,9 @@ Chat = {
             }
             if (Chat.info.smallCaps) {
                 appendCSS('variant', 'SmallCaps');
+            }
+            if (Chat.info.inverted) {
+                appendCSS('variant', 'inverted');
             }
 
             // Load badges
@@ -245,7 +249,7 @@ Chat = {
                         if (user.badge_is_colored == 0) color = (user.badge_color || '#755000');
                         else color = false;
                     }
-                    var userBadge = {
+                    const userBadge = {
                         description: 'FFZ:AP Badge',
                         url: 'https://api.ffzap.com/v1/user/badge/' + userId + '/3',
                         color: color
@@ -255,7 +259,7 @@ Chat = {
             });
             Chat.info.bttvBadges.forEach(user => {
                 if (user.name === nick) {
-                    var userBadge = {
+                    const userBadge = {
                         description: user.badge.description,
                         url: user.badge.svg
                     };
@@ -265,7 +269,7 @@ Chat = {
             Chat.info.seventvBadges.forEach(badge => {
                 badge.users.forEach(user => {
                     if (user === nick) {
-                        var userBadge = {
+                        const userBadge = {
                             description: badge.tooltip,
                             url: badge.urls[2][1]
                         };
@@ -276,7 +280,7 @@ Chat = {
             Chat.info.chatterinoBadges.forEach(badge => {
                 badge.users.forEach(user => {
                     if (user === userId) {
-                        var userBadge = {
+                        const userBadge = {
                             description: badge.tooltip,
                             url: badge.image3 || badge.image2 || badge.image1
                         };

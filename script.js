@@ -71,7 +71,8 @@ function generateURL(event) {
         hide_badges: $badges.is(':checked'),
         animate: $animate.is(':checked'),
         fade: ($fade_bool.is(':checked') ? $fade.val() : false),
-        small_caps: $small_caps.is(':checked')
+        small_caps: $small_caps.is(':checked'),
+        inverted: $inverted.is(':checked')
     };
 
     const params = encodeQueryData(data);
@@ -121,6 +122,7 @@ function resetForm(event) {
     $fade_seconds.addClass('hidden');
     $fade.val("30");
     $small_caps.prop('checked', false);
+    $inverted.prop('checked', false);
 
     sizeUpdate();
     fontUpdate();
@@ -145,6 +147,7 @@ const $fade = $("input[name='fade']");
 const $fade_seconds = $("#fade_seconds");
 const $commands = $("input[name='commands']");
 const $small_caps = $("input[name='small_caps']");
+const $inverted = $("input[name='inverted']");
 const $badges = $("input[name='badges']");
 const $size = $("select[name='size']");
 const $font = $("select[name='font']");
