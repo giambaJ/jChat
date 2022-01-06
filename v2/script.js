@@ -99,7 +99,8 @@ Chat = {
 
             // Load CSS
             let size = sizes[Chat.info.size - 1];
-            let font = fonts[Chat.info.font - 1];
+            let font = fonts[Chat.info.font];
+
             appendCSS('size', size);
             appendCSS('font', font);
 
