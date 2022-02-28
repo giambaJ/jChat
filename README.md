@@ -4,6 +4,7 @@
 ### The app is up and running on the [**website**](https://www.giambaj.it/twitch/jchat/).
 
 **Local jChat** running jChat locally is supported.  Download the files and point to index.html in https://github.com/giambaJ/jChat/tree/main/v2 - a Twitch Helix API oauth code will be required in credentials.js. (fixme: how to efficiently get helix api oauth tokens)
+* example: `file://v2/index.html?channel=yourusername&fade=10&hide_commands=true&size=1&shadow=0`
 
 ## Features
 - 7TV, BTTV and FFZ emotes support
