@@ -93,8 +93,10 @@ Chat = {
     },
 
     load: function(callback) {
-        TwitchAPI('https://api.twitch.tv/v5/users?login=' + Chat.info.channel).done(function(res) {
-            Chat.info.channelID = res.users[0]._id;
+/*        TwitchAPI('https://api.twitch.tv/helix/users?login=' + Chat.info.channel).done(function(res) {*/
+/* dont call helix again, the user_id is already stored*/
+        TwitchAPI().done(function(res) {
+            Chat.info.channelID = res.user_id;
             Chat.loadEmotes(Chat.info.channelID);
 
             // Load CSS
@@ -174,7 +176,9 @@ Chat = {
             }
 
             // Load cheers images
-            TwitchAPI("https://api.twitch.tv/v5/bits/actions?channel_id=" + Chat.info.channelId).done(function(res) {
+/*            TwitchAPI("https://api.twitch.tv/v5/bits/actions?channel_id=" + Chat.info.channelId).done(function(res) {*/
+/* untested change to user_id, i dont have ability to test cheer emotes on helix api*/
+            TwitchAPI().done(function(res) {
                 res.actions.forEach(action => {
                     Chat.info.cheers[action.prefix] = {}
                     action.tiers.forEach(tier => {
