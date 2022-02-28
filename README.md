@@ -13,3 +13,5 @@
 - Hide bots messages (on/off)
 - Hide commands messages (on/off)
 - !refreshoverlay to make newly added emotes appear (mods only)
+
+**Local jChat** running jChat locally is supported.  Download the files and point to index.html in https://github.com/giambaJ/jChat/tree/main/v2 - a Twitch Helix API oauth code will be required in credentials.js. (fixme: how to efficiently get helix api oauth tokens)
