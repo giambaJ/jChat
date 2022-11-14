@@ -7,7 +7,10 @@ use actix_web::{HttpRequest, Result};
 async fn main() -> anyhow::Result<()> {
     use actix_web::{web, App, HttpServer};
 
-    println!("Hello, world!");
+    HttpServer::new(|| App::new().route("/{filename:.*}", web::get().to(index)))
+        .bind(("127.0.0.1", 8080))?
+        .run()
+        .await?;
 
     Ok(())
 }
