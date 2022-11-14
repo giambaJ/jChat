@@ -1,12 +1,20 @@
 use std::path::PathBuf;
 
 use actix_files::NamedFile;
-use actix_web::{HttpRequest, Result};
+use actix_web::{middleware, HttpRequest, Result};
 
 #[actix_web::get("/twitch/{filename:.*}")]
 async fn twitch(req: HttpRequest) -> Result<NamedFile> {
     let base_path = std::env::current_dir().unwrap();
-    let path: PathBuf = req.match_info().query("filename").parse().unwrap();
+    let path = {
+        let query = req.match_info().query("filename");
+
+        if query.is_empty() {
+            "index.html"
+        } else {
+            query
+        }
+    };
 
     let qualified_path = base_path.join("chat").join(path);
 
@@ -17,10 +25,14 @@ async fn twitch(req: HttpRequest) -> Result<NamedFile> {
 async fn main() -> anyhow::Result<()> {
     use actix_web::{App, HttpServer};
 
-    HttpServer::new(|| App::new().service(twitch))
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await?;
+    HttpServer::new(|| {
+        App::new()
+            .service(twitch)
+            .wrap(middleware::NormalizePath::default())
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await?;
 
     Ok(())
 }
