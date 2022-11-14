@@ -4,6 +4,7 @@ use actix_web::{HttpRequest, Result};
 rotenv_codegen::dotenv_module!(visibility = "pub(crate)");
 
 // User follows reference: https://dev.twitch.tv/docs/api/reference#get-users-follows
+// And to get user id in the first place: https://dev.twitch.tv/docs/api/reference#get-users
 
 #[actix_web::get("/twitch/{filename:.*}")]
 async fn twitch(req: HttpRequest) -> Result<NamedFile> {
