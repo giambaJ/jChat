@@ -3,6 +3,8 @@ use actix_web::{HttpRequest, Result};
 
 rotenv_codegen::dotenv_module!(visibility = "pub(crate)");
 
+// User follows reference: https://dev.twitch.tv/docs/api/reference#get-users-follows
+
 #[actix_web::get("/twitch/{filename:.*}")]
 async fn twitch(req: HttpRequest) -> Result<NamedFile> {
     let base_path = std::env::current_dir().unwrap();
