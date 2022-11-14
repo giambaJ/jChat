@@ -1,6 +1,8 @@
 use actix_files::NamedFile;
 use actix_web::{HttpRequest, Result};
 
+rotenv_codegen::dotenv_module!(visibility = "pub(crate)");
+
 #[actix_web::get("/twitch/{filename:.*}")]
 async fn twitch(req: HttpRequest) -> Result<NamedFile> {
     let base_path = std::env::current_dir().unwrap();
