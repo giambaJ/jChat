@@ -5,8 +5,12 @@ use actix_web::{HttpRequest, Result};
 
 #[actix_web::get("/twitch/{filename:.*}")]
 async fn twitch(req: HttpRequest) -> Result<NamedFile> {
+    let base_path = std::env::current_dir().unwrap();
     let path: PathBuf = req.match_info().query("filename").parse().unwrap();
-    Ok(NamedFile::open(path)?)
+
+    let qualified_path = base_path.join("chat").join(path);
+
+    Ok(NamedFile::open(qualified_path)?)
 }
 
 #[tokio::main]
