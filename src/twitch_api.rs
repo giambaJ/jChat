@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 pub struct TwitchUsers {
     pub total: i64,
     pub data: Vec<Datum>,
-    pub pagination: Pagination,
+    pub pagination: Option<Pagination>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
