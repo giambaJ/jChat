@@ -1,7 +1,9 @@
 use actix_files::NamedFile;
 use actix_web::{HttpRequest, Result};
 
-rotenv_codegen::dotenv_module!(visibility = "pub(crate)");
+mod twitch;
+
+rotenv_codegen::dotenv_module!(visibility = "pub");
 
 // User follows reference: https://dev.twitch.tv/docs/api/reference#get-users-follows
 // And to get user id in the first place: https://dev.twitch.tv/docs/api/reference#get-users
