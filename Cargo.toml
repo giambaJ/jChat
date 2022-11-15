@@ -10,6 +10,7 @@ actix = "0.13.0"
 actix-files = "0.6.2"
 actix-web = "4.2.1"
 anyhow = "1.0.66"
+lazy_static = "1.4.0"
 reqwest = { version = "0.11.12", features = ["json"] }
 rotenv_codegen = "0.15.0"
 serde = { version = "1.0.147", features = ["derive"] }

@@ -505,6 +505,7 @@ dependencies = [
  "actix-files",
  "actix-web",
  "anyhow",
+ "lazy_static",
  "reqwest",
  "rotenv_codegen",
  "serde",
