@@ -7,6 +7,14 @@ pub struct TwitchUsers {
     pub pagination: Option<Pagination>,
 }
 
+impl TwitchUsers {
+    pub async fn new_with_len(max_length: usize) -> anyhow::Result<Self> {}
+
+    pub async fn new() -> anyhow::Result<Self> {
+        Self::new_with_len(1000).await
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Datum {
     pub from_id: String,
