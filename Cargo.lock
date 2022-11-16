@@ -104,6 +104,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "actix-irc"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c8d8b0810c7297016d7aac2885bda725063de2c2b449ba0bb870af17dbdb5e36"
+
+[[package]]
 name = "actix-macros"
 version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -503,6 +509,7 @@ version = "0.1.0"
 dependencies = [
  "actix",
  "actix-files",
+ "actix-irc",
  "actix-web",
  "anyhow",
  "lazy_static",
