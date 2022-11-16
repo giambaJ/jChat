@@ -15,6 +15,15 @@ lazy_static::lazy_static! {
 
 // Must retrieve list of followers, subscribers, mods, vips, etc. and match against the list of users in the channel
 
+pub struct UserPool {}
+
+pub struct TwitchUser {
+    pub name: String,
+    pub is_mod: bool,
+    pub is_vip: bool,
+    pub is_subscriber: bool,
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TwitchUsers {
     pub total: i64,
