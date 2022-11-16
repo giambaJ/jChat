@@ -30,6 +30,10 @@ async fn twitch(req: HttpRequest) -> Result<NamedFile> {
 async fn main() -> anyhow::Result<()> {
     use actix_web::{App, HttpServer};
 
+    let users = twitch_api::TwitchUsers::new().await?;
+
+    println!("{:#?}", users);
+
     HttpServer::new(|| App::new().service(twitch))
         .bind(("127.0.0.1", 8080))?
         .run()
