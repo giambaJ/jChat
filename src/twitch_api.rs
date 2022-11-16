@@ -29,25 +29,6 @@ impl TwitchUsers {
         let mut data = vec![];
 
         loop {
-            let resp = CLIENT
-                .get("https://api.twitch.tv/helix/users/follows")
-                .query(&[
-                    (
-                        "first",
-                        match max_length - length {
-                            remaining if remaining > 100 => 100,
-                            remaining => remaining,
-                        }
-                        .to_string()
-                        .as_str(),
-                    ),
-                    ("to_id", crate::dotenv_vars::TWITCH_USER_ID),
-                ])
-                .send()
-                .await?;
-
-            println!("{}", resp.text().await?);
-
             let result: TwitchUsers = CLIENT
                 .get("https://api.twitch.tv/helix/users/follows")
                 .query(&[
