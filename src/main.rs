@@ -23,7 +23,7 @@ async fn twitch(req: HttpRequest) -> Result<NamedFile> {
 
     let qualified_path = base_path.join("chat").join(path);
 
-    Ok(NamedFile::open(qualified_path)?)
+    Ok(NamedFile::open_async(qualified_path).await?)
 }
 
 #[tokio::main]
