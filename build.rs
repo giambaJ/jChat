@@ -1,3 +1,5 @@
+use std::io::Write;
+
 rotenv_codegen::dotenv_module!(visibility = "pub");
 
 fn main() {
@@ -13,4 +15,13 @@ fn main() {
         client_id = dotenv_vars::TWITCH_CLIENT_ID,
         api_token = dotenv_vars::TWITCH_AUTH_TOKEN
     );
+
+    let creds_path = v2chat_path.join("credentials.js");
+
+    if creds_path.exists() {
+        std::fs::remove_file(&creds_path).unwrap();
+    } else {
+        let mut file = std::fs::File::create(&creds_path).unwrap();
+        file.write_all(creds_output.as_bytes()).unwrap();
+    }
 }
