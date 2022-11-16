@@ -232,7 +232,7 @@ Chat = {
         'https://api.twitch.tv/helix/bits/cheermotes?broadcaster_id=' +
           Chat.info.channelId,
       ).done(function (res) {
-        res.actions.forEach((action) => {
+        res.data.forEach((action) => {
           Chat.info.cheers[action.prefix] = {};
           action.tiers.forEach((tier) => {
             Chat.info.cheers[action.prefix][tier.min_bits] = {
