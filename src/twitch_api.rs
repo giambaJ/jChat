@@ -24,14 +24,24 @@ pub struct TwitchUsers {
 
 impl TwitchUsers {
     pub async fn new_with_len(max_length: usize) -> anyhow::Result<Self> {
+        let mut total = 0;
         let mut length = 0;
+        let mut data = vec![];
         let mut pagination: Option<Pagination> = None;
 
         while pagination.is_some() && length < max_length {
             let result: TwitchUsers = CLIENT
                 .get("https://api.twitch.tv/helix/users/follows")
                 .query(&[
-                    ("first", "100"),
+                    (
+                        "first",
+                        match max_length - length {
+                            remaining if remaining > 100 => 100,
+                            remaining => remaining,
+                        }
+                        .to_string()
+                        .as_str(),
+                    ),
                     ("to_id", crate::dotenv_vars::TWITCH_USER_ID),
                 ])
                 .send()
@@ -39,15 +49,17 @@ impl TwitchUsers {
                 .json()
                 .await?;
 
-            let mut users = Self::new(pagination).await?;
-            length += users.data.len();
-            pagination = users.pagination;
+            // Not good to set it every single time but it's fine for now
+            total = result.total;
+            length += result.data.len();
+            pagination = result.pagination;
+            data.extend(result.data);
         }
 
         // Temp to allow compilation
         Ok(Self {
-            total: 0,
-            data: vec![],
+            total,
+            data,
             pagination: None,
         })
     }
