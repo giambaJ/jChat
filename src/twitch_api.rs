@@ -46,7 +46,7 @@ impl TwitchUsers {
                 .send()
                 .await?;
 
-            println!("{}", resp.text()?);
+            println!("{}", resp.text().await?);
 
             let result: TwitchUsers = CLIENT
                 .get("https://api.twitch.tv/helix/users/follows")
