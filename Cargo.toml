@@ -19,3 +19,6 @@ serde_json = "1.0.87"
 tokio = { version = "1.21.2", features = ["full"] }
 tracing = "0.1.37"
 tracing-subscriber = "0.3.16"
+
+[build-dependencies]
+rotenv_codegen = "0.15.0"
