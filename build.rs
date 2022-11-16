@@ -18,8 +18,10 @@ const credentials = "{api_token}";
 
     let creds_path = v2chat_path.join("credentials.js");
 
-    if !creds_path.exists() {
-        let mut file = std::fs::File::create(&creds_path).unwrap();
-        file.write_all(creds_output.as_bytes()).unwrap();
+    if creds_path.exists() {
+        std::fs::remove_file(&creds_path).unwrap();
     }
+
+    let mut file = std::fs::File::create(&creds_path).unwrap();
+    file.write_all(creds_output.as_bytes()).unwrap();
 }
