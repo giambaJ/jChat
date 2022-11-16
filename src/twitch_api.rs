@@ -28,10 +28,20 @@ impl TwitchUsers {
         let mut pagination: Option<Pagination> = None;
 
         while pagination.is_some() && length < max_length {
-            // let result: TwitchUsers =
-            // let mut users = Self::new(pagination).await?;
-            // length += users.data.len();
-            // pagination = users.pagination;
+            let result: TwitchUsers = CLIENT
+                .get("https://api.twitch.tv/helix/users/follows")
+                .query(&[
+                    ("first", "100"),
+                    ("to_id", crate::dotenv_vars::TWITCH_USER_ID),
+                ])
+                .send()
+                .await?
+                .json()
+                .await?;
+
+            let mut users = Self::new(pagination).await?;
+            length += users.data.len();
+            pagination = users.pagination;
         }
 
         // Temp to allow compilation
