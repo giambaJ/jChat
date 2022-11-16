@@ -51,18 +51,12 @@ pub struct Datum {
     pub from_login: String,
     pub from_name: String,
     pub to_id: String,
-    pub to_login: To,
-    pub to_name: To,
+    pub to_login: String,
+    pub to_name: String,
     pub followed_at: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Pagination {
     pub cursor: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub enum To {
-    #[serde(rename = "sapphicjewl")]
-    Sapphicjewl,
 }
