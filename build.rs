@@ -3,6 +3,9 @@ use std::io::Write;
 rotenv_codegen::dotenv_module!(visibility = "pub");
 
 fn main() {
+    // Ensure that we regenerate the `credentials.js` file if `.env` changes
+    println!("cargo:rerun-if-changed=.env");
+
     let pwd = std::env::current_dir().unwrap();
 
     let v2chat_path = pwd.join("chat").join("v2");
