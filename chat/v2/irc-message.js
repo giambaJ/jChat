@@ -15,7 +15,7 @@ window.parseIRC = function (data) {
   // http://ircv3.atheme.org/specification/message-tags-3.2
 
   if (data.charCodeAt(0) === 64) {
-    var nextspace = data.indexOf(' ');
+    var nextspace = data.indexOf(" ");
 
     if (nextspace === -1) {
       // Malformed IRC message.
@@ -23,13 +23,13 @@ window.parseIRC = function (data) {
     }
 
     // Tags are split by a semi colon.
-    var rawTags = data.slice(1, nextspace).split(';');
+    var rawTags = data.slice(1, nextspace).split(";");
 
     for (var i = 0; i < rawTags.length; i++) {
       // Tags delimited by an equals sign are key=value tags.
       // If there's no equals, we assign the tag a value of true.
       var tag = rawTags[i];
-      var pair = tag.split('=');
+      var pair = tag.split("=");
       message.tags[pair[0]] = pair[1] || true;
     }
 
@@ -45,7 +45,7 @@ window.parseIRC = function (data) {
   // with a colon.
 
   if (data.charCodeAt(position) === 58) {
-    nextspace = data.indexOf(' ', position);
+    nextspace = data.indexOf(" ", position);
 
     // If there's nothing after the prefix, deem this message to be
     // malformed.
@@ -63,7 +63,7 @@ window.parseIRC = function (data) {
     }
   }
 
-  nextspace = data.indexOf(' ', position);
+  nextspace = data.indexOf(" ", position);
 
   // If there's no more whitespace left, extract everything from the
   // current position to the end of the string as the command.
@@ -88,7 +88,7 @@ window.parseIRC = function (data) {
   }
 
   while (position < data.length) {
-    nextspace = data.indexOf(' ', position);
+    nextspace = data.indexOf(" ", position);
 
     // If the character is a colon, we've got a trailing parameter.
     // At this point, there are no extra params, so we push everything

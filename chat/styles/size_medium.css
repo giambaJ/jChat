@@ -1,42 +1,42 @@
 #example {
-    font-size: 34px;
+  font-size: 34px;
 }
 
 #example .chat_line {
-    line-height: 55px;
+  line-height: 55px;
 }
 
 #example .badge {
-    width: 28px;
-    height: 28px;
-    margin-right: 4px;
-    margin-bottom: 6px;
+  width: 28px;
+  height: 28px;
+  margin-right: 4px;
+  margin-bottom: 6px;
 }
 
 #example .badge:last-of-type {
-    margin-right: 6px;
+  margin-right: 6px;
 }
 
 #example .colon {
-    margin-right: 14px;
+  margin-right: 14px;
 }
 
 #example .cheer_bits {
-    font-weight: 600;
-    margin-right: 7px;
+  font-weight: 600;
+  margin-right: 7px;
 }
 
 #example .cheer_emote {
-    max-height: 42px;
-    margin-bottom: -10px;
+  max-height: 42px;
+  margin-bottom: -10px;
 }
 
 #example .emote {
-    max-width: 128px;
-    height: 42px;
-    margin-right: -6px;
+  max-width: 128px;
+  height: 42px;
+  margin-right: -6px;
 }
 
 #example .emoji {
-    height: 39px;
+  height: 39px;
 }
