@@ -2,9 +2,12 @@ use serde::{Deserialize, Serialize};
 
 lazy_static::lazy_static! {
     pub static ref CLIENT: reqwest::Client = {
-         reqwest::Client::builder()
-            .header("Client-ID", &*crate::dotenv_vars::TWITCH_CLIENT_ID)
-            .header("Authorization", &*crate::dotenv_vars::TWITCH_AUTH_TOKEN)
+        use reqwest::header::HeaderValue;
+        let mut default_headers = reqwest::header::HeaderMap::new();
+        default_headers.insert("Client-Id", HeaderValue::from_static(crate::dotenv_vars::TWITCH_CLIENT_ID));
+        default_headers.insert("Authorization", HeaderValue::from_static(crate::dotenv_vars::TWITCH_AUTH_TOKEN));
+
+        reqwest::Client::builder().default_headers(default_headers)
             .build()
             .unwrap()
     };
@@ -23,11 +26,18 @@ impl TwitchUsers {
         let mut pagination: Option<Pagination> = None;
 
         while pagination.is_some() && length < max_length {
-            let result: TwitchUsers = reqwest::
-            let mut users = Self::new(pagination).await?;
-            length += users.data.len();
-            pagination = users.pagination;
+            // let result: TwitchUsers =
+            // let mut users = Self::new(pagination).await?;
+            // length += users.data.len();
+            // pagination = users.pagination;
         }
+
+        // Temp to allow compilation
+        Ok(Self {
+            total: 0,
+            data: vec![],
+            pagination: None,
+        })
     }
 
     pub async fn new() -> anyhow::Result<Self> {
