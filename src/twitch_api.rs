@@ -24,12 +24,11 @@ pub struct TwitchUsers {
 
 impl TwitchUsers {
     pub async fn new_with_len(max_length: usize) -> anyhow::Result<Self> {
-        let mut total = 0;
+        let mut total;
         let mut length = 0;
         let mut data = vec![];
-        let mut pagination: Option<Pagination> = None;
 
-        while pagination.is_some() && length < max_length {
+        loop {
             let result: TwitchUsers = CLIENT
                 .get("https://api.twitch.tv/helix/users/follows")
                 .query(&[
@@ -52,8 +51,11 @@ impl TwitchUsers {
             // Not good to set it every single time but it's fine for now
             total = result.total;
             length += result.data.len();
-            pagination = result.pagination;
             data.extend(result.data);
+
+            if result.pagination.is_none() || length >= max_length {
+                break;
+            }
         }
 
         // Temp to allow compilation
