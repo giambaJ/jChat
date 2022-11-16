@@ -15,7 +15,9 @@ lazy_static::lazy_static! {
 
 // Must retrieve list of followers, subscribers, mods, vips, etc. and match against the list of users in the channel
 
-pub struct UserPool {}
+pub struct UserPool {
+    pub users: Vec<TwitchUser>,
+}
 
 pub struct TwitchUser {
     pub name: String,
