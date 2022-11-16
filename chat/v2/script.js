@@ -133,7 +133,7 @@ Chat = {
     TwitchAPI(
       'https://api.twitch.tv/helix/users?login=' + Chat.info.channel,
     ).done(function (res) {
-      Chat.info.channelID = res.users[0]._id;
+      Chat.info.channelID = res.data[0]._id;
       Chat.loadEmotes(Chat.info.channelID);
 
       // Load CSS
