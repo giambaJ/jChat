@@ -19,6 +19,10 @@ pub struct UserPool {
     pub users: Vec<TwitchUser>,
 }
 
+impl UserPool {
+    pub fn get() -> Self {}
+}
+
 pub struct TwitchUser {
     pub name: String,
     pub is_mod: bool,
