@@ -1,159 +1,228 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>jChat &bull; Setup | giambaJ</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Comfortaa:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Press+Start+2P&family=Wallpoet&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" class="preview_size" href="styles/size_large.css">
-    <link rel="stylesheet" class="preview_font" href="styles/font_BalooTammudu.css">
-    <script src="jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Comfortaa:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Press+Start+2P&family=Wallpoet&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" class="preview_size" href="styles/size_large.css" />
+    <link
+      rel="stylesheet"
+      class="preview_font"
+      href="styles/font_BalooTammudu.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+      integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="settings.js" defer></script>
     <script src="utils.js" defer></script>
     <script src="script.js" defer></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <img src="img/peepoHappy.png">
-        <div>
-            <h1>jChat</h1>
-            <h2>Setup</h2>
-        </div>
-
+      <img src="img/peepoHappy.png" />
+      <div>
+        <h1>jChat</h1>
+        <h2>Setup</h2>
+      </div>
     </header>
 
     <section>
-        <p>
-            <em>jChat</em> is an overlay that allows you to show your Twitch chat on screen with OBS, XSplit, and any other streaming software that supports browser sources. It supports your
-            <a href="https://betterttv.com/" target="_blank">BetterTTV</a>, <a href="https://www.frankerfacez.com/" target="_blank">FrankerFaceZ</a> and
-            <a href="https://7tv.app/" target="_blank">7TV</a> emotes, always at the best available quality. You have many options to customize your chat, like enabling a smooth animation for new messages, or fading old ones after some time. If you have
-            a chat full of !gamble addicts, you can choose to hide bots and commands messages. It also comes with many fonts and styling options that can be combined as desired.
-        </p>
+      <p>
+        <em>jChat</em> is an overlay that allows you to show your Twitch chat on
+        screen with OBS, XSplit, and any other streaming software that supports
+        browser sources. It supports your
+        <a href="https://betterttv.com/" target="_blank">BetterTTV</a>,
+        <a href="https://www.frankerfacez.com/" target="_blank">FrankerFaceZ</a>
+        and <a href="https://7tv.app/" target="_blank">7TV</a> emotes, always at
+        the best available quality. You have many options to customize your
+        chat, like enabling a smooth animation for new messages, or fading old
+        ones after some time. If you have a chat full of !gamble addicts, you
+        can choose to hide bots and commands messages. It also comes with many
+        fonts and styling options that can be combined as desired.
+      </p>
 
-
-        <form name="generator">
-            <div class="form_row center">
-
-                <input type="text" name="channel" required placeholder="Channel">
+      <form name="generator">
+        <div class="form_row center">
+          <input type="text" name="channel" required placeholder="Channel" />
+        </div>
+        <div class="form_table">
+          <div class="form_col">
+            <div class="form_row left">
+              <select name="size">
+                <option value="1">Small</option>
+                <option value="2">Medium</option>
+                <option value="3" selected>Large</option>
+              </select>
+              <label for="size">Size</label>
             </div>
-            <div class="form_table">
-                <div class="form_col">
-                    <div class="form_row left">
-                        <select name="size">
-                            <option value="1">Small</option>
-                            <option value="2">Medium</option>
-                            <option value="3" selected>Large</option>
-                        </select>
-                        <label for="size">Size</label>
-                    </div>
-                    <div class="form_row left">
-                        <select name="font">
-                            <option value="0" selected>Baloo Tammudu</option>
-                            <option value="1">Segoe UI</option>
-                            <option value="2">Roboto</option>
-                            <option value="3">Lato</option>
-                            <option value="4">Noto Sans</option>
-                            <option value="5">Source Code Pro</option>
-                            <option value="6">Impact</option>
-                            <option value="7">Comfortaa</option>
-                            <option value="8">Dancing Script</option>
-                            <option value="9">Indie Flower</option>
-                            <option value="10">Press Start 2P</option>
-                            <option value="11">Wallpoet</option>
-                        </select>
-                        <label for="font">Font</label>
-                    </div>
-                    <br>
-                    <div class="form_row left">
-                        <input type="checkbox" name="bots">
-                        <label for="bots">Show bots</label>
-                    </div>
-                    <div class="form_row left">
-                        <input type="checkbox" name="commands">
-                        <label for="commands">Hide commands</label>
-                    </div>
-                    <div class="form_row left">
-                        <input type="checkbox" name="badges">
-                        <label for="badges">Hide special badges</label>
-                    </div>
-                </div>
-                <div class="form_col">
-                    <div class="form_row right">
-                        <label for="stroke">Stroke</label>
-                        <select name="stroke">
-                            <option value="0" selected>Off</option>
-                            <option value="1">Thin</option>
-                            <option value="2">Medium</option>
-                            <option value="3">Thick</option>
-                            <option value="4">Thicker</option>
-                        </select>
-                    </div>
-                    <div class="form_row right">
-                        <label for="shadow">Shadow</label>
-                        <select name="shadow">
-                            <option value="0" selected>Off</option>
-                            <option value="1">Small</option>
-                            <option value="2">Medium</option>
-                            <option value="3">Large</option>
-                        </select>
-                    </div>
-                    <br>
-                    <div class="form_row right">
-                        <label for="animate">Animate</label>
-                        <input type="checkbox" name="animate">
-                    </div>
-                    <div class="form_row right">
-                        <label for="fade">Fade</label>
-                        <input type="text" name="fade" value="30" class="short hidden"><span id="fade_seconds" class="hidden">sec</span>
-                        <input type="checkbox" name="fade_bool">
-                    </div>
-                    <div class="form_row right">
-                        <label for="small_caps">Caps</label>
-                        <input type="checkbox" name="small_caps">
-                    </div>
-                </div>
+            <div class="form_row left">
+              <select name="font">
+                <option value="0" selected>Baloo Tammudu</option>
+                <option value="1">Segoe UI</option>
+                <option value="2">Roboto</option>
+                <option value="3">Lato</option>
+                <option value="4">Noto Sans</option>
+                <option value="5">Source Code Pro</option>
+                <option value="6">Impact</option>
+                <option value="7">Comfortaa</option>
+                <option value="8">Dancing Script</option>
+                <option value="9">Indie Flower</option>
+                <option value="10">Press Start 2P</option>
+                <option value="11">Wallpoet</option>
+              </select>
+              <label for="font">Font</label>
             </div>
-
-            <div id="submit_container">
-                <div class="preview"><img id="brightness" src="img/light.png"> <label>Preview:</label></div>
-                <div id="example">
-                    <div class="chat_line"><span class="user_info"><img class="badge special" src="https://cdn.frankerfacez.com/badge/3/4" style="background-color: rgb(117, 80, 0);"><img class="badge special" src="https://cdn.7tv.app/badge/60d5998fb0ac44b85331fe2b/3x"><img class="badge" src="https://static-cdn.jtvnw.net/badges/v1/3158e758-3cb4-43c5-94b3-7639810451c5/3"><span class="nick" style="color: rgb(38, 255, 0);">giambaJ</span>
-                        <span class="colon">:</span>
-                        </span><span class="message"><img class="cheer_emote" src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/100/4.gif"><span class="cheer_bits">100</span> Nice chat <img class="emote" src="https://cdn.betterttv.net/frankerfacez_emote/341767/4">                        <img class="emote" src="https://cdn.7tv.app/emote/6040aacfcf6746000db1034f/4x"></span>
-                    </div>
-                </div>
-                <input type="submit" value="Generate">
+            <br />
+            <div class="form_row left">
+              <input type="checkbox" name="bots" />
+              <label for="bots">Show bots</label>
             </div>
-        </form>
-        <div id="result" class="hidden">
-            <div id="alert">Copied to clipboard</div>
-            <input type="text" id="url" readonly>
-            <p>Configure a new browser source on your streaming software with the given URL.</p>
-            <input type="button" id="reset" value="Reset">
+            <div class="form_row left">
+              <input type="checkbox" name="commands" />
+              <label for="commands">Hide commands</label>
+            </div>
+            <div class="form_row left">
+              <input type="checkbox" name="badges" />
+              <label for="badges">Hide special badges</label>
+            </div>
+          </div>
+          <div class="form_col">
+            <div class="form_row right">
+              <label for="stroke">Stroke</label>
+              <select name="stroke">
+                <option value="0" selected>Off</option>
+                <option value="1">Thin</option>
+                <option value="2">Medium</option>
+                <option value="3">Thick</option>
+                <option value="4">Thicker</option>
+              </select>
+            </div>
+            <div class="form_row right">
+              <label for="shadow">Shadow</label>
+              <select name="shadow">
+                <option value="0" selected>Off</option>
+                <option value="1">Small</option>
+                <option value="2">Medium</option>
+                <option value="3">Large</option>
+              </select>
+            </div>
+            <br />
+            <div class="form_row right">
+              <label for="animate">Animate</label>
+              <input type="checkbox" name="animate" />
+            </div>
+            <div class="form_row right">
+              <label for="fade">Fade</label>
+              <input
+                type="text"
+                name="fade"
+                value="30"
+                class="short hidden"
+              /><span id="fade_seconds" class="hidden">sec</span>
+              <input type="checkbox" name="fade_bool" />
+            </div>
+            <div class="form_row right">
+              <label for="small_caps">Caps</label>
+              <input type="checkbox" name="small_caps" />
+            </div>
+          </div>
         </div>
 
+        <div id="submit_container">
+          <div class="preview">
+            <img id="brightness" src="img/light.png" /> <label>Preview:</label>
+          </div>
+          <div id="example">
+            <div class="chat_line">
+              <span class="user_info"
+                ><img
+                  class="badge special"
+                  src="https://cdn.frankerfacez.com/badge/3/4"
+                  style="background-color: rgb(117, 80, 0)"
+                /><img
+                  class="badge special"
+                  src="https://cdn.7tv.app/badge/60d5998fb0ac44b85331fe2b/3x"
+                /><img
+                  class="badge"
+                  src="https://static-cdn.jtvnw.net/badges/v1/3158e758-3cb4-43c5-94b3-7639810451c5/3"
+                /><span class="nick" style="color: rgb(38, 255, 0)"
+                  >giambaJ</span
+                >
+                <span class="colon">:</span> </span
+              ><span class="message"
+                ><img
+                  class="cheer_emote"
+                  src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/100/4.gif" /><span
+                  class="cheer_bits"
+                  >100</span
+                >
+                Nice chat
+                <img
+                  class="emote"
+                  src="https://cdn.betterttv.net/frankerfacez_emote/341767/4" />
+                <img
+                  class="emote"
+                  src="https://cdn.7tv.app/emote/6040aacfcf6746000db1034f/4x"
+              /></span>
+            </div>
+          </div>
+          <input type="submit" value="Generate" />
+        </div>
+      </form>
+      <div id="result" class="hidden">
+        <div id="alert">Copied to clipboard</div>
+        <input type="text" id="url" readonly />
+        <p>
+          Configure a new browser source on your streaming software with the
+          given URL.
+        </p>
+        <input type="button" id="reset" value="Reset" />
+      </div>
     </section>
 
     <section id="donation">
-        <span>This app is and will always be free.<br>If you like it and want to support, feel free to buy me a beer <img class="emote" src="img/Okayge.png"><img class="emote" src="img/BeerTime.gif"></span>
-        <form action="https://www.paypal.com/donate" method="post" target="_top">
-            <input type="hidden" name="hosted_button_id" value="SRGWJ9QMHMHUG">
-            <input id="paypal" type="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" value="Donate">
-        </form>
-
-
+      <span
+        >This app is and will always be free.<br />If you like it and want to
+        support, feel free to buy me a beer
+        <img class="emote" src="img/Okayge.png" /><img
+          class="emote"
+          src="img/BeerTime.gif"
+      /></span>
+      <form action="https://www.paypal.com/donate" method="post" target="_top">
+        <input type="hidden" name="hosted_button_id" value="SRGWJ9QMHMHUG" />
+        <input
+          id="paypal"
+          type="submit"
+          title="PayPal - The safer, easier way to pay online!"
+          alt="Donate with PayPal button"
+          value="Donate"
+        />
+      </form>
     </section>
 
     <footer>
-        <p>Made with &#10084; by <a href="mailto:me@giambaj.it">giambaJ</a>
-            <a href="https://github.com/giambaJ/jChat" target="_blank"><img class="github" src="img/github.png"></a>
-        </p>
-        <p>This application is not affiliated with <a href="https://www.twitch.tv/" target="_blank">Twitch</a></p>
+      <p>
+        Made with &#10084; by <a href="mailto:me@giambaj.it">giambaJ</a>
+        <a href="https://github.com/giambaJ/jChat" target="_blank"
+          ><img class="github" src="img/github.png"
+        /></a>
+      </p>
+      <p>
+        This application is not affiliated with
+        <a href="https://www.twitch.tv/" target="_blank">Twitch</a>
+      </p>
     </footer>
-</body>
-
+  </body>
 </html>
