@@ -58,7 +58,6 @@ impl TwitchUsers {
             }
         }
 
-        // Temp to allow compilation
         Ok(Self {
             total,
             data,
