@@ -13,6 +13,8 @@ lazy_static::lazy_static! {
     };
 }
 
+// Must retrieve list of followers, subscribers, mods, vips, etc. and match against the list of users in the channel
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TwitchUsers {
     pub total: i64,
