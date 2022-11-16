@@ -58,7 +58,7 @@ function generateURL(event) {
   event.preventDefault();
 
   const generatedUrl =
-    'http://localhost:8080/twitch/v2/?channel=' + $channel.val();
+    'http://localhost:8080/twitch/v2/index.html?channel=' + $channel.val();
 
   let data = {
     size: $size.val(),
