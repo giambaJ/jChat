@@ -49,6 +49,16 @@ impl UserPool {
             .json()
             .await?;
 
+        // TODO: Add ability to download all subs
+        let subs: TwitchVips = CLIENT
+            .get(crate::api_url!(
+                "subscriptions?broadcaster_id={user_id}&first=100"
+            ))
+            .send()
+            .await?
+            .json()
+            .await?;
+
         let users = TwitchUsers::new().await?;
 
         todo!()
