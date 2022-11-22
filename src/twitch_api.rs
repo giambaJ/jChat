@@ -34,13 +34,15 @@ pub struct UserPool {
 impl UserPool {
     pub async fn get() -> anyhow::Result<Self> {
         let vips: TwitchVips = CLIENT
-            .get(crate::api_url!("channels/vips/?broadcaster_id={user_id}&first=100"))
+            .get(crate::api_url!(
+                "channels/vips/?broadcaster_id={user_id}&first=100"
+            ))
             .send()
             .await?
             .json()
             .await?;
 
-            let mods: TwitchVips = CLIENT.get("https://api.twitch.tv/helix/moderation/moderators/")
+        let mods: TwitchVips = CLIENT.get("https://api.twitch.tv/helix/moderation/moderators/");
 
         let users = TwitchUsers::new().await?;
     }
