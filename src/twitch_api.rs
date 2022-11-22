@@ -37,6 +37,8 @@ impl UserPool {
             .get("https://api.twitch.tv/helix/channels/vips/?broadcaster_id={{user_id}}&first=100")
             .send()
             .await?;
+
+        let vips: TwitchVips = vips_resp.json().await?;
     }
 }
 
