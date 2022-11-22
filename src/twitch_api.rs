@@ -1,3 +1,4 @@
+use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 
 lazy_static::lazy_static! {
@@ -69,7 +70,7 @@ impl UserPool {
 
         let pool = users
             .data
-            .iter_mut()
+            .par_iter()
             .map(|user| {
                 let mut pooled_user: TwitchUser = TwitchUser {
                     name: user.from_name.clone(),
@@ -96,10 +97,13 @@ impl UserPool {
 
                 pooled_user
             })
-            .fold(UserPool { users: vec![] }, |mut pool, user| {
-                pool.users.push(user);
-                pool
-            });
+            .fold(
+                || UserPool { users: vec![] },
+                |mut pool, user| {
+                    pool.users.push(user);
+                    pool
+                },
+            );
 
         todo!()
     }
