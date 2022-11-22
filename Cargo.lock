@@ -564,6 +564,7 @@ dependencies = [
  "anyhow",
  "const_format",
  "lazy_static",
+ "rand",
  "rayon",
  "reqwest",
  "rotenv_codegen",

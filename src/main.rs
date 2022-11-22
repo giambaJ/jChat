@@ -53,8 +53,6 @@ async fn main() -> anyhow::Result<()> {
 
     let user_pool = UserPool::get().await?;
 
-    println!("{:#?}", user_pool);
-
     HttpServer::new(|| App::new().service(twitch))
         .bind(("127.0.0.1", 8080))?
         .run()
