@@ -79,19 +79,19 @@ impl UserPool {
                     is_sub: false,
                 };
 
-                if vips.data.iter().any(|vip| vip.user_id == user.from_id) {
+                if vips.data.par_iter().any(|vip| vip.user_id == user.from_id) {
                     pooled_user.is_vip = true;
                 }
 
                 if mods
                     .data
-                    .iter()
+                    .par_iter()
                     .any(|moderator| moderator.user_id == user.from_id)
                 {
                     pooled_user.is_mod = true;
                 }
 
-                if subs.data.iter().any(|sub| sub.user_id == user.from_id) {
+                if subs.data.par_iter().any(|sub| sub.user_id == user.from_id) {
                     pooled_user.is_sub = true;
                 }
 
