@@ -1,3 +1,5 @@
+use std::{fs::File, io::Read};
+
 use actix_files::NamedFile;
 use actix_web::{HttpRequest, Result};
 use tracing_subscriber::fmt::format::FmtSpan;
@@ -55,7 +57,13 @@ async fn main() -> anyhow::Result<()> {
 
     // A file containing one message per line
     // TODO: Add ability to pass custom directory
-    let cwd = std::env::current_dir().unwrap().join("messages.txt");
+    let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
+
+    let mut msgs_file = File::open(msgs_path)?;
+
+    let mut msgs: String = String::new();
+
+    msgs_file.read_to_string(&mut msgs)?;
 
     HttpServer::new(|| App::new().service(twitch))
         .bind(("127.0.0.1", 8080))?
