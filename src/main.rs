@@ -54,7 +54,7 @@ async fn main() -> anyhow::Result<()> {
     let user_pool = UserPool::get().await?;
 
     // TODO: Add ability to pass custom directory
-    let cwd = std::env::pwd().unwrap();
+    let cwd = std::env::current_dir().unwrap();
 
     HttpServer::new(|| App::new().service(twitch))
         .bind(("127.0.0.1", 8080))?
