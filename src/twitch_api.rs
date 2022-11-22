@@ -65,11 +65,11 @@ impl UserPool {
             .json()
             .await?;
 
-        let users = TwitchUsers::new().await?;
+        let mut users = TwitchUsers::new().await?;
 
         users.data.iter_mut().map(|user| {
             let mut pooled_user: TwitchUser = TwitchUser {
-                name: user.from_name,
+                name: user.from_name.clone(),
                 is_mod: false,
                 is_vip: false,
                 is_sub: false,
