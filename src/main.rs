@@ -6,15 +6,11 @@ rotenv_codegen::dotenv_module!(visibility = "pub");
 #[macro_export]
 macro_rules! api_url {
     ($url:literal) => {{
-        use const_format::{concatcp, formatcp};
+        use const_format::formatcp;
 
-        let url = formatcp!(
-            $url,
-            client_id = TWITCH_CLIENT_ID,
-            auth_token = TWITCH_AUTH_TOKEN
-        );
+        const URL: &str = formatcp!($url, user_id = $crate::dotenv_vars::TWITCH_USER_ID);
 
-        const_format::formatcp!("https://api.twitch.tv/helix/{}", url)
+        const_format::formatcp!("https://api.twitch.tv/helix/{}", URL)
     }};
 }
 
