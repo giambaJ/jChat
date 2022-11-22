@@ -39,6 +39,8 @@ impl UserPool {
             .await?;
 
         let vips: TwitchVips = vips_resp.json().await?;
+
+        let users = TwitchUsers::new().await?;
     }
 }
 
