@@ -1,6 +1,8 @@
 use actix_files::NamedFile;
 use actix_web::{HttpRequest, Result};
 
+use crate::twitch_api::UserPool;
+
 rotenv_codegen::dotenv_module!(visibility = "pub");
 
 #[macro_export]
@@ -41,9 +43,9 @@ async fn twitch(req: HttpRequest) -> Result<NamedFile> {
 async fn main() -> anyhow::Result<()> {
     use actix_web::{App, HttpServer};
 
-    let users = twitch_api::TwitchUsers::new().await?;
+    let user_pool = UserPool::get().await?;
 
-    println!("{:#?}", users);
+    println!("{:#?}", user_pool);
 
     HttpServer::new(|| App::new().service(twitch))
         .bind(("127.0.0.1", 8080))?

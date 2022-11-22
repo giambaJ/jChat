@@ -28,10 +28,12 @@ pub struct VipDatum {
     pub user_login: String,
 }
 
+#[derive(Debug)]
 pub struct UserPool {
     pub users: Vec<TwitchUser>,
 }
 
+#[derive(Debug)]
 pub struct TwitchUser {
     pub name: String,
     pub is_mod: bool,
