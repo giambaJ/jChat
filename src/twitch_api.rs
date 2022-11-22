@@ -17,11 +17,11 @@ lazy_static::lazy_static! {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TwitchVips {
-    pub data: Vec<Datum>,
+    pub data: Vec<VipDatum>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct Datum {
+pub struct VipDatum {
     pub user_id: String,
     pub user_name: String,
     pub user_login: String,
