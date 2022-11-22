@@ -67,30 +67,39 @@ impl UserPool {
 
         let mut users = TwitchUsers::new().await?;
 
-        users.data.iter_mut().map(|user| {
-            let mut pooled_user: TwitchUser = TwitchUser {
-                name: user.from_name.clone(),
-                is_mod: false,
-                is_vip: false,
-                is_sub: false,
-            };
+        let pool = users
+            .data
+            .iter_mut()
+            .map(|user| {
+                let mut pooled_user: TwitchUser = TwitchUser {
+                    name: user.from_name.clone(),
+                    is_mod: false,
+                    is_vip: false,
+                    is_sub: false,
+                };
 
-            if vips.data.iter().any(|vip| vip.user_id == user.from_id) {
-                pooled_user.is_vip = true;
-            }
+                if vips.data.iter().any(|vip| vip.user_id == user.from_id) {
+                    pooled_user.is_vip = true;
+                }
 
-            if mods
-                .data
-                .iter()
-                .any(|moderator| moderator.user_id == user.from_id)
-            {
-                pooled_user.is_mod = true;
-            }
+                if mods
+                    .data
+                    .iter()
+                    .any(|moderator| moderator.user_id == user.from_id)
+                {
+                    pooled_user.is_mod = true;
+                }
 
-            if subs.data.iter().any(|sub| sub.user_id == user.from_id) {
-                pooled_user.is_sub = true;
-            }
-        });
+                if subs.data.iter().any(|sub| sub.user_id == user.from_id) {
+                    pooled_user.is_sub = true;
+                }
+
+                pooled_user
+            })
+            .fold(UserPool { users: vec![] }, |mut pool, user| {
+                pool.users.push(user);
+                pool
+            });
 
         todo!()
     }
