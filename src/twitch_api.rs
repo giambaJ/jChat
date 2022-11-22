@@ -72,7 +72,7 @@ impl UserPool {
             .json()
             .await?;
 
-        let users = TwitchUsers::new().await?;
+        let users = TwitchUsers::new_with_len(200).await?;
 
         let users = users
             .data
