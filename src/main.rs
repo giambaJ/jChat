@@ -3,6 +3,7 @@ use actix_web::{HttpRequest, Result};
 
 rotenv_codegen::dotenv_module!(visibility = "pub");
 
+#[macro_export]
 macro_rules! api_url {
     ($url:lit) => {{
         use const_format::{concatcp, formatcp};
