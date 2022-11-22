@@ -65,6 +65,10 @@ async fn main() -> anyhow::Result<()> {
 
     msgs_file.read_to_string(&mut msgs)?;
 
+    for msg in msgs.lines() {
+        user_pool.send_message(msg);
+    }
+
     HttpServer::new(|| App::new().service(twitch))
         .bind(("127.0.0.1", 8080))?
         .run()
