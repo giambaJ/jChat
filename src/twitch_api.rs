@@ -1,3 +1,4 @@
+use rand::seq::SliceRandom;
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 
@@ -106,6 +107,13 @@ impl UserPool {
             .collect::<Vec<TwitchUser>>();
 
         Ok(UserPool { users })
+    }
+
+    pub fn send_message(&self, message: &str) {
+        let mut rng = rand::thread_rng();
+        let user = self.users.choose(&mut rng).unwrap();
+
+        info!("{} sent: {}", user.name, message)
     }
 }
 
