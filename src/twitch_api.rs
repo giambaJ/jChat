@@ -42,6 +42,7 @@ pub struct TwitchUser {
 }
 
 impl UserPool {
+    #[instrument]
     pub async fn get() -> anyhow::Result<Self> {
         let vips: TwitchVips = CLIENT
             .get(crate::api_url!(

@@ -1,9 +1,13 @@
 use actix_files::NamedFile;
 use actix_web::{HttpRequest, Result};
+use tracing_subscriber::fmt::format::FmtSpan;
 
 use crate::twitch_api::UserPool;
 
 rotenv_codegen::dotenv_module!(visibility = "pub");
+
+#[macro_use]
+extern crate tracing;
 
 #[macro_export]
 macro_rules! api_url {
@@ -42,6 +46,10 @@ async fn twitch(req: HttpRequest) -> Result<NamedFile> {
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     use actix_web::{App, HttpServer};
+
+    tracing_subscriber::fmt()
+        .with_span_events(FmtSpan::FULL)
+        .init();
 
     let user_pool = UserPool::get().await?;
 
