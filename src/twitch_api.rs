@@ -50,6 +50,8 @@ impl UserPool {
             .await?;
 
         let users = TwitchUsers::new().await?;
+
+        todo!()
     }
 }
 
