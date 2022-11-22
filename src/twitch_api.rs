@@ -68,7 +68,7 @@ impl UserPool {
 
         let users = TwitchUsers::new().await?;
 
-        let pool = users
+        let users = users
             .data
             .par_iter()
             .map(|user| {
@@ -97,16 +97,9 @@ impl UserPool {
 
                 pooled_user
             })
-            .fold(
-                || UserPool { users: vec![] },
-                |mut pool, user| {
-                    pool.users.push(user);
-                    pool
-                },
-            )
-            .collect();
+            .collect::<Vec<TwitchUser>>();
 
-        Ok(pool)
+        Ok(UserPool { users })
     }
 }
 
