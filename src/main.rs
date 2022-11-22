@@ -3,6 +3,20 @@ use actix_web::{HttpRequest, Result};
 
 rotenv_codegen::dotenv_module!(visibility = "pub");
 
+macro_rules! api_url {
+    ($url:lit) => {{
+        use const_format::{concatcp, formatcp};
+
+        let url = formatcp!(
+            $url,
+            client_id = TWITCH_CLIENT_ID,
+            auth_token = TWITCH_AUTH_TOKEN
+        );
+
+        const_format::formatcp!("https://api.twitch.tv/helix/{}", url)
+    }};
+}
+
 mod twitch_api;
 
 // User follows reference: https://dev.twitch.tv/docs/api/reference#get-users-follows
