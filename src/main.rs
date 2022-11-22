@@ -5,7 +5,7 @@ rotenv_codegen::dotenv_module!(visibility = "pub");
 
 #[macro_export]
 macro_rules! api_url {
-    ($url:lit) => {{
+    ($url:literal) => {{
         use const_format::{concatcp, formatcp};
 
         let url = formatcp!(
