@@ -11,7 +11,7 @@ actix-files = "0.6.2"
 actix-irc = "0.0.1"
 actix-web = "4.2.1"
 anyhow = "1.0.66"
-const_format = "0.2.30"
+const_format = { version = "0.2.30", features = ["all"] }
 lazy_static = "1.4.0"
 reqwest = { version = "0.11.12", features = ["json"] }
 rotenv_codegen = "0.15.0"
