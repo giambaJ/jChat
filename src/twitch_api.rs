@@ -15,12 +15,25 @@ lazy_static::lazy_static! {
 
 // Must retrieve list of followers, subscribers, mods, vips, etc. and match against the list of users in the channel
 
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TwitchVips {
+    pub data: Vec<Datum>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Datum {
+    pub user_id: String,
+    pub user_name: String,
+    pub user_login: String,
+}
+
 pub struct UserPool {
     pub users: Vec<TwitchUser>,
 }
 
 impl UserPool {
-    pub fn get() -> Self {}
+    pub fn get() -> Self {
+    }
 }
 
 pub struct TwitchUser {
