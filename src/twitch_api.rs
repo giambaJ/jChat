@@ -31,6 +31,7 @@ pub struct VipDatum {
 pub struct UserPool {
     pub users: Vec<TwitchUser>,
 }
+
 pub struct TwitchUser {
     pub name: String,
     pub is_mod: bool,
@@ -42,7 +43,7 @@ impl UserPool {
     pub async fn get() -> anyhow::Result<Self> {
         let vips: TwitchVips = CLIENT
             .get(crate::api_url!(
-                "channels/vips/?broadcaster_id={user_id}&first=100"
+                "channels/vips?broadcaster_id={user_id}&first=100"
             ))
             .send()
             .await?
@@ -50,7 +51,9 @@ impl UserPool {
             .await?;
 
         let mods: TwitchVips = CLIENT
-            .get("https://api.twitch.tv/helix/moderation/moderators/")
+            .get(crate::api_url!(
+                "moderation/moderators?broadcaster_id={user_id}&first=100"
+            ))
             .send()
             .await?
             .json()
