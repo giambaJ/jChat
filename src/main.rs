@@ -22,6 +22,7 @@ macro_rules! api_url {
     }};
 }
 
+mod irc;
 mod twitch_api;
 
 // User follows reference: https://dev.twitch.tv/docs/api/reference#get-users-follows
