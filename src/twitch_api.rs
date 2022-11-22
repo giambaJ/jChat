@@ -34,7 +34,7 @@ pub struct TwitchUser {
     pub name: String,
     pub is_mod: bool,
     pub is_vip: bool,
-    pub is_subscriber: bool,
+    pub is_sub: bool,
 }
 
 impl UserPool {
@@ -72,7 +72,7 @@ impl UserPool {
                 name: user.from_name,
                 is_mod: false,
                 is_vip: false,
-                is_subscriber: false,
+                is_sub: false,
             };
 
             if vips.data.iter().any(|vip| vip.user_id == user.from_id) {
