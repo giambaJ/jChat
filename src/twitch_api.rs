@@ -66,7 +66,7 @@ impl UserPool {
             .json()
             .await?;
 
-        let mut users = TwitchUsers::new().await?;
+        let users = TwitchUsers::new().await?;
 
         let pool = users
             .data
