@@ -68,7 +68,7 @@ impl UserPool {
 
         let users = TwitchUsers::new().await?;
 
-        let pool: UserPool = users
+        let pool = users
             .data
             .par_iter()
             .map(|user| {
@@ -104,7 +104,7 @@ impl UserPool {
                     pool
                 },
             )
-            .collect()?;
+            .collect();
 
         Ok(pool)
     }
