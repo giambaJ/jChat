@@ -33,12 +33,12 @@ pub struct UserPool {
 
 impl UserPool {
     pub async fn get() -> anyhow::Result<Self> {
-        let vips_resp = CLIENT
+        let vips: TwitchVips = CLIENT
             .get("https://api.twitch.tv/helix/channels/vips/?broadcaster_id={{user_id}}&first=100")
             .send()
+            .await?
+            .json()
             .await?;
-
-        let vips: TwitchVips = vips_resp.json().await?;
 
         let users = TwitchUsers::new().await?;
     }
