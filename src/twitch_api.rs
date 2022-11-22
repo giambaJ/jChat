@@ -30,6 +30,12 @@ pub struct VipDatum {
 pub struct UserPool {
     pub users: Vec<TwitchUser>,
 }
+pub struct TwitchUser {
+    pub name: String,
+    pub is_mod: bool,
+    pub is_vip: bool,
+    pub is_subscriber: bool,
+}
 
 impl UserPool {
     pub async fn get() -> anyhow::Result<Self> {
@@ -61,15 +67,33 @@ impl UserPool {
 
         let users = TwitchUsers::new().await?;
 
+        users.data.iter_mut().map(|user| {
+            let mut pooled_user: TwitchUser = TwitchUser {
+                name: user.from_name,
+                is_mod: false,
+                is_vip: false,
+                is_subscriber: false,
+            };
+
+            if vips.data.iter().any(|vip| vip.user_id == user.from_id) {
+                pooled_user.is_vip = true;
+            }
+
+            if mods
+                .data
+                .iter()
+                .any(|moderator| moderator.user_id == user.from_id)
+            {
+                pooled_user.is_mod = true;
+            }
+
+            if subs.data.iter().any(|sub| sub.user_id == user.from_id) {
+                pooled_user.is_sub = true;
+            }
+        });
+
         todo!()
     }
-}
-
-pub struct TwitchUser {
-    pub name: String,
-    pub is_mod: bool,
-    pub is_vip: bool,
-    pub is_subscriber: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
