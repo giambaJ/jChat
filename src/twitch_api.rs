@@ -42,7 +42,12 @@ impl UserPool {
             .json()
             .await?;
 
-        let mods: TwitchVips = CLIENT.get("https://api.twitch.tv/helix/moderation/moderators/");
+        let mods: TwitchVips = CLIENT
+            .get("https://api.twitch.tv/helix/moderation/moderators/")
+            .send()
+            .await?
+            .json()
+            .await?;
 
         let users = TwitchUsers::new().await?;
     }
