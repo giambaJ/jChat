@@ -8,7 +8,9 @@ use actix_web_actors::ws::{self};
 #[rtype(result = "()")]
 pub struct Message(pub String);
 
-pub struct FakeIrc;
+pub struct FakeIrc {
+    addrs: Vec<Recipient<Message>>,
+};
 
 impl Actor for FakeIrc {
     type Context = ws::WebsocketContext<Self>;
