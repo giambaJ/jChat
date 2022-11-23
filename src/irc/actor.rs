@@ -16,8 +16,8 @@ impl Actor for FakeIrc {
     type Context = ws::WebsocketContext<Self>;
 
     fn started(&mut self, ctx: &mut Self::Context) {
-        ctx.run_interval(Duration::from_secs(5), |_, _| {
-            self.send_message("PogU");
+        ctx.run_interval(Duration::from_secs(5), |server, _| {
+            server.send_message("PogU");
         });
     }
 }
