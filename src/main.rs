@@ -52,6 +52,7 @@ async fn main() -> anyhow::Result<()> {
 
     tracing_subscriber::fmt()
         .with_span_events(FmtSpan::FULL)
+        .with_max_level(tracing::Level::TRACE)
         .init();
 
     let user_pool = UserPool::get().await?;
