@@ -49,7 +49,6 @@ impl UserPool {
             .get(crate::api_url!(
                 "channels/vips?broadcaster_id={user_id}&first=100"
             ))
-            .send()
             .await?
             .json()
             .await?;
@@ -58,7 +57,6 @@ impl UserPool {
             .get(crate::api_url!(
                 "moderation/moderators?broadcaster_id={user_id}&first=100"
             ))
-            .send()
             .await?
             .json()
             .await?;
@@ -68,7 +66,6 @@ impl UserPool {
             .get(crate::api_url!(
                 "subscriptions?broadcaster_id={user_id}&first=100"
             ))
-            .send()
             .await?
             .json()
             .await?;
@@ -145,7 +142,6 @@ impl TwitchUsers {
                     ),
                     ("to_id", crate::dotenv_vars::TWITCH_USER_ID),
                 ])
-                .send()
                 .await?
                 .json()
                 .await?;
