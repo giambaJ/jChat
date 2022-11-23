@@ -46,4 +46,6 @@ impl Credentials {
 
         Ok(diff < Duration::from_secs(30 * 60))
     }
+
+    pub async fn refresh(&mut self) -> anyhow::Result<bool> {}
 }

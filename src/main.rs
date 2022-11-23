@@ -7,6 +7,8 @@ use tracing_subscriber::fmt::format::FmtSpan;
 use irc::handle_ws;
 use twitch_api::UserPool;
 
+use crate::creds::CREDENTIALS;
+
 mod creds;
 
 #[macro_use]
@@ -54,6 +56,8 @@ async fn main() -> anyhow::Result<()> {
     tracing_subscriber::fmt()
         .with_span_events(FmtSpan::FULL)
         .init();
+
+    if !CREDENTIALS.remain_30().await? {}
 
     let user_pool = UserPool::get().await?;
 
