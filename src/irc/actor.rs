@@ -31,6 +31,7 @@ impl FakeIrc {
 
             rt.block_on(async {
                 addr.send(Message(message.to_owned())).await.unwrap();
+                info!("Response gotten");
             });
         }
     }
