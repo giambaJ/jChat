@@ -25,16 +25,11 @@ impl Actor for FakeIrc {
 impl FakeIrc {
     /// Send message to all users in the room
     fn send_message(&self, message: &str) {
-        if let Some(sessions) = self.rooms.get(room) {
-            for id in sessions {
-                if *id != skip_id {
-                    if let Some(addr) = self.sessions.get(id) {
-                        addr.do_send(Message(message.to_owned()));
-                    }
-                }
-            }
+        for addr in self.addrs {
+
+            addr.do_send(Message(message.to_owned()));
         }
-    }
+        }
 }
 
 /// Handler for ws::Message message
