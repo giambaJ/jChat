@@ -45,16 +45,6 @@ pub struct TwitchUser {
 impl UserPool {
     #[instrument]
     pub async fn get() -> anyhow::Result<Self> {
-        let txt = CLIENT
-            .get(crate::api_url!(
-                "channels/vips?broadcaster_id={user_id}&first=100"
-            ))
-            .await?
-            .text()
-            .await?;
-
-        panic!("{}", txt);
-
         let vips: TwitchVips = CLIENT
             .get(crate::api_url!(
                 "channels/vips?broadcaster_id={user_id}&first=100"
