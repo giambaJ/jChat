@@ -30,7 +30,7 @@ macro_rules! api_url {
 
         const URL: &str = formatcp!($url, user_id = $crate::CREDENTIALS.user_id);
 
-        const_format::formatcp!("https://api.twitch.tv/helix/{}", URL)
+        formatcp!("https://api.twitch.tv/helix/{}", URL)
     }};
 }
 
