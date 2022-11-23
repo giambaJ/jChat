@@ -37,6 +37,7 @@ pub struct UserPool {
 #[derive(Debug)]
 pub struct TwitchUser {
     pub name: String,
+    pub uid: String,
     pub is_mod: bool,
     pub is_vip: bool,
     pub is_sub: bool,
@@ -86,6 +87,7 @@ impl UserPool {
             .map(|user| {
                 let mut pooled_user: TwitchUser = TwitchUser {
                     name: user.from_name.clone(),
+                    uid: user.from_id.clone(),
                     is_mod: false,
                     is_vip: false,
                     is_sub: false,
