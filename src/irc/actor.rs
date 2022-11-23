@@ -25,6 +25,7 @@ impl Actor for FakeIrc {
 impl FakeIrc {
     /// Send message to all users in the room
     fn send_message(&self, message: &str) {
+        info!("Sending message");
         for addr in &self.addrs {
             addr.do_send(Message(message.to_owned()));
         }
