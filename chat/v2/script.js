@@ -623,7 +623,7 @@ Chat = {
 
       socket.onmessage = function (data) {
         // Temp for testing in order to figure out what the Twitch API sends so we can emulate it.
-        console.log(JSON.stringify(data.data));
+        console.log(JSON.stringify(data));
 
         data.data.split('\r\n').forEach((line) => {
           if (!line) return;

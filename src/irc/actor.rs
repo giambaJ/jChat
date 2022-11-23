@@ -27,7 +27,11 @@ impl FakeIrc {
     fn send_message(&self, message: &str) {
         info!("Sending message");
         for addr in &self.addrs {
-            addr.do_send(Message(message.to_owned()));
+            let rt = tokio::runtime::Handle::current();
+
+            rt.block_on(async {
+                addr.send(Message(message.to_owned())).await.unwrap();
+            });
         }
     }
 }
