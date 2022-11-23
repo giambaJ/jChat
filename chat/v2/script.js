@@ -603,11 +603,9 @@ Chat = {
 
     Chat.load(function () {
       console.log('jChat: Connecting to IRC server...');
-      var socket = new ReconnectingWebSocket(
-        'wss://irc-ws.chat.twitch.tv',
-        'irc',
-        { reconnectInterval: 2000 },
-      );
+      var socket = new ReconnectingWebSocket('wss://127.0.0.1/ws/', 'irc', {
+        reconnectInterval: 2000,
+      });
 
       socket.onopen = function () {
         console.log('jChat: Connected');
