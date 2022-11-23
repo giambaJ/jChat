@@ -1,3 +1,5 @@
+use std::time::{Duration, SystemTime};
+
 pub struct Credentials {
     pub client_id: &'static str,
     pub client_secret: &'static str,
@@ -15,7 +17,7 @@ pub const CREDENTIALS: Credentials = Credentials {
 };
 
 impl Credentials {
-    pub async fn expires_in(&self) -> anyhow::Result<u64> {
+    pub async fn expires_in(&self) -> anyhow::Result<SystemTime> {
         use crate::twitch_api::CLIENT;
 
         let response: serde_json::Value = CLIENT
@@ -28,6 +30,10 @@ impl Credentials {
             anyhow::anyhow!("Could not parse expires_in from response: {:?}", response)
         })?;
 
-        Ok(expires_in)
+        let expires_in_dur = Duration::from_secs(expires_in);
+
+        let now = SystemTime::now() + expires_in_dur;
+
+        Ok(now)
     }
 }
