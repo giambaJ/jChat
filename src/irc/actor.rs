@@ -22,23 +22,10 @@ impl Actor for FakeIrc {
     fn started(&mut self, ctx: &mut Self::Context) {
         ctx.run_interval(Duration::from_secs(5), |server, ctx| {
             info!("Sending message");
-            for addr in &server.addrs {
-                addr.send(Message(MSG.to_owned()))
-                    .into_actor(server)
-                    .then(|res, _, ctx| {
-                        match res {
-                            Ok(_) => (),
-                            Err(e) => {
-                                error!("Error sending message: {}", e);
-                                ctx.stop();
-                            }
-                        }
-                        fut::ready(())
-                    })
-                    .wait(ctx);
 
-                info!("Response gotten");
-            }
+            ctx.text(MSG);
+
+            info!("Response gotten");
         });
     }
 }
