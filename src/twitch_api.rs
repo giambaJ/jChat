@@ -110,6 +110,8 @@ impl std::fmt::Display for Badges {
 impl TwitchUser {
     pub fn send_message(&self, message: impl AsRef<str>) {
         let msg = message.as_ref();
+
+        let badges = Badges::from_user(self);
     }
 }
 
