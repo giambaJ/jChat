@@ -116,6 +116,8 @@ impl TwitchUser {
         let mut message = String::from("@badge-info=subscriber/1;");
 
         message.push_str(badges.to_string().as_str());
+
+        message.push_str("client-nonce=6090b7621f1bf7bdcc46777cd522bca1;");
     }
 }
 
