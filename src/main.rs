@@ -6,7 +6,19 @@ use tracing_subscriber::fmt::format::FmtSpan;
 
 use crate::{irc::handle_ws, twitch_api::UserPool};
 
-rotenv_codegen::dotenv_module!(visibility = "pub");
+pub struct Credentials {
+    pub client_id: &'static str,
+    pub client_secret: &'static str,
+    pub user_id: &'static str,
+    pub auth_token: &'static str,
+}
+
+pub const CREDENTIALS: Credentials = Credentials {
+    client_id: env!("TWITCH_CLIENT_ID"),
+    client_secret: env!("TWITCH_CLIENT_SECRET"),
+    user_id: env!("TWITCH_USER_ID"),
+    auth_token: env!("TWITCH_AUTH_TOKEN"),
+};
 
 #[macro_use]
 extern crate tracing;
@@ -16,7 +28,7 @@ macro_rules! api_url {
     ($url:literal) => {{
         use const_format::formatcp;
 
-        const URL: &str = formatcp!($url, user_id = $crate::dotenv_vars::TWITCH_USER_ID);
+        const URL: &str = formatcp!($url, user_id = $crate::CREDENTIALS.user_id);
 
         const_format::formatcp!("https://api.twitch.tv/helix/{}", URL)
     }};

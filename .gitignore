@@ -16,3 +16,5 @@ target/
 
 # Remove .env file from remote
 .env
+
+credentials.toml
