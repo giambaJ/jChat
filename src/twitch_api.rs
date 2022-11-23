@@ -109,6 +109,12 @@ impl std::fmt::Display for Badges {
 
 // TODO: Add random hex colour impl
 
+pub struct Color {
+    r: u8,
+    g: u8,
+    b: u8,
+}
+
 impl TwitchUser {
     pub fn send_message(&self, message: impl AsRef<str>) {
         let msg = message.as_ref();
