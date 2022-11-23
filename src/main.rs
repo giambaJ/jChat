@@ -1,10 +1,10 @@
 use std::{fs::File, io::Read};
 
 use actix_files::NamedFile;
-use actix_web::{HttpRequest, Result};
+use actix_web::{web, HttpRequest, Result};
 use tracing_subscriber::fmt::format::FmtSpan;
 
-use crate::twitch_api::UserPool;
+use crate::{irc::handle_ws, twitch_api::UserPool};
 
 rotenv_codegen::dotenv_module!(visibility = "pub");
 
@@ -70,10 +70,14 @@ async fn main() -> anyhow::Result<()> {
         user_pool.send_message(msg);
     }
 
-    HttpServer::new(|| App::new().service(twitch))
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await?;
+    HttpServer::new(|| {
+        App::new()
+            .service(twitch)
+            .route("/ws/", web::get().to(handle_ws))
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await?;
 
     Ok(())
 }
