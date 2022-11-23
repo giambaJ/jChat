@@ -694,6 +694,8 @@ Chat = {
               Chat.write(nick, message.tags, message.params[1]);
               return;
           }
+
+          socket.send('Gotcha: ' + message.command);
         });
       };
     });
