@@ -603,9 +603,13 @@ Chat = {
 
     Chat.load(function () {
       console.log('jChat: Connecting to IRC server...');
-      var socket = new ReconnectingWebSocket('ws://127.0.0.1:8080/ws/', 'irc', {
-        reconnectInterval: 2000,
-      });
+      var socket = new ReconnectingWebSocket(
+        'ws://127.0.0.1:8080/ws/',
+        'websocket',
+        {
+          reconnectInterval: 2000,
+        },
+      );
 
       socket.onopen = function () {
         console.log('jChat: Connected');
