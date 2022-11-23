@@ -28,6 +28,6 @@ impl Credentials {
             anyhow::anyhow!("Could not parse expires_in from response: {:?}", response)
         })?;
 
-        expires_in
+        Ok(expires_in)
     }
 }
