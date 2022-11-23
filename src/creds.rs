@@ -36,4 +36,14 @@ impl Credentials {
 
         Ok(now)
     }
+
+    pub async fn remain_30(&self) -> anyhow::Result<bool> {
+        let expires_in = self.expires_in().await?;
+
+        let now = SystemTime::now();
+
+        let diff = expires_in.duration_since(now)?;
+
+        Ok(diff < Duration::from_secs(30 * 60))
+    }
 }
