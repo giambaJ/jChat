@@ -45,15 +45,12 @@ pub struct TwitchUser {
 
 const BASE_MESSAGE: &str = "@badge-info=subscriber/1;badges=broadcaster/1,subscriber/3012;client-nonce=6090b7621f1bf7bdcc46777cd522bca1;color=#29DE7A;display-name=sapphicjewl;emotes=;first-msg=0;flags=;id=aedfa462-66b6-4a2b-b94d-afb01d0631f9;mod=0;returning-chatter=0;room-id=538134305;subscriber=1;tmi-sent-ts=1668563455712;turbo=0;user-id=538134305;user-type= :sapphicjewl!sapphicjewl@sapphicjewl.tmi.twitch.tv PRIVMSG #sapphicjewl :monkaS\r\n";
 
-pub enum Badge {
-    Broadcaster,
-    Subscriber,
-    Moderator,
-    Vip,
+pub struct Badges {
+    inner: Vec<Badge>,
 }
 
-impl Badge {
-    pub fn from_user(user: &TwitchUser) -> Vec<Badge> {
+impl Badges {
+    pub fn from_user(user: &TwitchUser) -> Self {
         let uid = crate::CREDENTIALS.user_id;
 
         let mut badges = Vec::new();
@@ -74,7 +71,39 @@ impl Badge {
             badges.push(Badge::Subscriber);
         }
 
-        badges
+        Self { inner: badges }
+    }
+}
+
+pub enum Badge {
+    Broadcaster,
+    Subscriber,
+    Moderator,
+    Vip,
+}
+
+impl std::fmt::Display for Badge {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Broadcaster => write!(f, "broadcaster/1"),
+            Self::Subscriber => write!(f, "subscriber/3012"),
+            Self::Moderator => write!(f, "moderator/1"),
+            Self::Vip => write!(f, "vip/1"),
+        }
+    }
+}
+
+impl std::fmt::Display for Badges {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "badges=")?;
+
+        for badge in &self.inner {
+            write!(f, "{},", badge)?;
+        }
+
+        write!(f, ";")?;
+
+        Ok(())
     }
 }
 
