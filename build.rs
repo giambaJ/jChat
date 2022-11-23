@@ -8,6 +8,7 @@ struct Credentials {
     client_secret: String,
     user_id: String,
     auth_token: String,
+    refresh_token: String,
 }
 
 fn main() {
@@ -59,4 +60,8 @@ const credentials = "{api_token}";
     );
     println!("cargo:rustc-env=TWITCH_USER_ID={}", creds.user_id);
     println!("cargo:rustc-env=TWITCH_AUTH_TOKEN={}", creds.auth_token);
+    println!(
+        "cargo:rustc-env=TWITCH_REFRESH_TOKEN={}",
+        creds.refresh_token
+    );
 }
