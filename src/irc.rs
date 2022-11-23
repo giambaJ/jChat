@@ -4,7 +4,7 @@ use actix_web_actors::ws;
 mod actor;
 
 pub async fn handle_ws(req: HttpRequest, stream: web::Payload) -> Result<HttpResponse, Error> {
-    let resp = ws::start(actor::FakeIrc, &req, stream);
+    let resp = ws::start(actor::FakeIrc { addrs: vec![] }, &req, stream);
     println!("{:?}", resp);
     resp
 }

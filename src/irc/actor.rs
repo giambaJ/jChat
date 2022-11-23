@@ -10,13 +10,13 @@ pub struct Message(pub String);
 
 pub struct FakeIrc {
     addrs: Vec<Recipient<Message>>,
-};
+}
 
 impl Actor for FakeIrc {
     type Context = ws::WebsocketContext<Self>;
 
     fn started(&mut self, ctx: &mut Self::Context) {
-        ctx.run_interval(Duration::from_secs(5), |_,_| {
+        ctx.run_interval(Duration::from_secs(5), |_, _| {
             self.send_message("PogU");
         });
     }
@@ -26,10 +26,9 @@ impl FakeIrc {
     /// Send message to all users in the room
     fn send_message(&self, message: &str) {
         for addr in self.addrs {
-
             addr.do_send(Message(message.to_owned()));
         }
-        }
+    }
 }
 
 /// Handler for ws::Message message
