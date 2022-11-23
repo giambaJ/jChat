@@ -9,7 +9,7 @@ use actix_web_actors::ws::{self};
 pub struct Message(pub String);
 
 pub struct FakeIrc {
-    addrs: Vec<Recipient<Message>>,
+    pub addrs: Vec<Recipient<Message>>,
 }
 
 impl Actor for FakeIrc {
@@ -25,7 +25,7 @@ impl Actor for FakeIrc {
 impl FakeIrc {
     /// Send message to all users in the room
     fn send_message(&self, message: &str) {
-        for addr in self.addrs {
+        for addr in &self.addrs {
             addr.do_send(Message(message.to_owned()));
         }
     }
