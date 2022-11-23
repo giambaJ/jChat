@@ -57,7 +57,9 @@ async fn main() -> anyhow::Result<()> {
         .with_span_events(FmtSpan::FULL)
         .init();
 
-    if !CREDENTIALS.remain_30().await? {}
+    if !CREDENTIALS.remain_30().await? {
+        CREDENTIALS.refresh().await?;
+    }
 
     let user_pool = UserPool::get().await?;
 
