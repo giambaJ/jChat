@@ -42,6 +42,12 @@ pub struct TwitchUser {
     pub is_sub: bool,
 }
 
+impl TwitchUser {
+    pub fn send_message(&self, message: impl AsRef<str>) {
+        let msg = message.as_ref();
+    }
+}
+
 impl UserPool {
     #[instrument]
     pub async fn get() -> anyhow::Result<Self> {
