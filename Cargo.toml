@@ -13,7 +13,6 @@ actix-web = "4.2.1"
 actix-web-actors = "4.1.0"
 anyhow = "1.0.66"
 const_format = "0.2.30"
-irc = "0.15.0"
 lazy_static = "1.4.0"
 rand = "0.8.5"
 rayon = "1.6.0"
@@ -27,3 +26,5 @@ tracing-subscriber = "0.3.16"
 
 [build-dependencies]
 rotenv_codegen = "0.15.0"
+serde = { version = "1.0.147", features = ["derive"] }
+toml = "0.5.9"

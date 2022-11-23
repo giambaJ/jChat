@@ -4,9 +4,12 @@ use actix_files::NamedFile;
 use actix_web::{web, HttpRequest, Result};
 use tracing_subscriber::fmt::format::FmtSpan;
 
-use crate::{irc::handle_ws, twitch_api::UserPool};
+use irc::handle_ws;
+use twitch_api::UserPool;
 
-rotenv_codegen::dotenv_module!(visibility = "pub");
+use crate::creds::CREDENTIALS;
+
+mod creds;
 
 #[macro_use]
 extern crate tracing;
@@ -16,9 +19,9 @@ macro_rules! api_url {
     ($url:literal) => {{
         use const_format::formatcp;
 
-        const URL: &str = formatcp!($url, user_id = $crate::dotenv_vars::TWITCH_USER_ID);
+        const URL: &str = formatcp!($url, user_id = $crate::creds::CREDENTIALS.user_id);
 
-        const_format::formatcp!("https://api.twitch.tv/helix/{}", URL)
+        formatcp!("https://api.twitch.tv/helix/{}", URL)
     }};
 }
 
@@ -54,6 +57,10 @@ async fn main() -> anyhow::Result<()> {
         .with_span_events(FmtSpan::FULL)
         .with_max_level(tracing::Level::INFO)
         .init();
+
+    if CREDENTIALS.remain_30().await? {
+        CREDENTIALS.refresh().await?;
+    }
 
     let user_pool = UserPool::get().await?;
 

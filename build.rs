@@ -1,12 +1,36 @@
-use std::io::Write;
+use std::io::{Read, Write};
 
-rotenv_codegen::dotenv_module!(visibility = "pub");
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize)]
+struct Credentials {
+    client_id: String,
+    client_secret: String,
+    user_id: String,
+    auth_token: String,
+    refresh_token: String,
+}
 
 fn main() {
-    // Ensure that we regenerate the `credentials.js` file if `.env` changes
-    println!("cargo:rerun-if-changed=.env");
+    println!("cargo:rerun-if-changed=credentials.toml");
 
     let pwd = std::env::current_dir().unwrap();
+
+    let creds: Credentials = {
+        let creds_path = pwd.join("credentials.toml");
+
+        if !creds_path.exists() {
+            panic!("credentials.toml file does not exist");
+        }
+
+        let mut creds_file = std::fs::File::open(creds_path).unwrap();
+
+        let mut creds = String::new();
+
+        creds_file.read_to_string(&mut creds).unwrap();
+
+        toml::from_str(&creds).unwrap()
+    };
 
     let v2chat_path = pwd.join("chat").join("v2");
 
@@ -14,9 +38,9 @@ fn main() {
         r#"
 const client_id = "{client_id}";
 const credentials = "{api_token}";
-        "#,
-        client_id = dotenv_vars::TWITCH_CLIENT_ID,
-        api_token = dotenv_vars::TWITCH_AUTH_TOKEN
+"#,
+        client_id = creds.client_id,
+        api_token = creds.auth_token
     );
 
     let creds_path = v2chat_path.join("credentials.js");
@@ -27,4 +51,17 @@ const credentials = "{api_token}";
 
     let mut file = std::fs::File::create(&creds_path).unwrap();
     file.write_all(creds_output.as_bytes()).unwrap();
+
+    // Make credentionals accessible within the program
+    println!("cargo:rustc-env=TWITCH_CLIENT_ID={}", creds.client_id);
+    println!(
+        "cargo:rustc-env=TWITCH_CLIENT_SECRET={}",
+        creds.client_secret
+    );
+    println!("cargo:rustc-env=TWITCH_USER_ID={}", creds.user_id);
+    println!("cargo:rustc-env=TWITCH_AUTH_TOKEN={}", creds.auth_token);
+    println!(
+        "cargo:rustc-env=TWITCH_REFRESH_TOKEN={}",
+        creds.refresh_token
+    );
 }
