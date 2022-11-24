@@ -23,7 +23,7 @@ lazy_static::lazy_static! {
 
         msgs_file.read_to_string(&mut msgs)?;
 
-        msgs.lines()
+        msgs.lines().collect()
     };
 }
 
