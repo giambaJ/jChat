@@ -22,11 +22,14 @@ impl Actor for FakeIrc {
     fn started(&mut self, ctx: &mut Self::Context) {
         ctx.run_interval(Duration::from_secs(1), |_, ctx| {
             debug!("Sending message");
+
             let msg = crate::MESSAGES.lock().pop();
 
-            let sent = crate::USERS.lock().send_message(msg);
-
-            ctx.text(sent);
+            if let Some(msg) = msg {
+                ctx.text(msg);
+            } else {
+                ctx.text(MSG);
+            }
 
             debug!("Response gotten");
         });
