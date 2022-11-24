@@ -11,6 +11,24 @@ use crate::creds::CREDENTIALS;
 
 mod creds;
 
+lazy_static::lazy_static! {
+    pub static ref MESSAGES: Vec<String> = {
+        let user_pool = UserPool::get().await?;
+
+        // A file containing one message per line
+        // TODO: Add ability to pass custom directory
+        let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
+
+        let mut msgs_file = File::open(msgs_path)?;
+
+        let mut msgs: String = String::new();
+
+        msgs_file.read_to_string(&mut msgs)?;
+
+        msgs.lines()
+    }
+}
+
 #[macro_use]
 extern crate tracing;
 
@@ -60,22 +78,6 @@ async fn main() -> anyhow::Result<()> {
 
     if CREDENTIALS.remain_30().await? {
         CREDENTIALS.refresh().await?;
-    }
-
-    let user_pool = UserPool::get().await?;
-
-    // A file containing one message per line
-    // TODO: Add ability to pass custom directory
-    let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
-
-    let mut msgs_file = File::open(msgs_path)?;
-
-    let mut msgs: String = String::new();
-
-    msgs_file.read_to_string(&mut msgs)?;
-
-    for msg in msgs.lines() {
-        user_pool.send_message(msg);
     }
 
     HttpServer::new(|| {

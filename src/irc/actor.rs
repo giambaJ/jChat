@@ -1,4 +1,4 @@
-use std::time::Duration;
+use std::{fs::File, time::Duration};
 
 use actix::{prelude::*, Actor, AsyncContext, StreamHandler};
 use actix_web_actors::ws::{self};
@@ -20,6 +20,22 @@ impl Actor for FakeIrc {
     type Context = ws::WebsocketContext<Self>;
 
     fn started(&mut self, ctx: &mut Self::Context) {
+        let user_pool = UserPool::get().await?;
+
+        // A file containing one message per line
+        // TODO: Add ability to pass custom directory
+        let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
+
+        let mut msgs_file = File::open(msgs_path)?;
+
+        let mut msgs: String = String::new();
+
+        msgs_file.read_to_string(&mut msgs)?;
+
+        for msg in msgs.lines() {
+            user_pool.send_message(msg);
+        }
+
         ctx.run_interval(Duration::from_secs(5), |_, ctx| {
             debug!("Sending message");
 
