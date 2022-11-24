@@ -79,7 +79,7 @@ async fn main() -> anyhow::Result<()> {
 
     msgs_file.read_to_string(&mut msgs_str)?;
 
-    let msgs: Vec<String> = msgs_str.lines().collect();
+    let msgs: Vec<String> = msgs_str.lines().map(String::from).collect();
 
     HttpServer::new(|| {
         App::new()
