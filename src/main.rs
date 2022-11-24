@@ -2,6 +2,7 @@ use std::{fs::File, io::Read};
 
 use actix_files::NamedFile;
 use actix_web::{web, HttpRequest, Result};
+use parking_lot::Mutex;
 use tracing_subscriber::fmt::format::FmtSpan;
 
 use irc::handle_ws;
@@ -11,21 +12,7 @@ use crate::creds::CREDENTIALS;
 
 mod creds;
 
-lazy_static::lazy_static! {
-    pub static ref MESSAGES: Vec<String> = {
-        // A file containing one message per line
-        // TODO: Add ability to pass custom directory
-        let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
-
-        let mut msgs_file = File::open(msgs_path)?;
-
-        let mut msgs: String = String::new();
-
-        msgs_file.read_to_string(&mut msgs)?;
-
-        msgs.lines().collect()
-    };
-}
+pub static USERS: Mutex<Option<UserPool>> = Mutex::new(None);
 
 #[macro_use]
 extern crate tracing;
@@ -77,6 +64,22 @@ async fn main() -> anyhow::Result<()> {
     if CREDENTIALS.remain_30().await? {
         CREDENTIALS.refresh().await?;
     }
+
+    let pool = UserPool::get().await?;
+
+    *USERS.lock() = Some(pool);
+
+    // A file containing one message per line
+    // TODO: Add ability to pass custom directory
+    let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
+
+    let mut msgs_file = File::open(msgs_path)?;
+
+    let mut msgs_str = String::new();
+
+    msgs_file.read_to_string(&mut msgs_str)?;
+
+    let msgs: Vec<String> = msgs_str.lines().collect();
 
     HttpServer::new(|| {
         App::new()

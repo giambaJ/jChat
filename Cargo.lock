@@ -582,6 +582,7 @@ dependencies = [
  "anyhow",
  "const_format",
  "lazy_static",
+ "parking_lot",
  "rand",
  "rayon",
  "reqwest",
