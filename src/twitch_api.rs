@@ -188,6 +188,11 @@ impl TwitchUser {
         message.push_str(&format!("user-id={};", self.uid));
 
         message.push_str("user-type= :");
+
+        message.push_str(&format!(
+            "{}!{}@{}.tmi.twitch.tv PRIVMSG #{} :{}",
+            self.name, self.name, self.name, self.name, msg
+        ));
     }
 }
 
