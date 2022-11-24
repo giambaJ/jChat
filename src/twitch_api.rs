@@ -171,6 +171,23 @@ impl TwitchUser {
             "subscriber={};",
             if self.is_sub { "1" } else { "0" }
         ));
+
+        let current_time = {
+            use std::time::{SystemTime, UNIX_EPOCH};
+
+            SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .expect("Time went backwards")
+                .as_millis()
+        };
+
+        message.push_str(&format!("tmi-sent-ts={};", current_time));
+
+        message.push_str("turbo=0;");
+
+        message.push_str(&format!("user-id={};", self.uid));
+
+        message.push_str("user-type= :");
     }
 }
 
