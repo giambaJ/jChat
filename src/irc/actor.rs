@@ -1,7 +1,8 @@
-use std::{fs::File, time::Duration};
+use std::{fs::File, thread, time::Duration};
 
 use actix::{prelude::*, Actor, AsyncContext, StreamHandler};
 use actix_web_actors::ws::{self};
+use rand::Rng;
 
 /// Chat server sends this messages to session
 #[derive(Message)]
@@ -22,6 +23,12 @@ impl Actor for FakeIrc {
     fn started(&mut self, ctx: &mut Self::Context) {
         ctx.run_interval(Duration::from_secs(1), |_, ctx| {
             debug!("Sending message");
+
+            let mut rng = rand::thread_rng();
+
+            let millis: u16 = rng.gen_range(50..1500);
+
+            thread::sleep(Duration::from_millis(millis));
 
             let msg = crate::MESSAGES.lock().pop();
 
