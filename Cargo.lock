@@ -607,6 +607,7 @@ dependencies = [
  "const_format",
  "crossbeam",
  "lazy_static",
+ "no-panic",
  "parking_lot",
  "rand",
  "rayon",
@@ -1022,6 +1023,17 @@ dependencies = [
  "security-framework",
  "security-framework-sys",
  "tempfile",
+]
+
+[[package]]
+name = "no-panic"
+version = "0.1.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "12f10d4b6dcf2138f0fc171f4cc8f49517cc71ac57e29aa061c61aa57ec2dffc"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
