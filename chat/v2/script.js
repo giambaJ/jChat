@@ -628,6 +628,7 @@ Chat = {
         data.data.split('\r\n').forEach((line) => {
           if (!line) return;
           var message = window.parseIRC(line);
+          console.log(JSON.stringify(message));
           if (!message.command) return;
 
           switch (message.command) {
@@ -646,7 +647,7 @@ Chat = {
               return;
             case 'PRIVMSG':
               if (message.params[0] !== '#' + channel || !message.params[1])
-                return;
+                return console.log('jChat: Invalid PRIVMSG');
               var nick = message.prefix.split('@')[0].split('!')[0];
 
               if (
@@ -658,7 +659,7 @@ Chat = {
                   badge = badge.split('/');
                   if (badge[0] === 'moderator' || badge[0] === 'broadcaster') {
                     flag = true;
-                    return;
+                    return console.log('jChat: mod or broadcaster');
                   }
                 });
                 if (flag) {
@@ -669,15 +670,18 @@ Chat = {
               }
 
               if (Chat.info.hideCommands) {
-                if (/^!.+/.test(message.params[1])) return;
+                if (/^!.+/.test(message.params[1]))
+                  return console.log('jChat: Was command');
               }
 
               if (!Chat.info.showBots) {
-                if (Chat.info.bots.includes(nick)) return;
+                if (Chat.info.bots.includes(nick))
+                  return console.log('jChat: Hiding bot');
               }
 
               if (Chat.info.blockedUsers) {
-                if (Chat.info.blockedUsers.includes(nick)) return;
+                if (Chat.info.blockedUsers.includes(nick))
+                  return console.log('jChat: Hiding blocked user');
               }
 
               if (!Chat.info.hideBadges) {
@@ -692,7 +696,7 @@ Chat = {
               }
 
               Chat.write(nick, message.tags, message.params[1]);
-              return;
+              return console.log('jChat: Written');
           }
 
           socket.send('Gotcha: ' + message.command);
