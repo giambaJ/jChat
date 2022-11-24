@@ -138,7 +138,7 @@ impl std::fmt::UpperHex for Color {
 }
 
 impl TwitchUser {
-    pub fn send_message(&self, message: impl AsRef<str>) {
+    pub fn send_message(&self, message: impl AsRef<str>) -> String {
         let msg = message.as_ref();
 
         let badges = Badges::from_user(self);
@@ -193,6 +193,8 @@ impl TwitchUser {
             "{}!{}@{}.tmi.twitch.tv PRIVMSG #{} :{}",
             self.name, self.name, self.name, self.name, msg
         ));
+
+        message
     }
 }
 
@@ -261,11 +263,11 @@ impl UserPool {
         Ok(UserPool { users })
     }
 
-    pub fn send_message(&self, message: &str) {
+    pub fn send_message(&self, message: impl AsRef<str>) -> String {
         let mut rng = rand::thread_rng();
         let user = self.users.choose(&mut rng).unwrap();
 
-        info!("{} sent: {}", user.name, message)
+        user.send_message(message)
     }
 }
 
