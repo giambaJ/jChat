@@ -87,8 +87,8 @@ impl std::fmt::Display for Badge {
         match self {
             Self::Broadcaster => write!(f, "broadcaster/1"),
             Self::Subscriber => write!(f, "subscriber/3012"),
-            Self::Moderator => write!(f, "moderator/1"),
             Self::Vip => write!(f, "vip/1"),
+            _ => Ok(()),
         }
     }
 }
@@ -152,6 +152,12 @@ impl TwitchUser {
         let color = Color::rand_new();
 
         message.push_str(&format!("color=#{:X};", color));
+
+        message.push_str(&format!("display-name={};", self.name));
+
+        message.push_str("emotes=;first-msg=0;flags=;id=aedfa462-66b6-4a2b-b94d-afb01d0631f9;");
+
+        message.push_str(&format!("mod={}", if self.is_mod { "1" } else { "0" }))
     }
 }
 
