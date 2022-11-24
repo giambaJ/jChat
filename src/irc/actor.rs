@@ -26,7 +26,7 @@ impl Actor for FakeIrc {
 
             let mut rng = rand::thread_rng();
 
-            let millis: u16 = rng.gen_range(50..1500);
+            let millis: u64 = rng.gen_range(50..1500);
 
             thread::sleep(Duration::from_millis(millis));
 
