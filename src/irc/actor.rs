@@ -20,14 +20,13 @@ impl Actor for FakeIrc {
     type Context = ws::WebsocketContext<Self>;
 
     fn started(&mut self, ctx: &mut Self::Context) {
-        for msg in crate::MESSAGES.lock().iter() {
-            crate::USERS.lock().send_message(msg);
-        }
-
-        ctx.run_interval(Duration::from_secs(5), |_, ctx| {
+        ctx.run_interval(Duration::from_secs(1), |_, ctx| {
             debug!("Sending message");
+            let msg = crate::MESSAGES.lock().pop();
 
-            ctx.text(MSG);
+            let sent = crate::USERS.lock().send_message(msg);
+
+            ctx.text(sent);
 
             debug!("Response gotten");
         });
