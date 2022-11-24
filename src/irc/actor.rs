@@ -1,4 +1,4 @@
-use std::{fs::File, thread, time::Duration};
+use std::{thread, time::Duration};
 
 use actix::{prelude::*, Actor, AsyncContext, StreamHandler};
 use actix_web_actors::ws::{self};
