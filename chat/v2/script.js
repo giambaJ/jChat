@@ -621,7 +621,7 @@ Chat = {
         console.log('jChat: Disconnected');
       };
 
-      socket.onmessage = function (data) {
+      function onMessage(data) {
         // Temp for testing in order to figure out what the Twitch API sends so we can emulate it.
         console.log(data.data);
 
@@ -697,7 +697,11 @@ Chat = {
 
           socket.send('Gotcha: ' + message.command);
         });
-      };
+      }
+
+      window.onMessage = onMessage;
+
+      socket.onmessage = onMessage;
     });
   },
 };
