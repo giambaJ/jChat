@@ -166,6 +166,11 @@ impl TwitchUser {
             crate::CREDENTIALS.user_id,
             ";"
         ));
+
+        message.push_str(&format!(
+            "subscriber={};",
+            if self.is_sub { "1" } else { "0" }
+        ));
     }
 }
 
