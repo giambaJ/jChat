@@ -115,6 +115,16 @@ pub struct Color {
     b: u8,
 }
 
+impl std::fmt::UpperHex for Color {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:02X}", self.r)?;
+        write!(f, "{:02X}", self.g)?;
+        write!(f, "{:02X}", self.b)?;
+
+        Ok(())
+    }
+}
+
 impl TwitchUser {
     pub fn send_message(&self, message: impl AsRef<str>) {
         let msg = message.as_ref();
