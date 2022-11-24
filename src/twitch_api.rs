@@ -143,7 +143,7 @@ impl TwitchUser {
 
         let badges = Badges::from_user(self);
 
-        let mut message = String::from("@badge-info=subscriber/1;");
+        let mut message = String::from("@badge-info=subscriber/22;");
 
         message.push_str(badges.to_string().as_str());
 
