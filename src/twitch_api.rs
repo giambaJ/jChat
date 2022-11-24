@@ -1,4 +1,4 @@
-use rand::seq::SliceRandom;
+use rand::{seq::SliceRandom, thread_rng, Rng};
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 
@@ -113,6 +113,18 @@ pub struct Color {
     r: u8,
     g: u8,
     b: u8,
+}
+
+impl Color {
+    pub const fn new(r: u8, g: u8, b: u8) -> Self {
+        Self { r, g, b }
+    }
+
+    pub fn rand_new() -> Self {
+        let mut rng = thread_rng();
+
+        Self::new(rng.gen(), rng.gen(), rng.gen())
+    }
 }
 
 impl std::fmt::UpperHex for Color {
