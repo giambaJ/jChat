@@ -16,9 +16,6 @@ pub static USERS: Mutex<UserPool> = Mutex::new(UserPool { users: Vec::new() });
 pub static MESSAGES: Mutex<Vec<String>> = Mutex::new(vec![]);
 
 #[macro_use]
-extern crate no_panic;
-
-#[macro_use]
 extern crate tracing;
 
 #[macro_export]
