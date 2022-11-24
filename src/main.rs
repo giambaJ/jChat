@@ -15,6 +15,8 @@ mod creds;
 pub static USERS: Mutex<UserPool> = Mutex::new(UserPool { users: Vec::new() });
 pub static MESSAGES: Mutex<Vec<String>> = Mutex::new(vec![]);
 
+// TODO: In release builds, include all files from chat frontend in binary
+
 #[macro_use]
 extern crate tracing;
 
