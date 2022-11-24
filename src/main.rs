@@ -13,8 +13,6 @@ mod creds;
 
 lazy_static::lazy_static! {
     pub static ref MESSAGES: Vec<String> = {
-        let user_pool = UserPool::get().await?;
-
         // A file containing one message per line
         // TODO: Add ability to pass custom directory
         let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
@@ -26,7 +24,7 @@ lazy_static::lazy_static! {
         msgs_file.read_to_string(&mut msgs)?;
 
         msgs.lines()
-    }
+    };
 }
 
 #[macro_use]
