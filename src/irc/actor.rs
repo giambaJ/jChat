@@ -23,6 +23,10 @@ impl Actor for FakeIrc {
     fn started(&mut self, ctx: &mut Self::Context) {
         let (tx, rx) = crossbeam::channel::unbounded::<String>();
 
+        tokio::spawn(async move {
+            tx.send("wassup".to_string()).unwrap();
+        });
+
         ctx.run_interval(Duration::from_secs(1), |_, ctx| {
             debug!("Sending message");
 
