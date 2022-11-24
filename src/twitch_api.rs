@@ -148,6 +148,10 @@ impl TwitchUser {
         message.push_str(badges.to_string().as_str());
 
         message.push_str("client-nonce=6090b7621f1bf7bdcc46777cd522bca1;");
+
+        let color = Color::rand_new();
+
+        message.push_str(&format!("color=#{:X};", color));
     }
 }
 
