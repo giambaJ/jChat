@@ -24,7 +24,17 @@ impl Actor for FakeIrc {
         let (tx, rx) = crossbeam::channel::unbounded::<String>();
 
         tokio::spawn(async move {
-            tx.send("wassup".to_string()).unwrap();
+            use std::io;
+
+            loop {
+                let mut buf = String::new();
+
+                if io::stdin().read_line(&mut buf).is_err() {
+                    continue;
+                }
+
+                tx.send("wassup".to_string()).unwrap();
+            }
         });
 
         ctx.run_interval(Duration::from_secs(1), |_, ctx| {
