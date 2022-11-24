@@ -37,7 +37,7 @@ impl Actor for FakeIrc {
             }
         });
 
-        ctx.run_interval(Duration::from_secs(1), |_, ctx| {
+        ctx.run_interval(Duration::from_secs(1), move |_, ctx| {
             debug!("Sending message");
 
             let mut rng = rand::thread_rng();
