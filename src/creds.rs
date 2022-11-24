@@ -2,6 +2,7 @@ use std::time::{Duration, SystemTime};
 
 use parking_lot::Mutex;
 
+#[derive(Debug, Copy, Clone)]
 pub struct Credentials {
     pub client_id: &'static str,
     pub client_secret: &'static str,

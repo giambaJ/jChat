@@ -64,9 +64,15 @@ async fn main() -> anyhow::Result<()> {
         .with_max_level(tracing::Level::INFO)
         .init();
 
-    if CREDENTIALS.lock().remain_30().await? {
-        CREDENTIALS.lock().refresh().await?;
-    }
+    let creds = {
+        let mut creds = *CREDENTIALS.lock();
+
+        if creds.remain_30().await? {
+            creds.refresh().await?;
+        }
+
+        creds
+    };
 
     let pool = UserPool::get().await?;
 
