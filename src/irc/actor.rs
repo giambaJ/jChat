@@ -57,12 +57,8 @@ impl Actor for FakeIrc {
 
             info!("{:?}", msg);
 
-            if let Some(msg) = msg {
-                let parsed = crate::USERS.lock().send_message(msg);
-                ctx.text(parsed);
-            } else {
-                ctx.text(MSG);
-            }
+            let parsed = crate::USERS.lock().send_message(msg);
+            ctx.text(parsed);
 
             debug!("Response gotten");
         });
