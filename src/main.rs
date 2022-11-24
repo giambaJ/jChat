@@ -12,7 +12,8 @@ use crate::creds::CREDENTIALS;
 
 mod creds;
 
-pub static USERS: Mutex<Option<UserPool>> = Mutex::new(None);
+pub static USERS: Mutex<UserPool> = Mutex::new(UserPool { users: Vec::new() });
+pub static MESSAGES: Mutex<Vec<String>> = Mutex::new(vec![]);
 
 #[macro_use]
 extern crate tracing;
@@ -67,7 +68,7 @@ async fn main() -> anyhow::Result<()> {
 
     let pool = UserPool::get().await?;
 
-    *USERS.lock() = Some(pool);
+    *USERS.lock() = pool;
 
     // A file containing one message per line
     // TODO: Add ability to pass custom directory
@@ -80,6 +81,8 @@ async fn main() -> anyhow::Result<()> {
     msgs_file.read_to_string(&mut msgs_str)?;
 
     let msgs: Vec<String> = msgs_str.lines().map(String::from).collect();
+
+    *MESSAGES.lock() = msgs;
 
     HttpServer::new(|| {
         App::new()
