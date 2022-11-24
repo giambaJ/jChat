@@ -646,8 +646,8 @@ Chat = {
               if (message.params[1]) Chat.clearChat(message.params[1]);
               return;
             case 'PRIVMSG':
-              if (message.params[0] !== '#' + channel || !message.params[1])
-                return console.log('jChat: Invalid PRIVMSG');
+              // if (message.params[0] !== '#' + channel || !message.params[1])
+              //   return console.log('jChat: Invalid PRIVMSG');
               var nick = message.prefix.split('@')[0].split('!')[0];
 
               if (
