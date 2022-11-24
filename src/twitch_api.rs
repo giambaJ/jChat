@@ -157,7 +157,15 @@ impl TwitchUser {
 
         message.push_str("emotes=;first-msg=0;flags=;id=aedfa462-66b6-4a2b-b94d-afb01d0631f9;");
 
-        message.push_str(&format!("mod={}", if self.is_mod { "1" } else { "0" }))
+        message.push_str(&format!("mod={};", if self.is_mod { "1" } else { "0" }));
+
+        message.push_str("returning-chatter=0;");
+
+        message.push_str(const_format::concatcp!(
+            "room-id=",
+            crate::CREDENTIALS.user_id,
+            ";"
+        ));
     }
 }
 
