@@ -46,7 +46,14 @@ impl Actor for FakeIrc {
 
             thread::sleep(Duration::from_millis(millis));
 
-            let msg = crate::MESSAGES.lock().pop();
+            let msg = {
+                rx.try_recv().unwrap_or_else(|_| {
+                    crate::MESSAGES
+                        .lock()
+                        .pop()
+                        .unwrap_or_else(|| MSG.to_string())
+                })
+            };
 
             info!("{:?}", msg);
 
