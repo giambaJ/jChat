@@ -21,6 +21,8 @@ impl Actor for FakeIrc {
     type Context = ws::WebsocketContext<Self>;
 
     fn started(&mut self, ctx: &mut Self::Context) {
+        let (tx, rx) = crossbeam::channel::unbounded::<String>();
+
         ctx.run_interval(Duration::from_secs(1), |_, ctx| {
             debug!("Sending message");
 
