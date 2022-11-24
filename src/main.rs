@@ -8,8 +8,6 @@ use tracing_subscriber::fmt::format::FmtSpan;
 use irc::handle_ws;
 use twitch_api::UserPool;
 
-use crate::creds::CREDENTIALS;
-
 mod creds;
 
 pub static USERS: Mutex<UserPool> = Mutex::new(UserPool { users: Vec::new() });
@@ -25,7 +23,7 @@ macro_rules! api_url {
     ($url:literal) => {{
         use const_format::formatcp;
 
-        const URL: &str = formatcp!($url, user_id = $crate::creds::CREDENTIALS.user_id);
+        const URL: &str = formatcp!($url, user_id = env!("TWITCH_USER_ID"));
 
         formatcp!("https://api.twitch.tv/helix/{}", URL)
     }};
@@ -59,13 +57,15 @@ async fn twitch(req: HttpRequest) -> Result<NamedFile> {
 async fn main() -> anyhow::Result<()> {
     use actix_web::{App, HttpServer};
 
+    use creds::CREDENTIALS;
+
     tracing_subscriber::fmt()
         .with_span_events(FmtSpan::FULL)
         .with_max_level(tracing::Level::INFO)
         .init();
 
-    if CREDENTIALS.remain_30().await? {
-        CREDENTIALS.refresh().await?;
+    if CREDENTIALS.lock().remain_30().await? {
+        CREDENTIALS.lock().refresh().await?;
     }
 
     let pool = UserPool::get().await?;

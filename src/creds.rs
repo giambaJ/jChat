@@ -1,5 +1,7 @@
 use std::time::{Duration, SystemTime};
 
+use parking_lot::Mutex;
+
 pub struct Credentials {
     pub client_id: &'static str,
     pub client_secret: &'static str,
@@ -8,13 +10,13 @@ pub struct Credentials {
     pub refresh_token: &'static str,
 }
 
-pub const CREDENTIALS: Credentials = Credentials {
+pub static CREDENTIALS: Mutex<Credentials> = Mutex::new(Credentials {
     client_id: env!("TWITCH_CLIENT_ID"),
     client_secret: env!("TWITCH_CLIENT_SECRET"),
     user_id: env!("TWITCH_USER_ID"),
     auth_token: env!("TWITCH_AUTH_TOKEN"),
     refresh_token: env!("TWITCH_REFRESH_TOKEN"),
-};
+});
 
 impl Credentials {
     pub async fn expires_in(&self) -> anyhow::Result<SystemTime> {
