@@ -67,7 +67,8 @@ async fn main() -> anyhow::Result<()> {
     let creds = {
         let mut creds = *CREDENTIALS.lock();
 
-        // let dir = directories::
+        let dir = directories::ProjectDirs::from("com", "jewelexx", "FauxChat")
+            .unwrap_or_else(|| unimplemented!());
 
         if creds.remain_30().await? {
             creds.refresh().await?;
