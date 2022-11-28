@@ -65,7 +65,7 @@ async fn main() -> anyhow::Result<()> {
         .init();
 
     let creds = {
-        let mut creds = *CREDENTIALS.lock();
+        let mut creds = CREDENTIALS.lock();
 
         let dir = directories::ProjectDirs::from("com", "jewelexx", "FauxChat")
             .unwrap_or_else(|| unimplemented!());
