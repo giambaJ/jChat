@@ -8,6 +8,8 @@ use tracing_subscriber::fmt::format::FmtSpan;
 use irc::handle_ws;
 use twitch_api::UserPool;
 
+use crate::creds::Credentials;
+
 mod creds;
 
 pub static USERS: Mutex<UserPool> = Mutex::new(UserPool { users: Vec::new() });
@@ -66,6 +68,7 @@ async fn main() -> anyhow::Result<()> {
 
     let creds = {
         use std::fs::{create_dir_all, File};
+
         let mut creds = CREDENTIALS.lock();
 
         let dir = directories::ProjectDirs::from("com", "jewelexx", "FauxChat")
@@ -79,9 +82,13 @@ async fn main() -> anyhow::Result<()> {
 
         let creds_path = data_dir.join("credentials.toml");
 
-        let creds = {
+        let creds_raw = {
             if creds_path.exists() {
-                File::open(creds_path);
+                let mut file_contents = String::new();
+
+                File::open(creds_path)?.read_to_string(&mut file_contents)?;
+
+                let creds: Credentials = toml::from_str(&file_contents)?;
             }
         };
 
