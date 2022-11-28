@@ -6,7 +6,7 @@ lazy_static::lazy_static! {
     pub static ref CLIENT: reqwest::Client = {
         use reqwest::header::HeaderValue;
         let mut default_headers = reqwest::header::HeaderMap::new();
-        default_headers.insert("Client-Id", HeaderValue::from_static(crate::creds::CREDENTIALS.lock().user_id));
+        default_headers.insert("Client-Id", HeaderValue::from_str(&crate::creds::CREDENTIALS.lock().user_id).unwrap());
         default_headers.insert("Authorization", HeaderValue::from_str(&format!("Bearer {}", crate::creds::CREDENTIALS.lock().user_id)).unwrap());
 
         reqwest::Client::builder().default_headers(default_headers)
