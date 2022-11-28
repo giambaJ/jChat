@@ -65,6 +65,7 @@ async fn main() -> anyhow::Result<()> {
         .init();
 
     let creds = {
+        use std::fs::{create_dir_all, File};
         let mut creds = CREDENTIALS.lock();
 
         let dir = directories::ProjectDirs::from("com", "jewelexx", "FauxChat")
@@ -73,12 +74,16 @@ async fn main() -> anyhow::Result<()> {
         let data_dir = dir.data_dir();
 
         if !data_dir.exists() {
-            std::fs::create_dir_all(data_dir)?;
+            create_dir_all(data_dir)?;
         }
 
         let creds_path = data_dir.join("credentials.toml");
 
-        if creds_path.exists() {}
+        let creds = {
+            if creds_path.exists() {
+                File::open(creds_path);
+            }
+        };
 
         if creds.remain_30().await? {
             creds.refresh().await?;
