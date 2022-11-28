@@ -75,9 +75,9 @@ impl Credentials {
 
         let resp: AccessToken = CLIENT.post(REFRESH_URL).await?.json().await?;
 
-        self.auth_token = &resp.access_token;
+        // self.auth_token = &resp.access_token;
 
-        self.refresh_token = &resp.refresh_token;
+        // self.refresh_token = &resp.refresh_token;
 
         todo!();
     }
