@@ -70,6 +70,16 @@ async fn main() -> anyhow::Result<()> {
         let dir = directories::ProjectDirs::from("com", "jewelexx", "FauxChat")
             .unwrap_or_else(|| unimplemented!());
 
+        let data_dir = dir.data_dir();
+
+        if !data_dir.exists() {
+            std::fs::create_dir_all(data_dir)?;
+        }
+
+        let creds_path = data_dir.join("credentials.toml");
+
+        if creds_path.exists() {}
+
         if creds.remain_30().await? {
             creds.refresh().await?;
         }
