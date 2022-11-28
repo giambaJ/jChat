@@ -82,13 +82,19 @@ async fn main() -> anyhow::Result<()> {
 
         let creds_path = data_dir.join("credentials.toml");
 
-        let creds_raw = {
+        let creds_raw: Credentials = {
             if creds_path.exists() {
                 let mut file_contents = String::new();
 
                 File::open(creds_path)?.read_to_string(&mut file_contents)?;
 
-                let creds: Credentials = toml::from_str(&file_contents)?;
+                toml::from_str(&file_contents)?
+            } else {
+                let client_id = env!("TWITCH_CLIENT_ID");
+                let client_secret = env!("TWITCH_CLIENT_SECRET");
+                let user_id = env!("TWITCH_USER_ID");
+                let auth_token = env!("TWITCH_AUTH_TOKEN");
+                let refresh_token = env!("TWITCH_REFRESH_TOKEN");
             }
         };
 
