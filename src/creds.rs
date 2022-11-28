@@ -2,7 +2,7 @@ use std::time::{Duration, SystemTime};
 
 use const_format::formatcp;
 use parking_lot::Mutex;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::twitch_api::CLIENT;
 
@@ -15,22 +15,16 @@ pub struct AccessToken {
     token_type: String,
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct Credentials {
-    pub client_id: &'static str,
-    pub client_secret: &'static str,
-    pub user_id: &'static str,
-    pub auth_token: &'static str,
-    pub refresh_token: &'static str,
+    pub client_id: String,
+    pub client_secret: String,
+    pub user_id: String,
+    pub auth_token: String,
+    pub refresh_token: String,
 }
 
-pub static CREDENTIALS: Mutex<Credentials> = Mutex::new(Credentials {
-    client_id: env!("TWITCH_CLIENT_ID"),
-    client_secret: env!("TWITCH_CLIENT_SECRET"),
-    user_id: env!("TWITCH_USER_ID"),
-    auth_token: env!("TWITCH_AUTH_TOKEN"),
-    refresh_token: env!("TWITCH_REFRESH_TOKEN"),
-});
+pub static CREDENTIALS: Mutex<Credentials> = Mutex::new(Credentials::default());
 
 impl Credentials {
     pub async fn expires_in(&self) -> anyhow::Result<SystemTime> {
