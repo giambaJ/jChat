@@ -1,6 +1,7 @@
 use std::time::{Duration, SystemTime};
 
 use const_format::formatcp;
+use lazy_static::lazy_static;
 use parking_lot::Mutex;
 use serde::{Deserialize, Serialize};
 
@@ -24,7 +25,9 @@ pub struct Credentials {
     pub refresh_token: String,
 }
 
-pub static CREDENTIALS: Mutex<Credentials> = Mutex::new(Credentials::default());
+lazy_static! {
+    pub static ref CREDENTIALS: Mutex<Credentials> = Mutex::new(Credentials::default());
+}
 
 impl Credentials {
     pub async fn expires_in(&self) -> anyhow::Result<SystemTime> {
