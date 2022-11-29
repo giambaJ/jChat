@@ -53,6 +53,14 @@ impl Actor for FakeIrc {
                         for _ in 0..count {
                             let parsed = crate::USERS.lock().send_message(message);
                             ctx.text(parsed);
+
+                            let millis: u64 = rng.gen_range(50..1500);
+
+                            debug!("Sleeping for {} milliseconds", millis);
+
+                            thread::sleep(Duration::from_millis(millis));
+
+                            debug!("Sending message");
                         }
                     }
                     Command::Pause(millis) => thread::sleep(Duration::from_millis(millis)),
