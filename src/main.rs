@@ -55,6 +55,23 @@ async fn twitch(req: HttpRequest) -> Result<NamedFile> {
     Ok(NamedFile::open_async(qualified_path).await?)
 }
 
+#[actix_web::get("/credentials.js")]
+async fn credentials() -> Result<String> {
+    let creds = creds::CREDENTIALS.lock();
+
+    let client_id = &creds.client_id;
+    let api_token = &creds.auth_token;
+
+    let file = format!(
+        r#"
+const client_id = "{client_id}";
+const credentials = "{api_token}";
+        "#
+    );
+
+    Ok(file)
+}
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     use actix_web::{App, HttpServer};
