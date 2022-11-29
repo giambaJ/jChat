@@ -26,7 +26,7 @@ impl TryFrom<String> for Command {
         if let Some(command) = value.strip_prefix("/") {
             let split = command.split_whitespace().collect::<Vec<_>>();
 
-            match split.get(0) {
+            match split.first() {
                 Some(&"write") => {
                     let msg = match split.get(1) {
                         Some(v) => Ok(v),
