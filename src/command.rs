@@ -41,7 +41,7 @@ impl TryFrom<String> for Command {
                 Some(&"pause") => {
                     todo!()
                 }
-                Some(x) => Err(Self::Error::InvalidCommand(x)),
+                Some(x) => Err(Self::Error::InvalidCommand(x.to_string())),
                 None => Err(Self::Error::MissingCommand),
             }
         } else {
