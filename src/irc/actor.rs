@@ -44,9 +44,9 @@ impl Actor for FakeIrc {
                 let parsed = Command::try_from(msg).unwrap();
 
                 match parsed {
-                    Command::Write(msg, count) => {
+                    Command::Write(ref message, count) => {
                         for _ in 0..count {
-                            let parsed = crate::USERS.lock().send_message(msg);
+                            let parsed = crate::USERS.lock().send_message(message);
                             ctx.text(parsed);
                         }
                     }
