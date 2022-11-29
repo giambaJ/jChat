@@ -59,8 +59,6 @@ impl Actor for FakeIrc {
                             debug!("Sleeping for {} milliseconds", millis);
 
                             thread::sleep(Duration::from_millis(millis));
-
-                            debug!("Sending message");
                         }
                     }
                     Command::Pause(millis) => thread::sleep(Duration::from_millis(millis)),
