@@ -21,8 +21,8 @@ impl TryFrom<String> for Command {
             let split = command.split_whitespace().collect::<Vec<_>>();
 
             match split.get(0) {
-                Some("write") => {}
-                Some("pause") => {}
+                Some(&"write") => {}
+                Some(&"pause") => {}
                 Some(x) => Err(Self::Error::InvalidCommand(x)),
                 None => Err(Self::Error::MissingCommand),
             }
