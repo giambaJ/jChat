@@ -26,10 +26,16 @@ impl TryFrom<String> for Command {
                 Some(&"write") => {
                     let msg = match split.get(1) {
                         Some(v) => Ok(v),
-                        None => Err(Self::Error::NoMessage),
+                        None => Err(Self::Error::MissingMessage),
                     }?;
+
+                    let count = match split.get(2) {
+                        Some(v) => u64::from
+                    }
+
+                        todo!()
                 }
-                Some(&"pause") => {}
+                Some(&"pause") => {todo!()}
                 Some(x) => Err(Self::Error::InvalidCommand(x)),
                 None => Err(Self::Error::MissingCommand),
             }
