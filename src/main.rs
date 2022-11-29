@@ -11,7 +11,7 @@ use tracing_subscriber::fmt::format::FmtSpan;
 use irc::handle_ws;
 use twitch_api::UserPool;
 
-use crate::creds::Credentials;
+use creds::Credentials;
 
 mod creds;
 
@@ -62,17 +62,13 @@ async fn twitch(req: HttpRequest) -> Result<NamedFile> {
 async fn main() -> anyhow::Result<()> {
     use actix_web::{App, HttpServer};
 
-    use creds::CREDENTIALS;
-
     tracing_subscriber::fmt()
         .with_span_events(FmtSpan::FULL)
         .with_max_level(tracing::Level::INFO)
         .init();
 
-    let creds = {
+    {
         use std::fs::{create_dir_all, File};
-
-        let mut creds = CREDENTIALS.lock();
 
         let dir = directories::ProjectDirs::from("com", "jewelexx", "FauxChat")
             .unwrap_or_else(|| unimplemented!());
@@ -85,7 +81,7 @@ async fn main() -> anyhow::Result<()> {
 
         let creds_path = data_dir.join("credentials.toml");
 
-        let creds_raw: Credentials = {
+        let mut creds: Credentials = {
             if creds_path.exists() {
                 let mut file_contents = String::new();
 
@@ -121,7 +117,7 @@ async fn main() -> anyhow::Result<()> {
             creds.refresh().await?;
         }
 
-        creds
+        *creds::CREDENTIALS.lock() = creds;
     };
 
     let pool = UserPool::get().await?;
