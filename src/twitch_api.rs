@@ -86,7 +86,7 @@ impl std::fmt::Display for Badge {
             Self::Broadcaster => write!(f, "broadcaster/1"),
             Self::Subscriber => write!(f, "subscriber/3012"),
             Self::Vip => write!(f, "vip/1"),
-            _ => Ok(()),
+            Self::Moderator => write!(f, "moderator/1"),
         }
     }
 }
