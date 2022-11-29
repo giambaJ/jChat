@@ -145,6 +145,7 @@ async fn main() -> anyhow::Result<()> {
     HttpServer::new(|| {
         App::new()
             .service(twitch)
+            .service(credentials)
             .route("/ws/", web::get().to(handle_ws))
     })
     .bind(("127.0.0.1", 8080))?
