@@ -5,6 +5,10 @@ body {
   position: relative;
 }
 
+.preview-body {
+  background-color: #000;
+}
+
 #chat_container {
   width: calc(100% - 20px);
   padding: 10px;
