@@ -17,6 +17,7 @@ impl TryFrom<String> for Command {
     fn try_from(value: String) -> Result<Self, Self::Error> {
         if let Some(command) = value.strip_prefix("/") {
         } else {
+            Ok(Self::Write(value, 1))
         }
     }
 }
