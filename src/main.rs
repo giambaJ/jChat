@@ -13,7 +13,10 @@ use creds::Credentials;
 mod creds;
 
 pub static USERS: Mutex<UserPool> = Mutex::new(UserPool { users: Vec::new() });
-pub static MESSAGES: Mutex<VecDeque<String>> = Mutex::new(VecDeque::new());
+
+lazy_static::lazy_static! {
+    pub static ref MESSAGES: Mutex<VecDeque<String>> = Mutex::new(VecDeque::new());
+}
 
 // TODO: In release builds, include all files from chat frontend in binary
 
@@ -138,7 +141,7 @@ async fn main() -> anyhow::Result<()> {
 
     msgs_file.read_to_string(&mut msgs_str)?;
 
-    let msgs: Vec<String> = msgs_str.lines().map(String::from).collect();
+    let msgs: VecDeque<String> = msgs_str.lines().map(String::from).collect();
 
     *MESSAGES.lock() = msgs;
 
