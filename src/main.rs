@@ -143,19 +143,21 @@ async fn main() -> anyhow::Result<()> {
 
     *USERS.lock() = pool;
 
-    // A file containing one message per line
-    // TODO: Add ability to pass custom directory
-    let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
+    {
+        // A file containing one message per line
+        // TODO: Add ability to pass custom directory
+        let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
 
-    let mut msgs_file = File::open(msgs_path)?;
+        let mut msgs_file = File::open(msgs_path)?;
 
-    let mut msgs_str = String::new();
+        let mut msgs_str = String::new();
 
-    msgs_file.read_to_string(&mut msgs_str)?;
+        msgs_file.read_to_string(&mut msgs_str)?;
 
-    let msgs: VecDeque<String> = msgs_str.lines().map(String::from).collect();
+        let msgs: VecDeque<String> = msgs_str.lines().map(String::from).collect();
 
-    *MESSAGES.lock() = msgs;
+        *MESSAGES.lock() = msgs;
+    }
 
     HttpServer::new(|| {
         App::new()
@@ -166,6 +168,8 @@ async fn main() -> anyhow::Result<()> {
     .bind(("127.0.0.1", 8080))?
     .run()
     .await?;
+
+    info!("Completed web server");
 
     stdin_handle.abort();
 
