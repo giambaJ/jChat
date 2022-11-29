@@ -23,7 +23,7 @@ impl TryFrom<String> for Command {
     type Error = CommandError;
 
     fn try_from(value: String) -> Result<Self, Self::Error> {
-        if let Some(command) = value.strip_prefix("/") {
+        if let Some(command) = value.strip_prefix('/') {
             let split = command.split_whitespace().collect::<Vec<_>>();
 
             match split.first() {
