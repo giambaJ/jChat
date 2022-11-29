@@ -86,7 +86,7 @@ impl std::fmt::Display for Badge {
             Self::Broadcaster => write!(f, "broadcaster/1"),
             Self::Subscriber => write!(f, "subscriber/3012"),
             Self::Vip => write!(f, "vip/1"),
-            _ => Ok(()),
+            Self::Moderator => write!(f, "moderator/1"),
         }
     }
 }
@@ -95,8 +95,12 @@ impl std::fmt::Display for Badges {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "badges=")?;
 
-        for badge in &self.inner {
-            write!(f, "{},", badge)?;
+        for (i, badge) in self.inner.iter().enumerate() {
+            write!(f, "{}", badge)?;
+
+            if i != self.inner.len() - 1 {
+                write!(f, ",")?;
+            }
         }
 
         write!(f, ";")?;
@@ -141,7 +145,10 @@ impl TwitchUser {
 
         let badges = Badges::from_user(self);
 
-        let mut message = String::from("@badge-info=subscriber/22;");
+        let mut message = format!(
+            "@badge-info={};",
+            if self.is_sub { "subscriber/22" } else { "" }
+        );
 
         message.push_str(badges.to_string().as_str());
 
