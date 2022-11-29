@@ -1,4 +1,4 @@
-use std::io::{Read, Write};
+use std::io::Read;
 
 use serde::{Deserialize, Serialize};
 
@@ -31,26 +31,6 @@ fn main() {
 
         toml::from_str(&creds).unwrap()
     };
-
-    let v2chat_path = pwd.join("chat").join("v2");
-
-    let creds_output = format!(
-        r#"
-const client_id = "{client_id}";
-const credentials = "{api_token}";
-"#,
-        client_id = creds.client_id,
-        api_token = creds.auth_token
-    );
-
-    let creds_path = v2chat_path.join("credentials.js");
-
-    if creds_path.exists() {
-        std::fs::remove_file(&creds_path).unwrap();
-    }
-
-    let mut file = std::fs::File::create(&creds_path).unwrap();
-    file.write_all(creds_output.as_bytes()).unwrap();
 
     // Make credentionals accessible within the program
     println!("cargo:rustc-env=TWITCH_CLIENT_ID={}", creds.client_id);
