@@ -1,4 +1,4 @@
-use std::{fs::File, io::Read};
+use std::{collections::VecDeque, fs::File, io::Read};
 
 use actix_files::NamedFile;
 use actix_web::{web, HttpRequest, Result};
@@ -13,7 +13,7 @@ use creds::Credentials;
 mod creds;
 
 pub static USERS: Mutex<UserPool> = Mutex::new(UserPool { users: Vec::new() });
-pub static MESSAGES: Mutex<Vec<String>> = Mutex::new(vec![]);
+pub static MESSAGES: Mutex<VecDeque<String>> = Mutex::new(VecDeque::new());
 
 // TODO: In release builds, include all files from chat frontend in binary
 

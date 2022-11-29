@@ -54,7 +54,7 @@ impl Actor for FakeIrc {
                 rx.try_recv().unwrap_or_else(|_| {
                     crate::MESSAGES
                         .lock()
-                        .pop()
+                        .pop_back()
                         .unwrap_or_else(|| MSG.to_string())
                 })
             };
