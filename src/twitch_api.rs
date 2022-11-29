@@ -95,8 +95,12 @@ impl std::fmt::Display for Badges {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "badges=")?;
 
-        for badge in &self.inner {
-            write!(f, "{},", badge)?;
+        for (i, badge) in self.inner.iter().enumerate() {
+            write!(f, "{}", badge)?;
+
+            if i != self.inner.len() - 1 {
+                write!(f, ",")?;
+            }
         }
 
         write!(f, ";")?;
