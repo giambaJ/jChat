@@ -38,9 +38,11 @@ impl Actor for FakeIrc {
         ctx.run_interval(Duration::from_secs(1), move |_, ctx| {
             debug!("Sending message");
 
-            let mut rng = rand::thread_rng();
+            // let mut rng = rand::thread_rng();
 
-            let millis: u64 = rng.gen_range(50..1500);
+            // let millis: u64 = rng.gen_range(50..1500);
+
+            let millis = 50;
 
             info!("Sleeping for {} milliseconds", millis);
 
