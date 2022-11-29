@@ -10,6 +10,8 @@ pub enum CommandError {
     MissingMessage,
     #[error("The number provided was invalid")]
     InvalidNumber(#[from] ParseIntError),
+    #[error("No number provided")]
+    MissingNumber,
 }
 
 pub enum Command {
@@ -33,7 +35,7 @@ impl TryFrom<String> for Command {
 
                     let count = match split.get(2) {
                         Some(v) => v.parse::<u64>(),
-                        _ => todo!(),
+                        _ => Err(Self::Error::MissingNumber),
                     }?;
 
                     todo!()
