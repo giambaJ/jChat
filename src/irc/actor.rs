@@ -30,8 +30,6 @@ impl Actor for FakeIrc {
 
             let millis: u64 = rng.gen_range(50..1500);
 
-            let millis = 50;
-
             info!("Sleeping for {} milliseconds", millis);
 
             thread::sleep(Duration::from_millis(millis));
