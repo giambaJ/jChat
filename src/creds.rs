@@ -58,7 +58,7 @@ impl Credentials {
         Ok(diff < Duration::from_secs(30 * 60))
     }
 
-    pub async fn refresh(&mut self) -> anyhow::Result<bool> {
+    pub async fn refresh(&mut self) -> anyhow::Result<()> {
         const CLIENT_ID: &str = env!("TWITCH_CLIENT_ID");
         const CLIENT_SECRET: &str = env!("TWITCH_CLIENT_SECRET");
         const REFRESH_TOKEN: &str = env!("TWITCH_REFRESH_TOKEN");
@@ -76,6 +76,10 @@ impl Credentials {
 
         self.refresh_token = resp.refresh_token;
 
-        todo!();
+        Ok(())
+    }
+
+    pub fn save(&self) -> anyhow::Result<()> {
+        Ok(())
     }
 }
