@@ -35,6 +35,13 @@
     <script src="../settings.js"></script>
     <script src="utils.js"></script>
     <script src="script.js"></script>
+
+    <script>
+      const hash = window.location.hash;
+
+      // When in browser preview mode, make background black
+      hash.includes('preview');
+    </script>
   </head>
 
   <body>
