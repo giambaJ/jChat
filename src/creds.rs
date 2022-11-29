@@ -13,10 +13,7 @@ use crate::twitch_api::CLIENT;
 #[derive(Debug, Deserialize)]
 pub struct AccessToken {
     access_token: String,
-    expires_in: i64,
     refresh_token: String,
-    scope: Vec<String>,
-    token_type: String,
 }
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
@@ -98,6 +95,16 @@ impl Credentials {
     }
 
     pub fn save(&self) -> anyhow::Result<()> {
+        use std::{fs::File, io::Write};
+
+        let path = Self::get_path()?;
+
+        let creds_str = toml::to_string(&self)?;
+
+        let mut file = File::create(path)?;
+
+        file.write_all(creds_str.as_bytes())?;
+
         Ok(())
     }
 }

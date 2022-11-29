@@ -1,7 +1,4 @@
-use std::{
-    fs::File,
-    io::{Read, Write},
-};
+use std::{fs::File, io::Read};
 
 use actix_files::NamedFile;
 use actix_web::{web, HttpRequest, Result};
@@ -94,11 +91,7 @@ async fn main() -> anyhow::Result<()> {
                     refresh_token,
                 };
 
-                let creds_str = toml::to_string(&creds)?;
-
-                let mut file = File::create(creds_path)?;
-
-                file.write_all(creds_str.as_bytes())?;
+                creds.save()?;
 
                 creds
             }
