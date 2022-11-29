@@ -84,7 +84,7 @@ async fn main() -> anyhow::Result<()> {
         .with_max_level(tracing::Level::INFO)
         .init();
 
-    let stdin_handle = std::thread::spawn(|| loop {
+    std::thread::spawn(|| loop {
         use std::io;
 
         let mut buf = String::new();
