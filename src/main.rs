@@ -139,11 +139,11 @@ async fn main() -> anyhow::Result<()> {
     // Must be initialized after credentials
     lazy_static::initialize(&twitch_api::CLIENT);
 
-    let pool = UserPool::get().await?;
-
-    *USERS.lock() = pool;
-
     {
+        let pool = UserPool::get().await?;
+
+        *USERS.lock() = pool;
+
         // A file containing one message per line
         // TODO: Add ability to pass custom directory
         let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
