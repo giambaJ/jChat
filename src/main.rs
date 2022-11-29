@@ -10,6 +10,7 @@ use twitch_api::UserPool;
 
 use creds::Credentials;
 
+mod command;
 mod creds;
 
 pub static USERS: Mutex<UserPool> = Mutex::new(UserPool { users: Vec::new() });
