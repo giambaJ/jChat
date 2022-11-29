@@ -4,6 +4,8 @@ pub enum CommandError {
     InvalidCommand(String),
     #[error("No command was provided")]
     MissingCommand,
+    #[error("No message was provided")]
+    MissingMessage,
     #[error("The number provided was invalid")]
     InvalidNumber,
 }
@@ -21,7 +23,12 @@ impl TryFrom<String> for Command {
             let split = command.split_whitespace().collect::<Vec<_>>();
 
             match split.get(0) {
-                Some(&"write") => {}
+                Some(&"write") => {
+                    let msg = match split.get(1) {
+                        Some(v) => Ok(v),
+                        None => Err(Self::Error::NoMessage),
+                    }?;
+                }
                 Some(&"pause") => {}
                 Some(x) => Err(Self::Error::InvalidCommand(x)),
                 None => Err(Self::Error::MissingCommand),
