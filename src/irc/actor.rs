@@ -31,8 +31,8 @@ impl Actor for FakeIrc {
             let msg = crate::MESSAGES.lock().pop_front();
 
             if let Some(msg) = msg {
-                // Skip any comments
-                if msg.starts_with('#') {
+                // Skip any comments or empty lines
+                if msg.starts_with('#') || msg.is_empty() {
                     return;
                 }
 
