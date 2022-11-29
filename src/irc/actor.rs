@@ -44,7 +44,11 @@ impl Actor for FakeIrc {
 
             let millis: u64 = rng.gen_range(50..1500);
 
+            info!("Sleeping for {} milliseconds", millis);
+
             thread::sleep(Duration::from_millis(millis));
+
+            info!("Sending message");
 
             let msg = {
                 rx.try_recv().unwrap_or_else(|_| {
