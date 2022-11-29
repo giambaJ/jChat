@@ -1,3 +1,4 @@
-Hey!
+/write Hey! 10
 Hello world!
+/pause 1000
 Wassup!

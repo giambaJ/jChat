@@ -28,17 +28,22 @@ impl Actor for FakeIrc {
 
             let mut rng = rand::thread_rng();
 
-            let millis: u64 = rng.gen_range(50..1500);
-
-            debug!("Sleeping for {} milliseconds", millis);
-
-            thread::sleep(Duration::from_millis(millis));
-
-            debug!("Sending message");
-
             let msg = crate::MESSAGES.lock().pop_front();
 
             if let Some(msg) = msg {
+                // Skip any comments
+                if msg.starts_with('#') {
+                    return;
+                }
+
+                let millis: u64 = rng.gen_range(50..1500);
+
+                debug!("Sleeping for {} milliseconds", millis);
+
+                thread::sleep(Duration::from_millis(millis));
+
+                debug!("Sending message");
+
                 debug!("{}", msg);
 
                 let parsed = Command::try_from(msg).unwrap();
