@@ -104,6 +104,9 @@ async fn main() -> anyhow::Result<()> {
         *creds::CREDENTIALS.lock() = creds;
     };
 
+    // Must be initialized after credentials
+    lazy_static::initialize(&twitch_api::CLIENT);
+
     let pool = UserPool::get().await?;
 
     *USERS.lock() = pool;

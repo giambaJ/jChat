@@ -8,8 +8,6 @@ use lazy_static::lazy_static;
 use parking_lot::Mutex;
 use serde::{Deserialize, Serialize};
 
-use crate::twitch_api::CLIENT;
-
 #[derive(Debug, Deserialize)]
 pub struct AccessToken {
     access_token: String,
@@ -46,8 +44,7 @@ impl Credentials {
     }
 
     pub async fn expires_in(&self) -> anyhow::Result<SystemTime> {
-        let response: serde_json::Value = CLIENT
-            .get("https://id.twitch.tv/oauth2/validate")
+        let response: serde_json::Value = reqwest::get("https://id.twitch.tv/oauth2/validate")
             .await?
             .json()
             .await?;
@@ -85,7 +82,11 @@ impl Credentials {
             refresh_token = REFRESH_TOKEN,
         );
 
-        let resp: AccessToken = CLIENT.post(REFRESH_URL).await?.json().await?;
+        let resp: AccessToken = reqwest::Client::new()
+            .post(REFRESH_URL)
+            .await?
+            .json()
+            .await?;
 
         self.auth_token = resp.access_token;
 
