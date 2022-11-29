@@ -28,9 +28,9 @@ impl Actor for FakeIrc {
 
             let mut buf = String::new();
 
-            if io::stdin().read_line(&mut buf).is_ok() {
-                tx.send("wassup".to_string()).unwrap();
-            }
+            // if io::stdin().read_line(&mut buf).is_ok() {
+            tx.send("wassup".to_string()).unwrap();
+            // }
         });
 
         info!("Creating message sender interval");
