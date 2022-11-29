@@ -84,6 +84,18 @@ async fn main() -> anyhow::Result<()> {
         .with_max_level(tracing::Level::INFO)
         .init();
 
+    tokio::spawn(async {
+        loop {
+            use std::io;
+
+            let mut buf = String::new();
+
+            if io::stdin().read_line(&mut buf).is_ok() {
+                MESSAGES.lock().push_back(buf);
+            }
+        }
+    });
+
     {
         use std::fs::File;
 
