@@ -84,7 +84,7 @@ async fn main() -> anyhow::Result<()> {
         .with_max_level(tracing::Level::INFO)
         .init();
 
-    tokio::spawn(async {
+    let stdin_handle = tokio::spawn(async {
         loop {
             use std::io;
 
@@ -166,6 +166,8 @@ async fn main() -> anyhow::Result<()> {
     .bind(("127.0.0.1", 8080))?
     .run()
     .await?;
+
+    stdin_handle.abort();
 
     Ok(())
 }
