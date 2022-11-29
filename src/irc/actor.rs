@@ -50,21 +50,18 @@ impl Actor for FakeIrc {
 
             info!("Sending message");
 
-            let msg = {
-                rx.try_recv().unwrap_or_else(|_| {
-                    crate::MESSAGES
-                        .lock()
-                        .pop_front()
-                        .unwrap_or_else(|| MSG.to_string())
-                })
-            };
+            let msg = crate::MESSAGES.lock().pop_front();
 
-            info!("{:?}", msg);
+            if let Some(msg) = msg {
+                info!("{:?}", msg);
 
-            let parsed = crate::USERS.lock().send_message(msg);
-            ctx.text(parsed);
+                let parsed = crate::USERS.lock().send_message(msg);
+                ctx.text(parsed);
 
-            debug!("Response gotten");
+                debug!("Response gotten");
+            } else {
+                info!("No message to print");
+            }
         });
     }
 }
