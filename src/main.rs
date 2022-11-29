@@ -1,4 +1,7 @@
-use std::{fs::File, io::Read};
+use std::{
+    fs::File,
+    io::{Read, Write},
+};
 
 use actix_files::NamedFile;
 use actix_web::{web, HttpRequest, Result};
@@ -90,11 +93,27 @@ async fn main() -> anyhow::Result<()> {
 
                 toml::from_str(&file_contents)?
             } else {
-                let client_id = env!("TWITCH_CLIENT_ID");
-                let client_secret = env!("TWITCH_CLIENT_SECRET");
-                let user_id = env!("TWITCH_USER_ID");
-                let auth_token = env!("TWITCH_AUTH_TOKEN");
-                let refresh_token = env!("TWITCH_REFRESH_TOKEN");
+                let client_id = env!("TWITCH_CLIENT_ID").to_string();
+                let client_secret = env!("TWITCH_CLIENT_SECRET").to_string();
+                let user_id = env!("TWITCH_USER_ID").to_string();
+                let auth_token = env!("TWITCH_AUTH_TOKEN").to_string();
+                let refresh_token = env!("TWITCH_REFRESH_TOKEN").to_string();
+
+                let creds = Credentials {
+                    client_id,
+                    client_secret,
+                    user_id,
+                    auth_token,
+                    refresh_token,
+                };
+
+                let creds_str = toml::to_string(&creds)?;
+
+                let mut file = File::create(creds_path)?;
+
+                file.write_all(creds_str.as_bytes())?;
+
+                creds
             }
         };
 
