@@ -49,11 +49,11 @@ pub struct Badges {
 
 impl Badges {
     pub fn from_user(user: &TwitchUser) -> Self {
-        let uid = crate::creds::CREDENTIALS.lock().user_id;
+        let uid = &crate::creds::CREDENTIALS.lock().user_id;
 
         let mut badges = Vec::new();
 
-        if uid == user.uid {
+        if uid == &user.uid {
             badges.push(Badge::Broadcaster);
         }
 
