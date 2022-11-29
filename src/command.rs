@@ -34,7 +34,7 @@ impl TryFrom<String> for Command {
                     }?;
 
                     let count = match split.get(2) {
-                        Some(v) => v.parse::<u64>(),
+                        Some(v) => Ok(v.parse::<u64>()?),
                         _ => Err(Self::Error::MissingNumber),
                     }?;
 
