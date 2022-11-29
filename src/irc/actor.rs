@@ -23,16 +23,12 @@ impl Actor for FakeIrc {
     fn started(&mut self, ctx: &mut Self::Context) {
         let (tx, rx) = crossbeam::channel::unbounded::<String>();
 
-        tokio::spawn(async move {
+        ctx.run_interval(Duration::from_millis(100), move |_, _| {
             use std::io;
 
-            loop {
-                let mut buf = String::new();
+            let mut buf = String::new();
 
-                if io::stdin().read_line(&mut buf).is_err() {
-                    continue;
-                }
-
+            if io::stdin().read_line(&mut buf).is_ok() {
                 tx.send("wassup".to_string()).unwrap();
             }
         });
