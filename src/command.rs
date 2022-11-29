@@ -38,10 +38,15 @@ impl TryFrom<String> for Command {
                         _ => Err(Self::Error::MissingNumber),
                     }?;
 
-                    todo!()
+                    Ok(Command::Write(msg.to_string(), count))
                 }
                 Some(&"pause") => {
-                    todo!()
+                    let count = match split.get(1) {
+                        Some(v) => Ok(v.parse::<u64>()?),
+                        _ => Err(Self::Error::MissingNumber),
+                    }?;
+
+                    Ok(Command::Pause(count))
                 }
                 Some(x) => Err(Self::Error::InvalidCommand(x.to_string())),
                 None => Err(Self::Error::MissingCommand),
