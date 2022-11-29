@@ -84,15 +84,13 @@ async fn main() -> anyhow::Result<()> {
         .with_max_level(tracing::Level::INFO)
         .init();
 
-    let stdin_handle = tokio::spawn(async {
-        loop {
-            use std::io;
+    let stdin_handle = std::thread::spawn(|| loop {
+        use std::io;
 
-            let mut buf = String::new();
+        let mut buf = String::new();
 
-            if io::stdin().read_line(&mut buf).is_ok() {
-                MESSAGES.lock().push_back(buf);
-            }
+        if io::stdin().read_line(&mut buf).is_ok() {
+            MESSAGES.lock().push_back(buf);
         }
     });
 
@@ -170,8 +168,6 @@ async fn main() -> anyhow::Result<()> {
     .await?;
 
     info!("Completed web server");
-
-    stdin_handle.abort();
 
     Ok(())
 }
