@@ -1,3 +1,5 @@
+use std::num::ParseIntError;
+
 #[derive(Debug, thiserror::Error)]
 pub enum CommandError {
     #[error("The command provided was invalid. Found {0}")]
@@ -7,7 +9,7 @@ pub enum CommandError {
     #[error("No message was provided")]
     MissingMessage,
     #[error("The number provided was invalid")]
-    InvalidNumber,
+    InvalidNumber(#[from] ParseIntError),
 }
 
 pub enum Command {
@@ -30,12 +32,15 @@ impl TryFrom<String> for Command {
                     }?;
 
                     let count = match split.get(2) {
-                        Some(v) => u64::from
-                    }
+                        Some(v) => v.parse::<u64>(),
+                        _ => todo!(),
+                    }?;
 
-                        todo!()
+                    todo!()
                 }
-                Some(&"pause") => {todo!()}
+                Some(&"pause") => {
+                    todo!()
+                }
                 Some(x) => Err(Self::Error::InvalidCommand(x)),
                 None => Err(Self::Error::MissingCommand),
             }
