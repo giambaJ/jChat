@@ -2,6 +2,8 @@
 pub enum CommandError {
     #[error("The command provided was invalid. Found {0}")]
     InvalidCommand(String),
+    #[error("The number provided was invalid")]
+    InvalidNumber,
 }
 
 pub enum Command {
