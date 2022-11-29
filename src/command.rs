@@ -10,7 +10,7 @@ pub enum Command {
 }
 
 impl TryFrom<String> for Command {
-    type Error;
+    type Error = CommandError;
 
     fn try_from(value: String) -> Result<Self, Self::Error> {
         todo!()
