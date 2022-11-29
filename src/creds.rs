@@ -1,4 +1,7 @@
-use std::time::{Duration, SystemTime};
+use std::{
+    path::PathBuf,
+    time::{Duration, SystemTime},
+};
 
 use const_format::formatcp;
 use lazy_static::lazy_static;
@@ -30,6 +33,21 @@ lazy_static! {
 }
 
 impl Credentials {
+    pub fn get_path() -> anyhow::Result<PathBuf> {
+        use std::fs::create_dir_all;
+
+        let dir = directories::ProjectDirs::from("com", "jewelexx", "FauxChat")
+            .unwrap_or_else(|| unimplemented!());
+
+        let data_dir = dir.data_dir();
+
+        if !data_dir.exists() {
+            create_dir_all(data_dir)?;
+        }
+
+        Ok(data_dir.join("credentials.toml"))
+    }
+
     pub async fn expires_in(&self) -> anyhow::Result<SystemTime> {
         let response: serde_json::Value = CLIENT
             .get("https://id.twitch.tv/oauth2/validate")

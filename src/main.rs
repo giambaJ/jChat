@@ -68,18 +68,9 @@ async fn main() -> anyhow::Result<()> {
         .init();
 
     {
-        use std::fs::{create_dir_all, File};
+        use std::fs::File;
 
-        let dir = directories::ProjectDirs::from("com", "jewelexx", "FauxChat")
-            .unwrap_or_else(|| unimplemented!());
-
-        let data_dir = dir.data_dir();
-
-        if !data_dir.exists() {
-            create_dir_all(data_dir)?;
-        }
-
-        let creds_path = data_dir.join("credentials.toml");
+        let creds_path = Credentials::get_path()?;
 
         let mut creds: Credentials = {
             if creds_path.exists() {
