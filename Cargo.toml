@@ -23,6 +23,7 @@ reqwest = { version = "0.11.13", features = ["json", "into_future"], git = "http
 rotenv_codegen = "0.15.0"
 serde = { version = "1.0.147", features = ["derive"] }
 serde_json = "1.0.87"
+thiserror = "1.0.37"
 tokio = { version = "1.21.2", features = ["full"] }
 toml = "0.5.9"
 tracing = "0.1.37"

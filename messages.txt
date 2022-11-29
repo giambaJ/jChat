@@ -1,3 +1,8 @@
-Hey!
+# Write "Hey!" 10 times
+/write Hey! 10
+
+# Write "Hello World!" once
 Hello world!
-Wassup!
+
+# Pause for 1 second
+/pause 1000

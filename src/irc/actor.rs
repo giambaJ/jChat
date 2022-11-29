@@ -4,6 +4,8 @@ use actix::{prelude::*, Actor, AsyncContext, StreamHandler};
 use actix_web_actors::ws::{self};
 use rand::Rng;
 
+use crate::command::Command;
+
 /// Chat server sends this messages to session
 #[derive(Message)]
 #[rtype(result = "()")]
@@ -26,25 +28,45 @@ impl Actor for FakeIrc {
 
             let mut rng = rand::thread_rng();
 
-            let millis: u64 = rng.gen_range(50..1500);
-
-            info!("Sleeping for {} milliseconds", millis);
-
-            thread::sleep(Duration::from_millis(millis));
-
-            info!("Sending message");
-
             let msg = crate::MESSAGES.lock().pop_front();
 
             if let Some(msg) = msg {
-                info!("{}", msg);
+                // Skip any comments or empty lines
+                if msg.starts_with('#') || msg.is_empty() {
+                    return;
+                }
 
-                let parsed = crate::USERS.lock().send_message(msg);
-                ctx.text(parsed);
+                let millis: u64 = rng.gen_range(50..1500);
 
-                debug!("Response gotten");
+                debug!("Sleeping for {} milliseconds", millis);
+
+                thread::sleep(Duration::from_millis(millis));
+
+                debug!("Sending message");
+
+                debug!("{}", msg);
+
+                let parsed = Command::try_from(msg).unwrap();
+
+                match parsed {
+                    Command::Write(ref message, count) => {
+                        for _ in 0..count {
+                            let parsed = crate::USERS.lock().send_message(message);
+                            ctx.text(parsed);
+
+                            let millis: u64 = rng.gen_range(50..1500);
+
+                            debug!("Sleeping for {} milliseconds", millis);
+
+                            thread::sleep(Duration::from_millis(millis));
+                        }
+                    }
+                    Command::Pause(millis) => thread::sleep(Duration::from_millis(millis)),
+                }
+
+                debug!("Message sent");
             } else {
-                info!("No message to print");
+                debug!("No message to print");
             }
         });
     }

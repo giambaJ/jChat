@@ -38,6 +38,15 @@
   </head>
 
   <body>
+    <script>
+      const hash = window.location.hash;
+
+      // When in browser preview mode, make background black
+      if (hash.includes('preview')) {
+        document.body.classList.add('preview-body');
+      }
+    </script>
+
     <div id="chat_container"></div>
   </body>
 </html>
