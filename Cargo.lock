@@ -635,6 +635,7 @@ dependencies = [
  "rotenv_codegen",
  "serde",
  "serde_json",
+ "thiserror",
  "tokio",
  "toml",
  "tracing",
