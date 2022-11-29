@@ -167,7 +167,5 @@ async fn main() -> anyhow::Result<()> {
     .run()
     .await?;
 
-    info!("Completed web server");
-
     Ok(())
 }
