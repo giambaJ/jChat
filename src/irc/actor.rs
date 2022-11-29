@@ -4,6 +4,8 @@ use actix::{prelude::*, Actor, AsyncContext, StreamHandler};
 use actix_web_actors::ws::{self};
 use rand::Rng;
 
+use crate::command::Command;
+
 /// Chat server sends this messages to session
 #[derive(Message)]
 #[rtype(result = "()")]
@@ -28,25 +30,32 @@ impl Actor for FakeIrc {
 
             let millis: u64 = rng.gen_range(50..1500);
 
-            info!("Sleeping for {} milliseconds", millis);
+            debug!("Sleeping for {} milliseconds", millis);
 
             thread::sleep(Duration::from_millis(millis));
 
-            info!("Sending message");
+            debug!("Sending message");
 
             let msg = crate::MESSAGES.lock().pop_front();
 
             if let Some(msg) = msg {
-                info!("{}", msg);
+                debug!("{}", msg);
 
-                let parsed = crate::command::Command::try_from(msg).unwrap();
+                let parsed = Command::try_from(msg).unwrap();
 
-                let parsed = crate::USERS.lock().send_message(msg);
-                ctx.text(parsed);
+                match parsed {
+                    Command::Write(msg, count) => {
+                        for _ in 0..count {
+                            let parsed = crate::USERS.lock().send_message(msg);
+                            ctx.text(parsed);
+                        }
+                    }
+                    Command::Pause(millis) => thread::sleep(Duration::from_millis(millis)),
+                }
 
-                debug!("Response gotten");
+                debug!("Message sent");
             } else {
-                info!("No message to print");
+                debug!("No message to print");
             }
         });
     }
