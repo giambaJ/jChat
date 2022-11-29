@@ -33,6 +33,8 @@ impl Actor for FakeIrc {
             }
         });
 
+        info!("Creating message sender interval");
+
         ctx.run_interval(Duration::from_secs(1), move |_, ctx| {
             debug!("Sending message");
 
