@@ -1,7 +1,8 @@
-use std::{collections::VecDeque, fs::File, io::Read};
+use std::{collections::VecDeque, fs::File, io::Read, path::PathBuf};
 
 use actix_files::NamedFile;
 use actix_web::{web, HttpRequest, Result};
+use clap::Parser;
 use parking_lot::Mutex;
 use tracing_subscriber::fmt::format::FmtSpan;
 
@@ -37,6 +38,12 @@ macro_rules! api_url {
 
 mod irc;
 mod twitch_api;
+
+#[derive(Debug, Parser)]
+struct CmdArgs {
+    #[clap(short, long)]
+    messages_file: Option<PathBuf>,
+}
 
 // User follows reference: https://dev.twitch.tv/docs/api/reference#get-users-follows
 // And to get user id in the first place: https://dev.twitch.tv/docs/api/reference#get-users
@@ -84,6 +91,8 @@ async fn main() -> anyhow::Result<()> {
         .with_span_events(FmtSpan::FULL)
         .with_max_level(tracing::Level::INFO)
         .init();
+
+    let args = CmdArgs::parse();
 
     std::thread::spawn(|| loop {
         use std::io;
@@ -144,8 +153,15 @@ async fn main() -> anyhow::Result<()> {
         *USERS.lock() = pool;
 
         // A file containing one message per line
-        // TODO: Add ability to pass custom directory
-        let msgs_path = std::env::current_dir().unwrap().join("messages.txt");
+        let msgs_path = {
+            let cwd = std::env::current_dir().unwrap();
+
+            if let Some(path) = args.messages_file {
+                cwd.join(path)
+            } else {
+                cwd.join("messages.txt")
+            }
+        };
 
         let mut msgs_file = File::open(msgs_path)?;
 
