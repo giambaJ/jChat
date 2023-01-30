@@ -1,3 +1,24 @@
+const fonts = [
+  'BalooTammudu',
+  'SegoeUI',
+  'Roboto',
+  'Lato',
+  'NotoSans',
+  'SourceCodePro',
+  'Impact',
+  'Comfortaa',
+  'DancingScript',
+  'IndieFlower',
+  'PressStart2P',
+  'Wallpoet',
+];
+
+const sizes = ['small', 'medium', 'large'];
+
+const strokes = ['thin', 'medium', 'thick', 'thicker'];
+
+const shadows = ['small', 'medium', 'large'];
+
 function parseIRC(data) {
   var message = {
     raw: data,
@@ -141,7 +162,7 @@ function parseIRC(data) {
   })(window.location.search.substr(1).split('&'));
 })(jQuery);
 
-Chat = {
+const Chat = {
   info: {
     channel: null,
     animate:
@@ -256,9 +277,11 @@ Chat = {
   },
 
   load: function (callback) {
+    console.log('jChat: Loading...');
     TwitchAPI(
       'https://api.twitch.tv/helix/users?login=' + Chat.info.channel,
     ).done(function (res) {
+      console.log(res);
       Chat.info.channelID = res.data[0].id;
       Chat.loadEmotes(Chat.info.channelID);
 
@@ -723,6 +746,7 @@ Chat = {
   },
 
   connect: function (channel) {
+    console.log('jChat: Connecting...');
     Chat.info.channel = channel;
     var title = $(document).prop('title');
     $(document).prop('title', title + Chat.info.channel);
@@ -837,6 +861,7 @@ Chat = {
 };
 
 $(document).ready(function () {
+  console.log('Document is ready');
   Chat.connect(
     $.QueryString.channel ? $.QueryString.channel.toLowerCase() : 'giambaj',
   );
