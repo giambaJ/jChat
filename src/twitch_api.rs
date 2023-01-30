@@ -109,8 +109,6 @@ impl std::fmt::Display for Badges {
     }
 }
 
-// TODO: Add random hex colour impl
-
 pub struct Color {
     r: u8,
     g: u8,
