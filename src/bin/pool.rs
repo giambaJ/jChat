@@ -3,6 +3,8 @@ use tokio::{fs::File, io::AsyncWriteExt};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    fauxchat::init_creds().await?;
+
     let pool = UserPool::get().await?;
 
     let pool_str = serde_json::to_string(&pool)?;

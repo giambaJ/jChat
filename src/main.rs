@@ -1,9 +1,4 @@
-use std::{
-    collections::VecDeque,
-    fs::File,
-    io::{Read, Write},
-    path::PathBuf,
-};
+use std::{collections::VecDeque, fs::File, io::Read, path::PathBuf};
 
 use actix_files::NamedFile;
 use actix_web::{web, HttpRequest, Result};
@@ -14,8 +9,6 @@ use fauxchat::*;
 
 use irc::handle_ws;
 pub use twitch_api::UserPool;
-
-use creds::Credentials;
 
 // TODO: In release builds, include all files from chat frontend in binary
 
@@ -84,54 +77,13 @@ async fn main() -> anyhow::Result<()> {
         }
     });
 
-    {
-        use std::fs::File;
-
-        let creds_path = Credentials::get_path()?;
-
-        let mut creds: Credentials = {
-            if creds_path.exists() {
-                let mut file_contents = String::new();
-
-                File::open(creds_path)?.read_to_string(&mut file_contents)?;
-
-                toml::from_str(&file_contents)?
-            } else {
-                let client_id = env!("TWITCH_CLIENT_ID").to_string();
-                let client_secret = env!("TWITCH_CLIENT_SECRET").to_string();
-                let user_id = env!("TWITCH_USER_ID").to_string();
-                let auth_token = env!("TWITCH_AUTH_TOKEN").to_string();
-                let refresh_token = env!("TWITCH_REFRESH_TOKEN").to_string();
-
-                let creds = Credentials {
-                    client_id,
-                    client_secret,
-                    user_id,
-                    auth_token,
-                    refresh_token,
-                };
-
-                creds.save()?;
-
-                creds
-            }
-        };
-
-        if creds.remain_30().await? {
-            creds.refresh().await?;
-        }
-
-        *creds::CREDENTIALS.lock() = creds;
-    };
+    init_creds().await?;
 
     // Must be initialized after credentials
     lazy_static::initialize(&twitch_api::CLIENT);
 
     {
         let pool = UserPool::get().await?;
-
-        let user_pool_str = serde_json::to_string(&pool)?;
-        File::create("user-pool.json")?.write_all(user_pool_str.as_bytes())?;
 
         *USERS.lock() = pool;
 
