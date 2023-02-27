@@ -83,7 +83,12 @@ async fn main() -> anyhow::Result<()> {
     lazy_static::initialize(&twitch_api::CLIENT);
 
     {
-        let pool = UserPool::get().await?;
+        let pool = if PathBuf::from("pool.json").exists() {
+            let file = File::open("pool.json")?;
+            serde_json::from_reader(file)?
+        } else {
+            UserPool::get().await?
+        };
 
         *USERS.lock() = pool;
 
