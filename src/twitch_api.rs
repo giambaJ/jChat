@@ -29,12 +29,12 @@ pub struct VipDatum {
     pub user_login: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct UserPool {
     pub users: Vec<TwitchUser>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct TwitchUser {
     pub name: String,
     pub uid: String,

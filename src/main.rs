@@ -1,43 +1,23 @@
-use std::{collections::VecDeque, fs::File, io::Read, path::PathBuf};
+use std::{
+    collections::VecDeque,
+    fs::File,
+    io::{Read, Write},
+    path::PathBuf,
+};
 
 use actix_files::NamedFile;
 use actix_web::{web, HttpRequest, Result};
 use clap::Parser;
-use parking_lot::Mutex;
 use tracing_subscriber::fmt::format::FmtSpan;
 
+use fauxchat::*;
+
 use irc::handle_ws;
-use twitch_api::UserPool;
+pub use twitch_api::UserPool;
 
 use creds::Credentials;
 
-mod command;
-mod creds;
-
-pub static USERS: Mutex<UserPool> = Mutex::new(UserPool { users: Vec::new() });
-
-lazy_static::lazy_static! {
-    pub static ref MESSAGES: Mutex<VecDeque<String>> = Mutex::new(VecDeque::new());
-}
-
 // TODO: In release builds, include all files from chat frontend in binary
-
-#[macro_use]
-extern crate tracing;
-
-#[macro_export]
-macro_rules! api_url {
-    ($url:literal) => {{
-        use const_format::formatcp;
-
-        const URL: &str = formatcp!($url, user_id = env!("TWITCH_USER_ID"));
-
-        formatcp!("https://api.twitch.tv/helix/{}", URL)
-    }};
-}
-
-mod irc;
-mod twitch_api;
 
 #[derive(Debug, Parser)]
 struct CmdArgs {
@@ -149,6 +129,9 @@ async fn main() -> anyhow::Result<()> {
 
     {
         let pool = UserPool::get().await?;
+
+        let user_pool_str = serde_json::to_string(&pool)?;
+        File::create("user-pool.json")?.write_all(user_pool_str.as_bytes())?;
 
         *USERS.lock() = pool;
 
