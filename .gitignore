@@ -18,3 +18,5 @@ target/
 .env
 
 credentials.toml
+
+pool.json
