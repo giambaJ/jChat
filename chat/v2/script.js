@@ -1,3 +1,6 @@
+const URL = '127.0.0.1';
+const PORT = '8080';
+
 const fonts = [
   'BalooTammudu',
   'SegoeUI',
@@ -753,7 +756,7 @@ const Chat = {
 
     Chat.load(function () {
       console.log('jChat: Connecting to IRC server...');
-      var socket = new ReconnectingWebSocket('ws://127.0.0.1:8080/ws/', null, {
+      var socket = new ReconnectingWebSocket(`ws://${URL}:${PORT}/ws/`, null, {
         reconnectInterval: 2000,
       });
 
