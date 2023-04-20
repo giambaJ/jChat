@@ -1,4 +1,4 @@
-.PHONY: build
+.PHONY: setup build
 
 setup: update apply
 
