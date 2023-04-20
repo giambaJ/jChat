@@ -14,7 +14,7 @@ index cae6a81..37b25ed 100644
 +++ b/README.md
 @@ -1,8 +1,11 @@
  # [![](https://www.giambaj.it/twitch/jchat/img/peepoHappysmall.png)](#) jChat [![GitHub version](https://img.shields.io/badge/release-v2.3.4-blue)](#) [![Website giambaj.it](https://img.shields.io/website-up-down-green-red/https/giambaj.it.svg)](https://www.giambaj.it/twitch/jchat/) [![GitHub license](https://img.shields.io/github/license/giambaJ/jChat)](https://github.com/giambaJ/jChat/blob/main/LICENSE)
- 
+
  **jChat** is an overlay that allows you to show your Twitch chat on screen with OBS, XSplit, and any other streaming software that supports browser sources. It supports your [**BetterTTV**](https://betterttv.com/), [**FrankerFaceZ**](https://www.frankerfacez.com/) and [**7TV**](https://7tv.app/) emotes, always at the best available quality. You have many options to customize your chat, like enabling a smooth animation for new messages, or fading old ones after some time. If you have a chat full of !gamble addicts, you can choose to hide bots and commands messages. It also comes with many fonts and styling options that can be combined as desired.
 +
  ### The app is up and running on the [**website**](https://www.giambaj.it/twitch/jchat/).
@@ -24,15 +24,6 @@ index cae6a81..37b25ed 100644
  - 7TV, BTTV and FFZ emotes support
  - Custom channel badges
  - Lots of fonts and styling options
-diff --git a/img/BeerTime.gif b/img/BeerTime.gif
-index fec2542..4c841e0 100644
-Binary files a/img/BeerTime.gif and b/img/BeerTime.gif differ
-diff --git a/img/github.png b/img/github.png
-index 192846a..369009c 100644
-Binary files a/img/github.png and b/img/github.png differ
-diff --git a/img/peepoHappy.png b/img/peepoHappy.png
-index 5409f84..31134a8 100644
-Binary files a/img/peepoHappy.png and b/img/peepoHappy.png differ
 diff --git a/index.html b/index.html
 index 0a2f78c..2b9bad9 100644
 --- a/index.html
@@ -101,10 +92,10 @@ index 0a2f78c..2b9bad9 100644
 +        'PressStart2P',
 +        'Wallpoet',
 +      ];
- 
+
 -    </header>
 +      const sizes = ['small', 'medium', 'large'];
- 
+
 -    <section>
 -        <p>
 -            <em>jChat</em> is an overlay that allows you to show your Twitch chat on screen with OBS, XSplit, and any other streaming software that supports browser sources. It supports your
@@ -248,7 +239,7 @@ index 0a2f78c..2b9bad9 100644
 +          $alert.css('visibility', 'hidden');
 +        }, 200);
 +      }
- 
+
 +      function resetForm(event) {
 +        $channel.val('');
 +        $size.val('3');
@@ -264,7 +255,7 @@ index 0a2f78c..2b9bad9 100644
 +        $fade_seconds.addClass('hidden');
 +        $fade.val('30');
 +        $small_caps.prop('checked', false);
- 
+
 -        <form name="generator">
 -            <div class="form_row center">
 +        sizeUpdate();
@@ -274,7 +265,7 @@ index 0a2f78c..2b9bad9 100644
 +        badgesUpdate();
 +        capsUpdate();
 +        if ($example.hasClass('white')) changePreview();
- 
+
 -                <input type="text" name="channel" required placeholder="Channel">
 +        $result.addClass('hidden');
 +        $generator.removeClass('hidden');
@@ -519,7 +510,7 @@ index 0a2f78c..2b9bad9 100644
 +            </div>
 +          </div>
          </div>
- 
+
 +        <div id="submit_container">
 +          <div class="preview">
 +            <img id="brightness" src="img/light.png" /> <label>Preview:</label>
@@ -571,7 +562,7 @@ index 0a2f78c..2b9bad9 100644
 +        <input type="button" id="reset" value="Reset" />
 +      </div>
      </section>
- 
+
      <section id="donation">
 -        <span>This app is and will always be free.<br>If you like it and want to support, feel free to buy me a beer <img class="emote" src="img/Okayge.png"><img class="emote" src="img/BeerTime.gif"></span>
 -        <form action="https://www.paypal.com/donate" method="post" target="_top">
@@ -598,7 +589,7 @@ index 0a2f78c..2b9bad9 100644
 +        />
 +      </form>
      </section>
- 
+
      <footer>
 -        <p>Made with &#10084; by <a href="mailto:me@giambaj.it">giambaJ</a>
 -            <a href="https://github.com/giambaJ/jChat" target="_blank"><img class="github" src="img/github.png"></a>
@@ -795,12 +786,12 @@ index 012c4e3..d65bd4c 100644
 -    font-size: 48px;
 +  font-size: 48px;
  }
- 
+
  #example .chat_line {
 -    line-height: 75px;
 +  line-height: 75px;
  }
- 
+
  #example .badge {
 -    width: 40px;
 -    height: 40px;
@@ -811,31 +802,31 @@ index 012c4e3..d65bd4c 100644
 +  margin-right: 5px;
 +  margin-bottom: 8px;
  }
- 
+
  #example .badge:last-of-type {
 -    margin-right: 8px;
 +  margin-right: 8px;
  }
- 
+
  #example .colon {
 -    margin-right: 20px;
 +  margin-right: 20px;
  }
- 
+
  #example .cheer_bits {
 -    font-weight: 500;
 -    margin-right: 10px;
 +  font-weight: 500;
 +  margin-right: 10px;
  }
- 
+
  #example .cheer_emote {
 -    max-height: 60px;
 -    margin-bottom: -15px;
 +  max-height: 60px;
 +  margin-bottom: -15px;
  }
- 
+
  #example .emote {
 -    max-width: 180px;
 -    height: 60px;
@@ -844,7 +835,7 @@ index 012c4e3..d65bd4c 100644
 +  height: 60px;
 +  margin-right: -8px;
  }
- 
+
  #example .emoji {
 -    height: 55px;
 -}
@@ -860,12 +851,12 @@ index 683b332..f54fc96 100644
 -    font-size: 34px;
 +  font-size: 34px;
  }
- 
+
  #example .chat_line {
 -    line-height: 55px;
 +  line-height: 55px;
  }
- 
+
  #example .badge {
 -    width: 28px;
 -    height: 28px;
@@ -876,31 +867,31 @@ index 683b332..f54fc96 100644
 +  margin-right: 4px;
 +  margin-bottom: 6px;
  }
- 
+
  #example .badge:last-of-type {
 -    margin-right: 6px;
 +  margin-right: 6px;
  }
- 
+
  #example .colon {
 -    margin-right: 14px;
 +  margin-right: 14px;
  }
- 
+
  #example .cheer_bits {
 -    font-weight: 600;
 -    margin-right: 7px;
 +  font-weight: 600;
 +  margin-right: 7px;
  }
- 
+
  #example .cheer_emote {
 -    max-height: 42px;
 -    margin-bottom: -10px;
 +  max-height: 42px;
 +  margin-bottom: -10px;
  }
- 
+
  #example .emote {
 -    max-width: 128px;
 -    height: 42px;
@@ -909,7 +900,7 @@ index 683b332..f54fc96 100644
 +  height: 42px;
 +  margin-right: -6px;
  }
- 
+
  #example .emoji {
 -    height: 39px;
 -}
@@ -925,12 +916,12 @@ index f56141a..ca2d14e 100644
 -    font-size: 20px;
 +  font-size: 20px;
  }
- 
+
  #example .chat_line {
 -    line-height: 30px;
 +  line-height: 30px;
  }
- 
+
  #example .badge {
 -    width: 16px;
 -    height: 16px;
@@ -941,31 +932,31 @@ index f56141a..ca2d14e 100644
 +  margin-right: 2px;
 +  margin-bottom: 3px;
  }
- 
+
  #example .badge:last-of-type {
 -    margin-right: 3px;
 +  margin-right: 3px;
  }
- 
+
  #example .colon {
 -    margin-right: 8px;
 +  margin-right: 8px;
  }
- 
+
  #example .cheer_bits {
 -    font-weight: 700;
 -    margin-right: 4px;
 +  font-weight: 700;
 +  margin-right: 4px;
  }
- 
+
  #example .cheer_emote {
 -    max-height: 25px;
 -    margin-bottom: -6px;
 +  max-height: 25px;
 +  margin-bottom: -6px;
  }
- 
+
  #example .emote {
 -    max-width: 75px;
 -    height: 25px;
@@ -974,7 +965,7 @@ index f56141a..ca2d14e 100644
 +  height: 25px;
 +  margin-right: -3px;
  }
- 
+
  #example .emoji {
 -    height: 22px;
 -}
@@ -1054,7 +1045,7 @@ index fe5e06b..e174aa6 100644
 +  align-items: center;
 +  overflow-x: hidden;
  }
- 
+
  header {
 -    display: flex;
 -    align-items: center;
@@ -1065,21 +1056,21 @@ index fe5e06b..e174aa6 100644
 +  justify-content: center;
 +  margin-top: 25px;
  }
- 
+
  header img {
 -    width: 250px;
 -    height: auto;
 +  width: 250px;
 +  height: auto;
  }
- 
+
  header div {
 -    margin: 20px;
 -    text-align: center;
 +  margin: 20px;
 +  text-align: center;
  }
- 
+
  h1 {
 -    margin: 0px;
 -    font-weight: 600;
@@ -1088,14 +1079,14 @@ index fe5e06b..e174aa6 100644
 +  font-weight: 600;
 +  font-size: 3em;
  }
- 
+
  h2 {
 -    margin: 0;
 -    font-weight: 300;
 +  margin: 0;
 +  font-weight: 300;
  }
- 
+
  section {
 -    width: 80%;
 -    margin: 30px;
@@ -1108,21 +1099,21 @@ index fe5e06b..e174aa6 100644
 +  flex-direction: column;
 +  align-items: center;
  }
- 
+
  p {
 -    margin-top: 0;
 -    text-align: justify;
 +  margin-top: 0;
 +  text-align: justify;
  }
- 
+
  em {
 -    font-weight: bolder;
 -    font-style: unset;
 +  font-weight: bolder;
 +  font-style: unset;
  }
- 
+
  a {
 -    color: white;
 -    text-decoration: unset;
@@ -1133,12 +1124,12 @@ index fe5e06b..e174aa6 100644
 +  font-weight: bold;
 +  transition: opacity 0.3s;
  }
- 
+
  a:hover {
 -    opacity: .6;
 +  opacity: 0.6;
  }
- 
+
  form[name="generator"] {
 -    width: 1050px;
 -    margin: 15px;
@@ -1161,7 +1152,7 @@ index fe5e06b..e174aa6 100644
 +  justify-content: center;
 +  align-items: center;
  }
- 
+
  .form_table {
 -    width: 100%;
 -    display: flex;
@@ -1172,7 +1163,7 @@ index fe5e06b..e174aa6 100644
 +  justify-content: center;
 +  align-items: flex-start;
  }
- 
+
  .form_col {
 -    width: 400px;
 -    display: flex;
@@ -1185,7 +1176,7 @@ index fe5e06b..e174aa6 100644
 +  justify-content: center;
 +  align-items: center;
  }
- 
+
  .form_row {
 -    width: 100%;
 -    height: 40px;
@@ -1196,34 +1187,34 @@ index fe5e06b..e174aa6 100644
 +  display: flex;
 +  align-items: center;
  }
- 
+
  .form_row.left {
 -    justify-content: flex-start;
 +  justify-content: flex-start;
  }
- 
+
  .form_row.right {
 -    justify-content: flex-end;
 +  justify-content: flex-end;
  }
- 
+
  .form_row.left label {
 -    margin-left: 20px;
 +  margin-left: 20px;
  }
- 
+
  .form_row.right label {
 -    margin-right: 20px;
 +  margin-right: 20px;
  }
- 
+
  .form_row.center {
 -    justify-content: center;
 -    margin-bottom: 20px;
 +  justify-content: center;
 +  margin-bottom: 20px;
  }
- 
+
  input[type="text"] {
 -    width: 220px;
 -    height: 30px;
@@ -1242,7 +1233,7 @@ index fe5e06b..e174aa6 100644
 +  text-align: center;
 +  padding: 2px 10px;
  }
- 
+
  input[type="text"].short {
 -    width: 40px;
 -    height: 25px;
@@ -1251,7 +1242,7 @@ index fe5e06b..e174aa6 100644
 +  height: 25px;
 +  font-size: 0.8em;
  }
- 
+
  input[type="checkbox"] {
 -    font-size: 17px;
 -    -webkit-appearance: none;
@@ -1280,12 +1271,12 @@ index fe5e06b..e174aa6 100644
 +  -webkit-transition: all 0.2s ease-in-out;
 +  transition: all 0.2s ease-in-out;
  }
- 
+
  input[type="checkbox"]:checked {
 -    background: rgb(14, 207, 255);
 +  background: rgb(14, 207, 255);
  }
- 
+
  input[type="checkbox"]:after {
 -    position: absolute;
 -    content: "";
@@ -1314,12 +1305,12 @@ index fe5e06b..e174aa6 100644
 +  -webkit-transition: all 0.2s ease-in-out;
 +  transition: all 0.2s ease-in-out;
  }
- 
+
  input[type="checkbox"]:checked:after {
 -    left: calc(100% - 1.5em);
 +  left: calc(100% - 1.5em);
  }
- 
+
  select {
 -    width: 200px;
 -    height: 25px;
@@ -1334,12 +1325,12 @@ index fe5e06b..e174aa6 100644
 +  padding: 0px 8px;
 +  cursor: pointer;
  }
- 
+
  .hidden {
 -    display: none !important;
 +  display: none !important;
  }
- 
+
  #fade_seconds {
 -    margin: 10px;
 -    font-size: 0.7em;
@@ -1348,13 +1339,13 @@ index fe5e06b..e174aa6 100644
 +  font-size: 0.7em;
 +  font-weight: 200;
  }
- 
+
  select:focus,
  input:focus {
 -    outline: none;
 +  outline: none;
  }
- 
+
  #submit_container {
 -    display: flex;
 -    flex-direction: column;
@@ -1365,14 +1356,14 @@ index fe5e06b..e174aa6 100644
 +  justify-content: center;
 +  align-items: center;
  }
- 
+
  .preview {
 -    margin-top: 30px;
 -    display: flex;
 +  margin-top: 30px;
 +  display: flex;
  }
- 
+
  .preview img {
 -    width: 30px;
 -    height: 30px;
@@ -1383,7 +1374,7 @@ index fe5e06b..e174aa6 100644
 +  margin-right: 10px;
 +  cursor: pointer;
  }
- 
+
  #example {
 -    margin: 25px 0px;
 -    margin-top: 10px;
@@ -1404,24 +1395,24 @@ index fe5e06b..e174aa6 100644
 +  word-break: break-word;
 +  transition: background-color 0.3s ease-in-out;
  }
- 
+
  #example.white {
 -    background-color: white;
 +  background-color: white;
  }
- 
+
  #example .user_info {
 -    display: inline-block;
 +  display: inline-block;
  }
- 
+
  #example .badge {
 -    vertical-align: middle;
 -    border-radius: 10%;
 +  vertical-align: middle;
 +  border-radius: 10%;
  }
- 
+
  #example .cheer_bits {
 -    color: rgb(189, 98, 255);
 -    font-size: 0.6em;
@@ -1430,17 +1421,17 @@ index fe5e06b..e174aa6 100644
 +  font-size: 0.6em;
 +  -webkit-text-stroke: 1px black;
  }
- 
+
  #example .emote {
 -    vertical-align: middle;
 +  vertical-align: middle;
  }
- 
+
  #example .emoji {
 -    vertical-align: middle;
 +  vertical-align: middle;
  }
- 
+
  input[type="submit"],
  input[type="button"] {
 -    width: 150px;
@@ -1464,13 +1455,13 @@ index fe5e06b..e174aa6 100644
 +  opacity: 0.7;
 +  transition: opacity 0.3s;
  }
- 
+
  input[type="submit"]:hover,
  input[type="button"]:hover {
 -    opacity: 1;
 +  opacity: 1;
  }
- 
+
  #result {
 -    position: relative;
 -    width: 950px;
@@ -1493,7 +1484,7 @@ index fe5e06b..e174aa6 100644
 +  flex-direction: column;
 +  align-items: center;
  }
- 
+
  #alert {
 -    visibility: hidden;
 -    opacity: 0;
@@ -1522,14 +1513,14 @@ index fe5e06b..e174aa6 100644
 +  padding: 2px 10px;
 +  transition: opacity 0.2s ease-out;
  }
- 
+
  #url {
 -    width: 800px;
 -    cursor: pointer;
 +  width: 800px;
 +  cursor: pointer;
  }
- 
+
  #result p {
 -    text-align: center;
 -    font-size: 0.9em;
@@ -1538,7 +1529,7 @@ index fe5e06b..e174aa6 100644
 +  font-size: 0.9em;
 +  margin: 1em;
  }
- 
+
  #donation {
 -    font-size: 0.7em;
 -    font-weight: 300;
@@ -1549,7 +1540,7 @@ index fe5e06b..e174aa6 100644
 +  text-align: center;
 +  margin: 30px;
  }
- 
+
  #donation .emote {
 -    height: 30px;
 -    width: 30px;
@@ -1560,12 +1551,12 @@ index fe5e06b..e174aa6 100644
 +  margin-bottom: -5px;
 +  margin-right: 0;
  }
- 
+
  #donation form {
 -    margin: 15px;
 +  margin: 15px;
  }
- 
+
  #paypal {
 -    width: 100px;
 -    height: 25px;
@@ -1580,7 +1571,7 @@ index fe5e06b..e174aa6 100644
 +  font-size: 0.9em;
 +  font-weight: 600;
  }
- 
+
  footer {
 -    width: 100%;
 -    margin-top: auto;
@@ -1597,7 +1588,7 @@ index fe5e06b..e174aa6 100644
 +  align-items: center;
 +  background-color: black;
  }
- 
+
  footer p {
 -    font-size: 0.8em;
 -    font-weight: 200;
@@ -1606,12 +1597,12 @@ index fe5e06b..e174aa6 100644
 +  font-weight: 200;
 +  margin: 5px;
  }
- 
+
  footer a {
 -    font-weight: 400;
 +  font-weight: 400;
  }
- 
+
  .github {
 -    height: 20px;
 -    margin-left: 5px;
@@ -1620,27 +1611,27 @@ index fe5e06b..e174aa6 100644
 +  margin-left: 5px;
 +  vertical-align: middle;
  }
- 
+
 -
  /* Scrollbar */
- 
+
  ::-webkit-scrollbar {
 -    width: 12px;
 -    height: 12px;
 +  width: 12px;
 +  height: 12px;
  }
- 
+
  ::-webkit-scrollbar-thumb {
 -    background: rgb(43, 43, 43);
 +  background: rgb(43, 43, 43);
  }
- 
+
  ::-webkit-scrollbar-thumb:hover {
 -    background: rgb(77, 77, 77);
 +  background: rgb(77, 77, 77);
  }
- 
+
  ::-webkit-scrollbar-track {
 -    background: black;
 -}
@@ -1679,7 +1670,7 @@ index 03c139a..6a45feb 100644
 +      href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Comfortaa:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Press+Start+2P&family=Wallpoet&display=swap"
 +      rel="stylesheet"
 +    />
- 
+
 -    <link rel="preconnect" href="https://fonts.gstatic.com">
 -    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Comfortaa:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Press+Start+2P&family=Wallpoet&display=swap"
 -        rel="stylesheet">
@@ -1705,7 +1696,7 @@ index 03c139a..6a45feb 100644
 +      type="text/javascript"
 +      src="https://unpkg.com/twemoji@14.0.2/dist/twemoji.min.js"
 +    ></script>
- 
+
 -    <script src="jquery.min.js"></script>
 -    <script src="irc-message.js"></script>
 -    <script src="reconnecting-websocket.min.js"></script>
@@ -1717,12 +1708,12 @@ index 03c139a..6a45feb 100644
      <script src="utils.js"></script>
      <script src="script.js"></script>
 +  </head>
- 
+
 -</head>
 +  <body>
 +    <script>
 +      const hash = window.location.hash;
- 
+
 -<body>
 -    <div id="chat_container"></div>
 -</body>
@@ -1731,7 +1722,7 @@ index 03c139a..6a45feb 100644
 +        document.body.classList.add('preview-body');
 +      }
 +    </script>
- 
+
 -</html>
 \ No newline at end of file
 +    <div id="chat_container"></div>
@@ -1792,13 +1783,13 @@ index 8b69758..4439ebf 100644
 +      // Malformed IRC message.
 +      return null;
 +    }
- 
+
 -        for (let i = 0; i < paramsArray.length; ++i) {
 -            let param = paramsArray[i]
 -                .split('=', 2);
 +    // Tags are split by a semi colon.
 +    var rawTags = data.slice(1, nextspace).split(';');
- 
+
 -            if (param.length !== 2)
 -                continue;
 +    for (var i = 0; i < rawTags.length; i++) {
@@ -1808,12 +1799,12 @@ index 8b69758..4439ebf 100644
 +      var pair = tag.split('=');
 +      message.tags[pair[0]] = pair[1] || true;
 +    }
- 
+
 -            params[param[0]] = decodeURIComponent(param[1].replace(/\+/g, " "));
 -        }
 +    position = nextspace + 1;
 +  }
- 
+
 -        return params;
 -    })(window.location.search.substr(1).split('&'))
 -})(jQuery);
@@ -1821,7 +1812,7 @@ index 8b69758..4439ebf 100644
 +  while (data.charCodeAt(position) === 32) {
 +    position++;
 +  }
- 
+
 -Chat = {
 -    info: {
 -        channel: null,
@@ -1871,7 +1862,7 @@ index 8b69758..4439ebf 100644
 -        });
 +  // Extract the message's prefix if present. Prefixes are prepended
 +  // with a colon.
- 
+
 -        ['emotes/global', 'users/twitch/' + encodeURIComponent(channelID)].forEach(endpoint => {
 -            $.getJSON('https://api.betterttv.net/3/cached/' + endpoint).done(function(res) {
 -                if (!Array.isArray(res)) {
@@ -1888,7 +1879,7 @@ index 8b69758..4439ebf 100644
 -        });
 +  if (data.charCodeAt(position) === 58) {
 +    nextspace = data.indexOf(' ', position);
- 
+
 -        ['emotes/global', 'users/' + encodeURIComponent(channelID) + '/emotes'].forEach(endpoint => {
 -            $.getJSON('https://api.7tv.app/v2/' + endpoint).done(function(res) {
 -                res.forEach(emote => {
@@ -1907,14 +1898,14 @@ index 8b69758..4439ebf 100644
 +      // Malformed IRC message.
 +      return null;
 +    }
- 
+
 -    load: function(callback) {
 -        TwitchAPI('https://api.twitch.tv/v5/users?login=' + Chat.info.channel).done(function(res) {
 -            Chat.info.channelID = res.users[0]._id;
 -            Chat.loadEmotes(Chat.info.channelID);
 +    message.prefix = data.slice(position + 1, nextspace);
 +    position = nextspace + 1;
- 
+
 -            // Load CSS
 -            let size = sizes[Chat.info.size - 1];
 -            let font = fonts[Chat.info.font];
@@ -1923,11 +1914,11 @@ index 8b69758..4439ebf 100644
 +      position++;
 +    }
 +  }
- 
+
 -            appendCSS('size', size);
 -            appendCSS('font', font);
 +  nextspace = data.indexOf(' ', position);
- 
+
 -            if (Chat.info.stroke && Chat.info.stroke > 0) {
 -                let stroke = strokes[Chat.info.stroke - 1];
 -                appendCSS('stroke', stroke);
@@ -1946,7 +1937,7 @@ index 8b69758..4439ebf 100644
 +      message.command = data.slice(position);
 +      return message;
 +    }
- 
+
 -            // Load badges
 -            TwitchAPI('https://badges.twitch.tv/v1/badges/global/display').done(function(global) {
 -                Object.entries(global.badge_sets).forEach(badge => {
@@ -1972,7 +1963,7 @@ index 8b69758..4439ebf 100644
 -            });
 +    return null;
 +  }
- 
+
 -            if (!Chat.info.hideBadges) {
 -                $.getJSON('https://api.ffzap.com/v1/supporters')
 -                    .done(function(res) {
@@ -2008,7 +1999,7 @@ index 8b69758..4439ebf 100644
 +  // Else, the command is the current position up to the next space. After
 +  // that, we expect some parameters.
 +  message.command = data.slice(position, nextspace);
- 
+
 -            // Load cheers images
 -            TwitchAPI("https://api.twitch.tv/v5/bits/actions?channel_id=" + Chat.info.channelId).done(function(res) {
 -                res.actions.forEach(action => {
@@ -2022,7 +2013,7 @@ index 8b69758..4439ebf 100644
 -                });
 -            });
 +  position = nextspace + 1;
- 
+
 -            callback(true);
 -        });
 -    },
@@ -3058,12 +3049,12 @@ index 8b69758..4439ebf 100644
 +          socket.send('Gotcha: ' + message.command);
 +        });
 +      }
- 
+
 -            socket.onclose = function() {
 -                console.log('jChat: Disconnected');
 -            };
 +      window.onMessage = onMessage;
- 
+
 -            socket.onmessage = function(data) {
 -                data.data.split('\r\n').forEach(line => {
 -                    if (!line) return;
@@ -3130,7 +3121,7 @@ index 8b69758..4439ebf 100644
 +    });
 +  },
  };
- 
+
 -$(document).ready(function() {
 -    Chat.connect($.QueryString.channel ? $.QueryString.channel.toLowerCase() : 'giambaj');
 -});
@@ -3315,12 +3306,12 @@ index b032d9d..e635940 100644
 -    font-size: 48px;
 +  font-size: 48px;
  }
- 
+
  .chat_line {
 -    line-height: 75px;
 +  line-height: 75px;
  }
- 
+
  .badge {
 -    width: 40px;
 -    height: 40px;
@@ -3331,17 +3322,17 @@ index b032d9d..e635940 100644
 +  margin-right: 5px;
 +  margin-bottom: 8px;
  }
- 
+
  .badge:last-of-type {
 -    margin-right: 8px;
 +  margin-right: 8px;
  }
- 
+
  .colon {
 -    margin-right: 20px;
 +  margin-right: 20px;
  }
- 
+
  .cheer_bits {
 -    font-weight: 500;
 -    margin-left: 5px;
@@ -3350,14 +3341,14 @@ index b032d9d..e635940 100644
 +  margin-left: 5px;
 +  margin-right: 10px;
  }
- 
+
  .cheer_emote {
 -    max-height: 60px;
 -    margin-bottom: -15px;
 +  max-height: 60px;
 +  margin-bottom: -15px;
  }
- 
+
  .emote {
 -    max-width: 180px;
 -    max-height: 60px;
@@ -3366,12 +3357,12 @@ index b032d9d..e635940 100644
 +  max-height: 60px;
 +  margin-right: -4px;
  }
- 
+
  .upscale {
 -    height: 60px;
 +  height: 60px;
  }
- 
+
  .emoji {
 -    height: 55px;
 -}
@@ -3387,12 +3378,12 @@ index 6a73b45..83f8140 100644
 -    font-size: 34px;
 +  font-size: 34px;
  }
- 
+
  .chat_line {
 -    line-height: 55px;
 +  line-height: 55px;
  }
- 
+
  .badge {
 -    width: 28px;
 -    height: 28px;
@@ -3403,17 +3394,17 @@ index 6a73b45..83f8140 100644
 +  margin-right: 4px;
 +  margin-bottom: 6px;
  }
- 
+
  .badge:last-of-type {
 -    margin-right: 6px;
 +  margin-right: 6px;
  }
- 
+
  .colon {
 -    margin-right: 14px;
 +  margin-right: 14px;
  }
- 
+
  .cheer_bits {
 -    font-weight: 600;
 -    margin-left: 4px;
@@ -3422,14 +3413,14 @@ index 6a73b45..83f8140 100644
 +  margin-left: 4px;
 +  margin-right: 7px;
  }
- 
+
  .cheer_emote {
 -    max-height: 42px;
 -    margin-bottom: -10px;
 +  max-height: 42px;
 +  margin-bottom: -10px;
  }
- 
+
  .emote {
 -    max-width: 128px;
 -    max-height: 42px;
@@ -3438,12 +3429,12 @@ index 6a73b45..83f8140 100644
 +  max-height: 42px;
 +  margin-right: -3px;
  }
- 
+
  .upscale {
 -    height: 42px;
 +  height: 42px;
  }
- 
+
  .emoji {
 -    height: 39px;
 -}
@@ -3459,12 +3450,12 @@ index d43b6d5..8b93ac1 100644
 -    font-size: 20px;
 +  font-size: 20px;
  }
- 
+
  .chat_line {
 -    line-height: 30px;
 +  line-height: 30px;
  }
- 
+
  .badge {
 -    width: 16px;
 -    height: 16px;
@@ -3475,17 +3466,17 @@ index d43b6d5..8b93ac1 100644
 +  margin-right: 2px;
 +  margin-bottom: 3px;
  }
- 
+
  .badge:last-of-type {
 -    margin-right: 3px;
 +  margin-right: 3px;
  }
- 
+
  .colon {
 -    margin-right: 8px;
 +  margin-right: 8px;
  }
- 
+
  .cheer_bits {
 -    font-weight: 700;
 -    margin-left: 2px;
@@ -3494,14 +3485,14 @@ index d43b6d5..8b93ac1 100644
 +  margin-left: 2px;
 +  margin-right: 4px;
  }
- 
+
  .cheer_emote {
 -    max-height: 25px;
 -    margin-bottom: -6px;
 +  max-height: 25px;
 +  margin-bottom: -6px;
  }
- 
+
  .emote {
 -    max-width: 75px;
 -    max-height: 25px;
@@ -3510,12 +3501,12 @@ index d43b6d5..8b93ac1 100644
 +  max-height: 25px;
 +  margin-right: -2px;
  }
- 
+
  .upscale {
 -    height: 25px;
 +  height: 25px;
  }
- 
+
  .emoji {
 -    height: 22px;
 -}
@@ -3585,7 +3576,7 @@ index 3d14194..e011700 100644
 +.preview-body {
 +  background-color: #000;
  }
- 
+
  #chat_container {
 -    width: calc(100% - 20px);
 -    padding: 10px;
@@ -3606,19 +3597,19 @@ index 3d14194..e011700 100644
 +  font-weight: 800;
 +  word-break: break-word;
  }
- 
+
  .user_info {
 -    display: inline-block;
 +  display: inline-block;
  }
- 
+
  .badge {
 -    vertical-align: middle;
 -    border-radius: 10%;
 +  vertical-align: middle;
 +  border-radius: 10%;
  }
- 
+
  .zero-width_container {
 -    display: inline-flex;
 -    align-items: center;
@@ -3629,29 +3620,29 @@ index 3d14194..e011700 100644
 +  justify-content: center;
 +  vertical-align: middle;
  }
- 
+
  .cheer_bits {
 -    font-size: 0.6em;
 -    -webkit-text-stroke: 1px black;
 +  font-size: 0.6em;
 +  -webkit-text-stroke: 1px black;
  }
- 
+
  .emote {
 -    vertical-align: middle;
 +  vertical-align: middle;
  }
- 
+
  .zero-width {
 -    position: absolute;
 +  position: absolute;
  }
- 
+
  .emoji {
 -    vertical-align: middle;
 +  vertical-align: middle;
  }
- 
+
  .hidden {
 -    display: none;
 -}
@@ -3688,14 +3679,14 @@ index 4415fee..c975d17 100644
 +    href: `styles/${type}_${name}.css`,
 +  }).appendTo('head');
  }
- 
+
 -function escapeRegExp(string) { // Thanks to coolaj86 and Darren Cook (https://stackoverflow.com/a/6969486)
 -    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 +function escapeRegExp(string) {
 +  // Thanks to coolaj86 and Darren Cook (https://stackoverflow.com/a/6969486)
 +  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
  }
- 
+
  function escapeHtml(message) {
 -    return message
 -        .replace(/&/g, "&amp;")
@@ -3706,7 +3697,7 @@ index 4415fee..c975d17 100644
 +    .replace(/(<)(?!3)/g, '&lt;')
 +    .replace(/(>)(?!\()/g, '&gt;');
  }
- 
+
  function TwitchAPI(url) {
 -    return $.getJSON(url + (url.search(/\?/) > -1 ? '&' : '?') + 'client_id=' + client_id);
 -}
