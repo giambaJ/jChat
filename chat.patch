@@ -1,0 +1,3722 @@
+diff --git a/.gitignore b/.gitignore
+index f73960c..dc01400 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,4 +1,3 @@
+-credentials.js
+ backups/
+ t/
+ .vscode
+\ No newline at end of file
+diff --git a/README.md b/README.md
+index cae6a81..37b25ed 100644
+--- a/README.md
++++ b/README.md
+@@ -1,8 +1,11 @@
+ # [![](https://www.giambaj.it/twitch/jchat/img/peepoHappysmall.png)](#) jChat [![GitHub version](https://img.shields.io/badge/release-v2.3.4-blue)](#) [![Website giambaj.it](https://img.shields.io/website-up-down-green-red/https/giambaj.it.svg)](https://www.giambaj.it/twitch/jchat/) [![GitHub license](https://img.shields.io/github/license/giambaJ/jChat)](https://github.com/giambaJ/jChat/blob/main/LICENSE)
+ 
+ **jChat** is an overlay that allows you to show your Twitch chat on screen with OBS, XSplit, and any other streaming software that supports browser sources. It supports your [**BetterTTV**](https://betterttv.com/), [**FrankerFaceZ**](https://www.frankerfacez.com/) and [**7TV**](https://7tv.app/) emotes, always at the best available quality. You have many options to customize your chat, like enabling a smooth animation for new messages, or fading old ones after some time. If you have a chat full of !gamble addicts, you can choose to hide bots and commands messages. It also comes with many fonts and styling options that can be combined as desired.
++
+ ### The app is up and running on the [**website**](https://www.giambaj.it/twitch/jchat/).
++
+ ## Features
++
+ - 7TV, BTTV and FFZ emotes support
+ - Custom channel badges
+ - Lots of fonts and styling options
+diff --git a/img/BeerTime.gif b/img/BeerTime.gif
+index fec2542..4c841e0 100644
+Binary files a/img/BeerTime.gif and b/img/BeerTime.gif differ
+diff --git a/img/github.png b/img/github.png
+index 192846a..369009c 100644
+Binary files a/img/github.png and b/img/github.png differ
+diff --git a/img/peepoHappy.png b/img/peepoHappy.png
+index 5409f84..31134a8 100644
+Binary files a/img/peepoHappy.png and b/img/peepoHappy.png differ
+diff --git a/index.html b/index.html
+index 0a2f78c..2b9bad9 100644
+--- a/index.html
++++ b/index.html
+@@ -1,159 +1,443 @@
+ <!DOCTYPE html>
+ <html>
+-
+-<head>
++  <head>
+     <title>jChat &bull; Setup | giambaJ</title>
+-    <link rel="preconnect" href="https://fonts.gstatic.com">
+-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+-    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Comfortaa:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Press+Start+2P&family=Wallpoet&display=swap"
+-        rel="stylesheet">
+-    <link rel="stylesheet" href="styles/style.css">
+-    <link rel="stylesheet" class="preview_size" href="styles/size_large.css">
+-    <link rel="stylesheet" class="preview_font" href="styles/font_BalooTammudu.css">
+-    <script src="jquery.min.js"></script>
+-    <script src="settings.js" defer></script>
+-    <script src="utils.js" defer></script>
+-    <script src="script.js" defer></script>
+-</head>
+-
+-<body>
+-    <header>
+-        <img src="img/peepoHappy.png">
+-        <div>
+-            <h1>jChat</h1>
+-            <h2>Setup</h2>
+-        </div>
++    <link rel="preconnect" href="https://fonts.gstatic.com" />
++    <link
++      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;700&display=swap"
++      rel="stylesheet"
++    />
++    <link
++      href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Comfortaa:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Press+Start+2P&family=Wallpoet&display=swap"
++      rel="stylesheet"
++    />
++    <link rel="stylesheet" href="styles/style.css" />
++    <link rel="stylesheet" class="preview_size" href="styles/size_large.css" />
++    <link
++      rel="stylesheet"
++      class="preview_font"
++      href="styles/font_BalooTammudu.css"
++    />
++    <script
++      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"
++      integrity="sha512-J9QfbPuFlqGD2CYVCa6zn8/7PEgZnGpM5qtFOBZgwujjDnG5w5Fjx46YzqvIh/ORstcj7luStvvIHkisQi5SKw=="
++      crossorigin="anonymous"
++      referrerpolicy="no-referrer"
++    ></script>
++    <script defer>
++      const fonts = [
++        'BalooTammudu',
++        'SegoeUI',
++        'Roboto',
++        'Lato',
++        'NotoSans',
++        'SourceCodePro',
++        'Impact',
++        'Comfortaa',
++        'DancingScript',
++        'IndieFlower',
++        'PressStart2P',
++        'Wallpoet',
++      ];
+ 
+-    </header>
++      const sizes = ['small', 'medium', 'large'];
+ 
+-    <section>
+-        <p>
+-            <em>jChat</em> is an overlay that allows you to show your Twitch chat on screen with OBS, XSplit, and any other streaming software that supports browser sources. It supports your
+-            <a href="https://betterttv.com/" target="_blank">BetterTTV</a>, <a href="https://www.frankerfacez.com/" target="_blank">FrankerFaceZ</a> and
+-            <a href="https://7tv.app/" target="_blank">7TV</a> emotes, always at the best available quality. You have many options to customize your chat, like enabling a smooth animation for new messages, or fading old ones after some time. If you have
+-            a chat full of !gamble addicts, you can choose to hide bots and commands messages. It also comes with many fonts and styling options that can be combined as desired.
+-        </p>
++      const strokes = ['thin', 'medium', 'thick', 'thicker'];
++
++      const shadows = ['small', 'medium', 'large'];
++    </script>
++    <script defer>
++      function encodeQueryData(data) {
++        // https://stackoverflow.com/questions/111529/how-to-create-query-parameters-in-javascript
++        const ret = [];
++        for (let d in data) {
++          if (data[d])
++            ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
++        }
++        return ret.join('&');
++      }
++
++      function appendCSS(type, name) {
++        $('<link/>', {
++          rel: 'stylesheet',
++          type: 'text/css',
++          class: `preview_${type}`,
++          href: `styles/${type}_${name}.css`,
++        }).appendTo('head');
++      }
++
++      function removeCSS(type) {
++        $(`link[class="preview_${type}"]`).remove();
++      }
++    </script>
++    <script defer>
++      function fadeOption(event) {
++        if ($fade_bool.is(':checked')) {
++          $fade.removeClass('hidden');
++          $fade_seconds.removeClass('hidden');
++        } else {
++          $fade.addClass('hidden');
++          $fade_seconds.addClass('hidden');
++        }
++      }
++
++      function sizeUpdate(event) {
++        let size = sizes[Number($size.val()) - 1];
++        removeCSS('size');
++        appendCSS('size', size);
++      }
++
++      function fontUpdate(event) {
++        let font = fonts[Number($font.val())];
++        removeCSS('font');
++        appendCSS('font', font);
++      }
++
++      function strokeUpdate(event) {
++        removeCSS('stroke');
++        if ($stroke.val() == '0') return;
++        else {
++          let stroke = strokes[Number($stroke.val()) - 1];
++          appendCSS('stroke', stroke);
++        }
++      }
++
++      function shadowUpdate(event) {
++        removeCSS('shadow');
++        if ($shadow.val() == '0') return;
++        else {
++          let shadow = shadows[Number($shadow.val()) - 1];
++          appendCSS('shadow', shadow);
++        }
++      }
++
++      function badgesUpdate(event) {
++        if ($badges.is(':checked')) {
++          $('img[class="badge special"]').addClass('hidden');
++        } else {
++          $('img[class="badge special hidden"]').removeClass('hidden');
++        }
++      }
++
++      function capsUpdate(event) {
++        if ($small_caps.is(':checked')) {
++          appendCSS('variant', 'SmallCaps');
++        } else {
++          removeCSS('variant');
++        }
++      }
++
++      function generateURL(event) {
++        event.preventDefault();
++
++        const generatedUrl =
++          'http://localhost:8080/twitch/v2/index.html?channel=' +
++          $channel.val();
++
++        let data = {
++          size: $size.val(),
++          font: $font.val(),
++          stroke: $stroke.val() != '0' ? $stroke.val() : false,
++          shadow: $shadow.val() != '0' ? $shadow.val() : false,
++          bots: $bots.is(':checked'),
++          hide_commands: $commands.is(':checked'),
++          hide_badges: $badges.is(':checked'),
++          animate: $animate.is(':checked'),
++          fade: $fade_bool.is(':checked') ? $fade.val() : false,
++          small_caps: $small_caps.is(':checked'),
++        };
++
++        const params = encodeQueryData(data);
++
++        $url.val(generatedUrl + '&' + params);
++
++        $generator.addClass('hidden');
++        $result.removeClass('hidden');
++      }
++
++      function changePreview(event) {
++        if ($example.hasClass('white')) {
++          $example.removeClass('white');
++          $brightness.attr('src', 'img/light.png');
++        } else {
++          $example.addClass('white');
++          $brightness.attr('src', 'img/dark.png');
++        }
++      }
++
++      function copyUrl(event) {
++        navigator.clipboard.writeText($url.val());
++
++        $alert.css('visibility', 'visible');
++        $alert.css('opacity', '1');
++      }
++
++      function showUrl(event) {
++        $alert.css('opacity', '0');
++        setTimeout(function () {
++          $alert.css('visibility', 'hidden');
++        }, 200);
++      }
+ 
++      function resetForm(event) {
++        $channel.val('');
++        $size.val('3');
++        $font.val('0');
++        $stroke.val('0');
++        $shadow.val('0');
++        $bots.prop('checked', false);
++        $commands.prop('checked', false);
++        $badges.prop('checked', false);
++        $animate.prop('checked', false);
++        $fade_bool.prop('checked', false);
++        $fade.addClass('hidden');
++        $fade_seconds.addClass('hidden');
++        $fade.val('30');
++        $small_caps.prop('checked', false);
+ 
+-        <form name="generator">
+-            <div class="form_row center">
++        sizeUpdate();
++        fontUpdate();
++        strokeUpdate();
++        shadowUpdate();
++        badgesUpdate();
++        capsUpdate();
++        if ($example.hasClass('white')) changePreview();
+ 
+-                <input type="text" name="channel" required placeholder="Channel">
++        $result.addClass('hidden');
++        $generator.removeClass('hidden');
++        showUrl();
++      }
++
++      const $generator = $("form[name='generator']");
++      const $channel = $('input[name="channel"]');
++      const $animate = $('input[name="animate"]');
++      const $bots = $('input[name="bots"]');
++      const $fade_bool = $("input[name='fade_bool']");
++      const $fade = $("input[name='fade']");
++      const $fade_seconds = $('#fade_seconds');
++      const $commands = $("input[name='commands']");
++      const $small_caps = $("input[name='small_caps']");
++      const $badges = $("input[name='badges']");
++      const $size = $("select[name='size']");
++      const $font = $("select[name='font']");
++      const $stroke = $("select[name='stroke']");
++      const $shadow = $("select[name='shadow']");
++      const $brightness = $('#brightness');
++      const $example = $('#example');
++      const $result = $('#result');
++      const $url = $('#url');
++      const $alert = $('#alert');
++      const $reset = $('#reset');
++
++      $fade_bool.change(fadeOption);
++      $size.change(sizeUpdate);
++      $font.change(fontUpdate);
++      $stroke.change(strokeUpdate);
++      $shadow.change(shadowUpdate);
++      $small_caps.change(capsUpdate);
++      $badges.change(badgesUpdate);
++      $generator.submit(generateURL);
++      $brightness.click(changePreview);
++      $url.click(copyUrl);
++      $alert.click(showUrl);
++      $reset.click(resetForm);
++    </script>
++  </head>
++
++  <body>
++    <header>
++      <img src="img/peepoHappy.png" />
++      <div>
++        <h1>jChat</h1>
++        <h2>Setup</h2>
++      </div>
++    </header>
++
++    <section>
++      <p>
++        <em>jChat</em> is an overlay that allows you to show your Twitch chat on
++        screen with OBS, XSplit, and any other streaming software that supports
++        browser sources. It supports your
++        <a href="https://betterttv.com/" target="_blank">BetterTTV</a>,
++        <a href="https://www.frankerfacez.com/" target="_blank">FrankerFaceZ</a>
++        and <a href="https://7tv.app/" target="_blank">7TV</a> emotes, always at
++        the best available quality. You have many options to customize your
++        chat, like enabling a smooth animation for new messages, or fading old
++        ones after some time. If you have a chat full of !gamble addicts, you
++        can choose to hide bots and commands messages. It also comes with many
++        fonts and styling options that can be combined as desired.
++      </p>
++
++      <form name="generator">
++        <div class="form_row center">
++          <input type="text" name="channel" required placeholder="Channel" />
++        </div>
++        <div class="form_table">
++          <div class="form_col">
++            <div class="form_row left">
++              <select name="size">
++                <option value="1">Small</option>
++                <option value="2">Medium</option>
++                <option value="3" selected>Large</option>
++              </select>
++              <label for="size">Size</label>
+             </div>
+-            <div class="form_table">
+-                <div class="form_col">
+-                    <div class="form_row left">
+-                        <select name="size">
+-                            <option value="1">Small</option>
+-                            <option value="2">Medium</option>
+-                            <option value="3" selected>Large</option>
+-                        </select>
+-                        <label for="size">Size</label>
+-                    </div>
+-                    <div class="form_row left">
+-                        <select name="font">
+-                            <option value="0" selected>Baloo Tammudu</option>
+-                            <option value="1">Segoe UI</option>
+-                            <option value="2">Roboto</option>
+-                            <option value="3">Lato</option>
+-                            <option value="4">Noto Sans</option>
+-                            <option value="5">Source Code Pro</option>
+-                            <option value="6">Impact</option>
+-                            <option value="7">Comfortaa</option>
+-                            <option value="8">Dancing Script</option>
+-                            <option value="9">Indie Flower</option>
+-                            <option value="10">Press Start 2P</option>
+-                            <option value="11">Wallpoet</option>
+-                        </select>
+-                        <label for="font">Font</label>
+-                    </div>
+-                    <br>
+-                    <div class="form_row left">
+-                        <input type="checkbox" name="bots">
+-                        <label for="bots">Show bots</label>
+-                    </div>
+-                    <div class="form_row left">
+-                        <input type="checkbox" name="commands">
+-                        <label for="commands">Hide commands</label>
+-                    </div>
+-                    <div class="form_row left">
+-                        <input type="checkbox" name="badges">
+-                        <label for="badges">Hide special badges</label>
+-                    </div>
+-                </div>
+-                <div class="form_col">
+-                    <div class="form_row right">
+-                        <label for="stroke">Stroke</label>
+-                        <select name="stroke">
+-                            <option value="0" selected>Off</option>
+-                            <option value="1">Thin</option>
+-                            <option value="2">Medium</option>
+-                            <option value="3">Thick</option>
+-                            <option value="4">Thicker</option>
+-                        </select>
+-                    </div>
+-                    <div class="form_row right">
+-                        <label for="shadow">Shadow</label>
+-                        <select name="shadow">
+-                            <option value="0" selected>Off</option>
+-                            <option value="1">Small</option>
+-                            <option value="2">Medium</option>
+-                            <option value="3">Large</option>
+-                        </select>
+-                    </div>
+-                    <br>
+-                    <div class="form_row right">
+-                        <label for="animate">Animate</label>
+-                        <input type="checkbox" name="animate">
+-                    </div>
+-                    <div class="form_row right">
+-                        <label for="fade">Fade</label>
+-                        <input type="text" name="fade" value="30" class="short hidden"><span id="fade_seconds" class="hidden">sec</span>
+-                        <input type="checkbox" name="fade_bool">
+-                    </div>
+-                    <div class="form_row right">
+-                        <label for="small_caps">Caps</label>
+-                        <input type="checkbox" name="small_caps">
+-                    </div>
+-                </div>
++            <div class="form_row left">
++              <select name="font">
++                <option value="0" selected>Baloo Tammudu</option>
++                <option value="1">Segoe UI</option>
++                <option value="2">Roboto</option>
++                <option value="3">Lato</option>
++                <option value="4">Noto Sans</option>
++                <option value="5">Source Code Pro</option>
++                <option value="6">Impact</option>
++                <option value="7">Comfortaa</option>
++                <option value="8">Dancing Script</option>
++                <option value="9">Indie Flower</option>
++                <option value="10">Press Start 2P</option>
++                <option value="11">Wallpoet</option>
++              </select>
++              <label for="font">Font</label>
+             </div>
+-
+-            <div id="submit_container">
+-                <div class="preview"><img id="brightness" src="img/light.png"> <label>Preview:</label></div>
+-                <div id="example">
+-                    <div class="chat_line"><span class="user_info"><img class="badge special" src="https://cdn.frankerfacez.com/badge/3/4" style="background-color: rgb(117, 80, 0);"><img class="badge special" src="https://cdn.7tv.app/badge/60d5998fb0ac44b85331fe2b/3x"><img class="badge" src="https://static-cdn.jtvnw.net/badges/v1/3158e758-3cb4-43c5-94b3-7639810451c5/3"><span class="nick" style="color: rgb(38, 255, 0);">giambaJ</span>
+-                        <span class="colon">:</span>
+-                        </span><span class="message"><img class="cheer_emote" src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/100/4.gif"><span class="cheer_bits">100</span> Nice chat <img class="emote" src="https://cdn.betterttv.net/frankerfacez_emote/341767/4">                        <img class="emote" src="https://cdn.7tv.app/emote/6040aacfcf6746000db1034f/4x"></span>
+-                    </div>
+-                </div>
+-                <input type="submit" value="Generate">
++            <br />
++            <div class="form_row left">
++              <input type="checkbox" name="bots" />
++              <label for="bots">Show bots</label>
++            </div>
++            <div class="form_row left">
++              <input type="checkbox" name="commands" />
++              <label for="commands">Hide commands</label>
++            </div>
++            <div class="form_row left">
++              <input type="checkbox" name="badges" />
++              <label for="badges">Hide special badges</label>
++            </div>
++          </div>
++          <div class="form_col">
++            <div class="form_row right">
++              <label for="stroke">Stroke</label>
++              <select name="stroke">
++                <option value="0" selected>Off</option>
++                <option value="1">Thin</option>
++                <option value="2">Medium</option>
++                <option value="3">Thick</option>
++                <option value="4">Thicker</option>
++              </select>
+             </div>
+-        </form>
+-        <div id="result" class="hidden">
+-            <div id="alert">Copied to clipboard</div>
+-            <input type="text" id="url" readonly>
+-            <p>Configure a new browser source on your streaming software with the given URL.</p>
+-            <input type="button" id="reset" value="Reset">
++            <div class="form_row right">
++              <label for="shadow">Shadow</label>
++              <select name="shadow">
++                <option value="0" selected>Off</option>
++                <option value="1">Small</option>
++                <option value="2">Medium</option>
++                <option value="3">Large</option>
++              </select>
++            </div>
++            <br />
++            <div class="form_row right">
++              <label for="animate">Animate</label>
++              <input type="checkbox" name="animate" />
++            </div>
++            <div class="form_row right">
++              <label for="fade">Fade</label>
++              <input
++                type="text"
++                name="fade"
++                value="30"
++                class="short hidden"
++              /><span id="fade_seconds" class="hidden">sec</span>
++              <input type="checkbox" name="fade_bool" />
++            </div>
++            <div class="form_row right">
++              <label for="small_caps">Caps</label>
++              <input type="checkbox" name="small_caps" />
++            </div>
++          </div>
+         </div>
+ 
++        <div id="submit_container">
++          <div class="preview">
++            <img id="brightness" src="img/light.png" /> <label>Preview:</label>
++          </div>
++          <div id="example">
++            <div class="chat_line">
++              <span class="user_info"
++                ><img
++                  class="badge special"
++                  src="https://cdn.frankerfacez.com/badge/3/4"
++                  style="background-color: rgb(117, 80, 0)"
++                /><img
++                  class="badge special"
++                  src="https://cdn.7tv.app/badge/60d5998fb0ac44b85331fe2b/3x"
++                /><img
++                  class="badge"
++                  src="https://static-cdn.jtvnw.net/badges/v1/3158e758-3cb4-43c5-94b3-7639810451c5/3"
++                /><span class="nick" style="color: rgb(38, 255, 0)"
++                  >giambaJ</span
++                >
++                <span class="colon">:</span> </span
++              ><span class="message"
++                ><img
++                  class="cheer_emote"
++                  src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/100/4.gif" /><span
++                  class="cheer_bits"
++                  >100</span
++                >
++                Nice chat
++                <img
++                  class="emote"
++                  src="https://cdn.betterttv.net/frankerfacez_emote/341767/4" />
++                <img
++                  class="emote"
++                  src="https://cdn.7tv.app/emote/6040aacfcf6746000db1034f/4x"
++              /></span>
++            </div>
++          </div>
++          <input type="submit" value="Generate" />
++        </div>
++      </form>
++      <div id="result" class="hidden">
++        <div id="alert">Copied to clipboard</div>
++        <input type="text" id="url" readonly />
++        <p>
++          Configure a new browser source on your streaming software with the
++          given URL.
++        </p>
++        <input type="button" id="reset" value="Reset" />
++      </div>
+     </section>
+ 
+     <section id="donation">
+-        <span>This app is and will always be free.<br>If you like it and want to support, feel free to buy me a beer <img class="emote" src="img/Okayge.png"><img class="emote" src="img/BeerTime.gif"></span>
+-        <form action="https://www.paypal.com/donate" method="post" target="_top">
+-            <input type="hidden" name="hosted_button_id" value="SRGWJ9QMHMHUG">
+-            <input id="paypal" type="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" value="Donate">
+-        </form>
+-
+-
++      <span
++        >This app is and will always be free.<br />If you like it and want to
++        support, feel free to buy me a beer
++        <img class="emote" src="img/Okayge.png" /><img
++          class="emote"
++          src="img/BeerTime.gif"
++      /></span>
++      <form action="https://www.paypal.com/donate" method="post" target="_top">
++        <input type="hidden" name="hosted_button_id" value="SRGWJ9QMHMHUG" />
++        <input
++          id="paypal"
++          type="submit"
++          title="PayPal - The safer, easier way to pay online!"
++          alt="Donate with PayPal button"
++          value="Donate"
++        />
++      </form>
+     </section>
+ 
+     <footer>
+-        <p>Made with &#10084; by <a href="mailto:me@giambaj.it">giambaJ</a>
+-            <a href="https://github.com/giambaJ/jChat" target="_blank"><img class="github" src="img/github.png"></a>
+-        </p>
+-        <p>This application is not affiliated with <a href="https://www.twitch.tv/" target="_blank">Twitch</a></p>
++      <p>
++        Made with &#10084; by <a href="mailto:me@giambaj.it">giambaJ</a>
++        <a href="https://github.com/giambaJ/jChat" target="_blank"
++          ><img class="github" src="img/github.png"
++        /></a>
++      </p>
++      <p>
++        This application is not affiliated with
++        <a href="https://www.twitch.tv/" target="_blank">Twitch</a>
++      </p>
+     </footer>
+-</body>
+-
+-</html>
+\ No newline at end of file
++  </body>
++</html>
+diff --git a/styles/font_BalooTammudu.css b/styles/font_BalooTammudu.css
+index c36ce36..d4dc76f 100644
+--- a/styles/font_BalooTammudu.css
++++ b/styles/font_BalooTammudu.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Baloo Tammudu 2', cursive;
+-}
+\ No newline at end of file
++  font-family: "Baloo Tammudu 2", cursive;
++}
+diff --git a/styles/font_Comfortaa.css b/styles/font_Comfortaa.css
+index a0f89d4..ae8d4b1 100644
+--- a/styles/font_Comfortaa.css
++++ b/styles/font_Comfortaa.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Comfortaa', cursive;
+-}
+\ No newline at end of file
++  font-family: "Comfortaa", cursive;
++}
+diff --git a/styles/font_DancingScript.css b/styles/font_DancingScript.css
+index 539c656..d9562a3 100644
+--- a/styles/font_DancingScript.css
++++ b/styles/font_DancingScript.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Dancing Script', cursive;
+-}
+\ No newline at end of file
++  font-family: "Dancing Script", cursive;
++}
+diff --git a/styles/font_Impact.css b/styles/font_Impact.css
+index b932bfb..d78f8d3 100644
+--- a/styles/font_Impact.css
++++ b/styles/font_Impact.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Impact', sans-serif;
+-}
+\ No newline at end of file
++  font-family: "Impact", sans-serif;
++}
+diff --git a/styles/font_IndieFlower.css b/styles/font_IndieFlower.css
+index a1eb47f..0bc111f 100644
+--- a/styles/font_IndieFlower.css
++++ b/styles/font_IndieFlower.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Indie Flower', cursive;
+-}
+\ No newline at end of file
++  font-family: "Indie Flower", cursive;
++}
+diff --git a/styles/font_Lato.css b/styles/font_Lato.css
+index a77ee79..28fb304 100644
+--- a/styles/font_Lato.css
++++ b/styles/font_Lato.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Lato', sans-serif;
+-}
+\ No newline at end of file
++  font-family: "Lato", sans-serif;
++}
+diff --git a/styles/font_NotoSans.css b/styles/font_NotoSans.css
+index 1dd3dc9..cca6b62 100644
+--- a/styles/font_NotoSans.css
++++ b/styles/font_NotoSans.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Noto Sans JP', sans-serif;
+-}
+\ No newline at end of file
++  font-family: "Noto Sans JP", sans-serif;
++}
+diff --git a/styles/font_PressStart2P.css b/styles/font_PressStart2P.css
+index 374eef1..be27c9e 100644
+--- a/styles/font_PressStart2P.css
++++ b/styles/font_PressStart2P.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Press Start 2P', cursive;
+-}
+\ No newline at end of file
++  font-family: "Press Start 2P", cursive;
++}
+diff --git a/styles/font_Roboto.css b/styles/font_Roboto.css
+index f237bd3..7c22e0a 100644
+--- a/styles/font_Roboto.css
++++ b/styles/font_Roboto.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Roboto', sans-serif;
+-}
+\ No newline at end of file
++  font-family: "Roboto", sans-serif;
++}
+diff --git a/styles/font_SegoeUI.css b/styles/font_SegoeUI.css
+index 6263cb2..3e9018c 100644
+--- a/styles/font_SegoeUI.css
++++ b/styles/font_SegoeUI.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Segoe UI', sans-serif;
+-}
+\ No newline at end of file
++  font-family: "Segoe UI", sans-serif;
++}
+diff --git a/styles/font_SourceCodePro.css b/styles/font_SourceCodePro.css
+index 4bf4a22..9141237 100644
+--- a/styles/font_SourceCodePro.css
++++ b/styles/font_SourceCodePro.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Source Code Pro', monospace;
+-}
+\ No newline at end of file
++  font-family: "Source Code Pro", monospace;
++}
+diff --git a/styles/font_Wallpoet.css b/styles/font_Wallpoet.css
+index d9ade37..4798417 100644
+--- a/styles/font_Wallpoet.css
++++ b/styles/font_Wallpoet.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-family: 'Wallpoet', cursive;
+-}
+\ No newline at end of file
++  font-family: "Wallpoet", cursive;
++}
+diff --git a/styles/shadow_large.css b/styles/shadow_large.css
+index 23c1c2c..a387fb0 100644
+--- a/styles/shadow_large.css
++++ b/styles/shadow_large.css
+@@ -1,3 +1,3 @@
+ #example {
+-    text-shadow: 2px 2px 6px black;
+-}
+\ No newline at end of file
++  text-shadow: 2px 2px 6px black;
++}
+diff --git a/styles/shadow_medium.css b/styles/shadow_medium.css
+index 9d977f4..610f082 100644
+--- a/styles/shadow_medium.css
++++ b/styles/shadow_medium.css
+@@ -1,3 +1,3 @@
+ #example {
+-    text-shadow: 2px 2px 4px black;
+-}
+\ No newline at end of file
++  text-shadow: 2px 2px 4px black;
++}
+diff --git a/styles/shadow_small.css b/styles/shadow_small.css
+index c50b691..950ecdb 100644
+--- a/styles/shadow_small.css
++++ b/styles/shadow_small.css
+@@ -1,3 +1,3 @@
+ #example {
+-    text-shadow: 2px 2px 2px black;
+-}
+\ No newline at end of file
++  text-shadow: 2px 2px 2px black;
++}
+diff --git a/styles/size_large.css b/styles/size_large.css
+index 012c4e3..d65bd4c 100644
+--- a/styles/size_large.css
++++ b/styles/size_large.css
+@@ -1,42 +1,42 @@
+ #example {
+-    font-size: 48px;
++  font-size: 48px;
+ }
+ 
+ #example .chat_line {
+-    line-height: 75px;
++  line-height: 75px;
+ }
+ 
+ #example .badge {
+-    width: 40px;
+-    height: 40px;
+-    margin-right: 5px;
+-    margin-bottom: 8px;
++  width: 40px;
++  height: 40px;
++  margin-right: 5px;
++  margin-bottom: 8px;
+ }
+ 
+ #example .badge:last-of-type {
+-    margin-right: 8px;
++  margin-right: 8px;
+ }
+ 
+ #example .colon {
+-    margin-right: 20px;
++  margin-right: 20px;
+ }
+ 
+ #example .cheer_bits {
+-    font-weight: 500;
+-    margin-right: 10px;
++  font-weight: 500;
++  margin-right: 10px;
+ }
+ 
+ #example .cheer_emote {
+-    max-height: 60px;
+-    margin-bottom: -15px;
++  max-height: 60px;
++  margin-bottom: -15px;
+ }
+ 
+ #example .emote {
+-    max-width: 180px;
+-    height: 60px;
+-    margin-right: -8px;
++  max-width: 180px;
++  height: 60px;
++  margin-right: -8px;
+ }
+ 
+ #example .emoji {
+-    height: 55px;
+-}
+\ No newline at end of file
++  height: 55px;
++}
+diff --git a/styles/size_medium.css b/styles/size_medium.css
+index 683b332..f54fc96 100644
+--- a/styles/size_medium.css
++++ b/styles/size_medium.css
+@@ -1,42 +1,42 @@
+ #example {
+-    font-size: 34px;
++  font-size: 34px;
+ }
+ 
+ #example .chat_line {
+-    line-height: 55px;
++  line-height: 55px;
+ }
+ 
+ #example .badge {
+-    width: 28px;
+-    height: 28px;
+-    margin-right: 4px;
+-    margin-bottom: 6px;
++  width: 28px;
++  height: 28px;
++  margin-right: 4px;
++  margin-bottom: 6px;
+ }
+ 
+ #example .badge:last-of-type {
+-    margin-right: 6px;
++  margin-right: 6px;
+ }
+ 
+ #example .colon {
+-    margin-right: 14px;
++  margin-right: 14px;
+ }
+ 
+ #example .cheer_bits {
+-    font-weight: 600;
+-    margin-right: 7px;
++  font-weight: 600;
++  margin-right: 7px;
+ }
+ 
+ #example .cheer_emote {
+-    max-height: 42px;
+-    margin-bottom: -10px;
++  max-height: 42px;
++  margin-bottom: -10px;
+ }
+ 
+ #example .emote {
+-    max-width: 128px;
+-    height: 42px;
+-    margin-right: -6px;
++  max-width: 128px;
++  height: 42px;
++  margin-right: -6px;
+ }
+ 
+ #example .emoji {
+-    height: 39px;
+-}
+\ No newline at end of file
++  height: 39px;
++}
+diff --git a/styles/size_small.css b/styles/size_small.css
+index f56141a..ca2d14e 100644
+--- a/styles/size_small.css
++++ b/styles/size_small.css
+@@ -1,42 +1,42 @@
+ #example {
+-    font-size: 20px;
++  font-size: 20px;
+ }
+ 
+ #example .chat_line {
+-    line-height: 30px;
++  line-height: 30px;
+ }
+ 
+ #example .badge {
+-    width: 16px;
+-    height: 16px;
+-    margin-right: 2px;
+-    margin-bottom: 3px;
++  width: 16px;
++  height: 16px;
++  margin-right: 2px;
++  margin-bottom: 3px;
+ }
+ 
+ #example .badge:last-of-type {
+-    margin-right: 3px;
++  margin-right: 3px;
+ }
+ 
+ #example .colon {
+-    margin-right: 8px;
++  margin-right: 8px;
+ }
+ 
+ #example .cheer_bits {
+-    font-weight: 700;
+-    margin-right: 4px;
++  font-weight: 700;
++  margin-right: 4px;
+ }
+ 
+ #example .cheer_emote {
+-    max-height: 25px;
+-    margin-bottom: -6px;
++  max-height: 25px;
++  margin-bottom: -6px;
+ }
+ 
+ #example .emote {
+-    max-width: 75px;
+-    height: 25px;
+-    margin-right: -3px;
++  max-width: 75px;
++  height: 25px;
++  margin-right: -3px;
+ }
+ 
+ #example .emoji {
+-    height: 22px;
+-}
+\ No newline at end of file
++  height: 22px;
++}
+diff --git a/styles/stroke_medium.css b/styles/stroke_medium.css
+index 6c35116..62faf74 100644
+--- a/styles/stroke_medium.css
++++ b/styles/stroke_medium.css
+@@ -1,3 +1,3 @@
+ #example {
+-    -webkit-text-stroke: 2px black;
+-}
+\ No newline at end of file
++  -webkit-text-stroke: 2px black;
++}
+diff --git a/styles/stroke_thick.css b/styles/stroke_thick.css
+index 86a2bbb..5f09a3c 100644
+--- a/styles/stroke_thick.css
++++ b/styles/stroke_thick.css
+@@ -1,3 +1,3 @@
+ #example {
+-    -webkit-text-stroke: 3px black;
+-}
+\ No newline at end of file
++  -webkit-text-stroke: 3px black;
++}
+diff --git a/styles/stroke_thicker.css b/styles/stroke_thicker.css
+index 78c8e76..f133e5d 100644
+--- a/styles/stroke_thicker.css
++++ b/styles/stroke_thicker.css
+@@ -1,3 +1,3 @@
+ #example {
+-    -webkit-text-stroke: 4px black;
+-}
+\ No newline at end of file
++  -webkit-text-stroke: 4px black;
++}
+diff --git a/styles/stroke_thin.css b/styles/stroke_thin.css
+index 164c7e2..d24e9d3 100644
+--- a/styles/stroke_thin.css
++++ b/styles/stroke_thin.css
+@@ -1,3 +1,3 @@
+ #example {
+-    -webkit-text-stroke: 1px black;
+-}
+\ No newline at end of file
++  -webkit-text-stroke: 1px black;
++}
+diff --git a/styles/style.css b/styles/style.css
+index fe5e06b..e174aa6 100644
+--- a/styles/style.css
++++ b/styles/style.css
+@@ -1,397 +1,396 @@
+ body {
+-    height: 100vh;
+-    margin: 0;
+-    background: rgb(34, 34, 34);
+-    color: white;
+-    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+-    font-size: 1.5em;
+-    font-weight: 400;
+-    display: flex;
+-    flex-direction: column;
+-    align-items: center;
+-    overflow-x: hidden;
++  height: 100vh;
++  margin: 0;
++  background: rgb(34, 34, 34);
++  color: white;
++  font-family: "Montserrat", "Segoe UI", sans-serif;
++  font-size: 1.5em;
++  font-weight: 400;
++  display: flex;
++  flex-direction: column;
++  align-items: center;
++  overflow-x: hidden;
+ }
+ 
+ header {
+-    display: flex;
+-    align-items: center;
+-    justify-content: center;
+-    margin-top: 25px;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  margin-top: 25px;
+ }
+ 
+ header img {
+-    width: 250px;
+-    height: auto;
++  width: 250px;
++  height: auto;
+ }
+ 
+ header div {
+-    margin: 20px;
+-    text-align: center;
++  margin: 20px;
++  text-align: center;
+ }
+ 
+ h1 {
+-    margin: 0px;
+-    font-weight: 600;
+-    font-size: 3em;
++  margin: 0px;
++  font-weight: 600;
++  font-size: 3em;
+ }
+ 
+ h2 {
+-    margin: 0;
+-    font-weight: 300;
++  margin: 0;
++  font-weight: 300;
+ }
+ 
+ section {
+-    width: 80%;
+-    margin: 30px;
+-    display: flex;
+-    flex-direction: column;
+-    align-items: center;
++  width: 80%;
++  margin: 30px;
++  display: flex;
++  flex-direction: column;
++  align-items: center;
+ }
+ 
+ p {
+-    margin-top: 0;
+-    text-align: justify;
++  margin-top: 0;
++  text-align: justify;
+ }
+ 
+ em {
+-    font-weight: bolder;
+-    font-style: unset;
++  font-weight: bolder;
++  font-style: unset;
+ }
+ 
+ a {
+-    color: white;
+-    text-decoration: unset;
+-    font-weight: bold;
+-    transition: opacity .3s;
++  color: white;
++  text-decoration: unset;
++  font-weight: bold;
++  transition: opacity 0.3s;
+ }
+ 
+ a:hover {
+-    opacity: .6;
++  opacity: 0.6;
+ }
+ 
+ form[name="generator"] {
+-    width: 1050px;
+-    margin: 15px;
+-    padding: 25px;
+-    border-radius: 15px;
+-    background-color: rgb(43, 43, 43);
+-    box-shadow: 2px 2px 10px 2px black;
+-    display: flex;
+-    flex-direction: column;
+-    justify-content: center;
+-    align-items: center;
++  width: 1050px;
++  margin: 15px;
++  padding: 25px;
++  border-radius: 15px;
++  background-color: rgb(43, 43, 43);
++  box-shadow: 2px 2px 10px 2px black;
++  display: flex;
++  flex-direction: column;
++  justify-content: center;
++  align-items: center;
+ }
+ 
+ .form_table {
+-    width: 100%;
+-    display: flex;
+-    justify-content: center;
+-    align-items: flex-start;
++  width: 100%;
++  display: flex;
++  justify-content: center;
++  align-items: flex-start;
+ }
+ 
+ .form_col {
+-    width: 400px;
+-    display: flex;
+-    flex-direction: column;
+-    justify-content: center;
+-    align-items: center;
++  width: 400px;
++  display: flex;
++  flex-direction: column;
++  justify-content: center;
++  align-items: center;
+ }
+ 
+ .form_row {
+-    width: 100%;
+-    height: 40px;
+-    display: flex;
+-    align-items: center;
++  width: 100%;
++  height: 40px;
++  display: flex;
++  align-items: center;
+ }
+ 
+ .form_row.left {
+-    justify-content: flex-start;
++  justify-content: flex-start;
+ }
+ 
+ .form_row.right {
+-    justify-content: flex-end;
++  justify-content: flex-end;
+ }
+ 
+ .form_row.left label {
+-    margin-left: 20px;
++  margin-left: 20px;
+ }
+ 
+ .form_row.right label {
+-    margin-right: 20px;
++  margin-right: 20px;
+ }
+ 
+ .form_row.center {
+-    justify-content: center;
+-    margin-bottom: 20px;
++  justify-content: center;
++  margin-bottom: 20px;
+ }
+ 
+ input[type="text"] {
+-    width: 220px;
+-    height: 30px;
+-    border: none;
+-    border-radius: 5px;
+-    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+-    font-size: 1em;
+-    text-align: center;
+-    padding: 2px 10px;
++  width: 220px;
++  height: 30px;
++  border: none;
++  border-radius: 5px;
++  font-family: "Montserrat", "Segoe UI", sans-serif;
++  font-size: 1em;
++  text-align: center;
++  padding: 2px 10px;
+ }
+ 
+ input[type="text"].short {
+-    width: 40px;
+-    height: 25px;
+-    font-size: 0.8em;
++  width: 40px;
++  height: 25px;
++  font-size: 0.8em;
+ }
+ 
+ input[type="checkbox"] {
+-    font-size: 17px;
+-    -webkit-appearance: none;
+-    -moz-appearance: none;
+-    appearance: none;
+-    width: 50px;
+-    height: 25px;
+-    background: rgb(221, 221, 221);
+-    border-radius: 20px;
+-    position: relative;
+-    cursor: pointer;
+-    outline: none;
+-    -webkit-transition: all .2s ease-in-out;
+-    transition: all .2s ease-in-out;
++  font-size: 17px;
++  -webkit-appearance: none;
++  -moz-appearance: none;
++  appearance: none;
++  width: 50px;
++  height: 25px;
++  background: rgb(221, 221, 221);
++  border-radius: 20px;
++  position: relative;
++  cursor: pointer;
++  outline: none;
++  -webkit-transition: all 0.2s ease-in-out;
++  transition: all 0.2s ease-in-out;
+ }
+ 
+ input[type="checkbox"]:checked {
+-    background: rgb(14, 207, 255);
++  background: rgb(14, 207, 255);
+ }
+ 
+ input[type="checkbox"]:after {
+-    position: absolute;
+-    content: "";
+-    width: 25px;
+-    height: 25px;
+-    border-radius: 50%;
+-    background: white;
+-    -webkit-box-shadow: 0 0 .25em rgba(0, 0, 0, .3);
+-    box-shadow: 0 0 .25em rgba(0, 0, 0, .3);
+-    -webkit-transform: scale(.7);
+-    transform: scale(.7);
+-    left: 0;
+-    -webkit-transition: all .2s ease-in-out;
+-    transition: all .2s ease-in-out;
++  position: absolute;
++  content: "";
++  width: 25px;
++  height: 25px;
++  border-radius: 50%;
++  background: white;
++  -webkit-box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.3);
++  box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.3);
++  -webkit-transform: scale(0.7);
++  transform: scale(0.7);
++  left: 0;
++  -webkit-transition: all 0.2s ease-in-out;
++  transition: all 0.2s ease-in-out;
+ }
+ 
+ input[type="checkbox"]:checked:after {
+-    left: calc(100% - 1.5em);
++  left: calc(100% - 1.5em);
+ }
+ 
+ select {
+-    width: 200px;
+-    height: 25px;
+-    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+-    font-size: 0.7em;
+-    padding: 0px 8px;
+-    cursor: pointer;
++  width: 200px;
++  height: 25px;
++  font-family: "Montserrat", "Segoe UI", sans-serif;
++  font-size: 0.7em;
++  padding: 0px 8px;
++  cursor: pointer;
+ }
+ 
+ .hidden {
+-    display: none !important;
++  display: none !important;
+ }
+ 
+ #fade_seconds {
+-    margin: 10px;
+-    font-size: 0.7em;
+-    font-weight: 200;
++  margin: 10px;
++  font-size: 0.7em;
++  font-weight: 200;
+ }
+ 
+ select:focus,
+ input:focus {
+-    outline: none;
++  outline: none;
+ }
+ 
+ #submit_container {
+-    display: flex;
+-    flex-direction: column;
+-    justify-content: center;
+-    align-items: center;
++  display: flex;
++  flex-direction: column;
++  justify-content: center;
++  align-items: center;
+ }
+ 
+ .preview {
+-    margin-top: 30px;
+-    display: flex;
++  margin-top: 30px;
++  display: flex;
+ }
+ 
+ .preview img {
+-    width: 30px;
+-    height: 30px;
+-    margin-right: 10px;
+-    cursor: pointer;
++  width: 30px;
++  height: 30px;
++  margin-right: 10px;
++  cursor: pointer;
+ }
+ 
+ #example {
+-    margin: 25px 0px;
+-    margin-top: 10px;
+-    padding: 1rem;
+-    border-radius: 15px;
+-    overflow: hidden;
+-    color: white;
+-    font-weight: 800;
+-    word-break: break-word;
+-    transition: background-color .3s ease-in-out;
++  margin: 25px 0px;
++  margin-top: 10px;
++  padding: 1rem;
++  border-radius: 15px;
++  overflow: hidden;
++  color: white;
++  font-weight: 800;
++  word-break: break-word;
++  transition: background-color 0.3s ease-in-out;
+ }
+ 
+ #example.white {
+-    background-color: white;
++  background-color: white;
+ }
+ 
+ #example .user_info {
+-    display: inline-block;
++  display: inline-block;
+ }
+ 
+ #example .badge {
+-    vertical-align: middle;
+-    border-radius: 10%;
++  vertical-align: middle;
++  border-radius: 10%;
+ }
+ 
+ #example .cheer_bits {
+-    color: rgb(189, 98, 255);
+-    font-size: 0.6em;
+-    -webkit-text-stroke: 1px black;
++  color: rgb(189, 98, 255);
++  font-size: 0.6em;
++  -webkit-text-stroke: 1px black;
+ }
+ 
+ #example .emote {
+-    vertical-align: middle;
++  vertical-align: middle;
+ }
+ 
+ #example .emoji {
+-    vertical-align: middle;
++  vertical-align: middle;
+ }
+ 
+ input[type="submit"],
+ input[type="button"] {
+-    width: 150px;
+-    height: 45px;
+-    border: none;
+-    border-radius: 5px;
+-    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+-    font-size: 1em;
+-    font-weight: 500;
+-    cursor: pointer;
+-    opacity: .7;
+-    transition: opacity .3s;
++  width: 150px;
++  height: 45px;
++  border: none;
++  border-radius: 5px;
++  font-family: "Montserrat", "Segoe UI", sans-serif;
++  font-size: 1em;
++  font-weight: 500;
++  cursor: pointer;
++  opacity: 0.7;
++  transition: opacity 0.3s;
+ }
+ 
+ input[type="submit"]:hover,
+ input[type="button"]:hover {
+-    opacity: 1;
++  opacity: 1;
+ }
+ 
+ #result {
+-    position: relative;
+-    width: 950px;
+-    margin: 15px;
+-    padding: 25px;
+-    border-radius: 15px;
+-    background-color: rgb(43, 43, 43);
+-    box-shadow: 2px 2px 10px 2px black;
+-    display: flex;
+-    flex-direction: column;
+-    align-items: center;
++  position: relative;
++  width: 950px;
++  margin: 15px;
++  padding: 25px;
++  border-radius: 15px;
++  background-color: rgb(43, 43, 43);
++  box-shadow: 2px 2px 10px 2px black;
++  display: flex;
++  flex-direction: column;
++  align-items: center;
+ }
+ 
+ #alert {
+-    visibility: hidden;
+-    opacity: 0;
+-    position: absolute;
+-    width: 800px;
+-    height: 30px;
+-    background-color: white;
+-    border-radius: 5px;
+-    cursor: pointer;
+-    color: black;
+-    font-size: 1em;
+-    text-align: center;
+-    padding: 2px 10px;
+-    transition: opacity .2s ease-out;
++  visibility: hidden;
++  opacity: 0;
++  position: absolute;
++  width: 800px;
++  height: 30px;
++  background-color: white;
++  border-radius: 5px;
++  cursor: pointer;
++  color: black;
++  font-size: 1em;
++  text-align: center;
++  padding: 2px 10px;
++  transition: opacity 0.2s ease-out;
+ }
+ 
+ #url {
+-    width: 800px;
+-    cursor: pointer;
++  width: 800px;
++  cursor: pointer;
+ }
+ 
+ #result p {
+-    text-align: center;
+-    font-size: 0.9em;
+-    margin: 1em;
++  text-align: center;
++  font-size: 0.9em;
++  margin: 1em;
+ }
+ 
+ #donation {
+-    font-size: 0.7em;
+-    font-weight: 300;
+-    text-align: center;
+-    margin: 30px;
++  font-size: 0.7em;
++  font-weight: 300;
++  text-align: center;
++  margin: 30px;
+ }
+ 
+ #donation .emote {
+-    height: 30px;
+-    width: 30px;
+-    margin-bottom: -5px;
+-    margin-right: 0;
++  height: 30px;
++  width: 30px;
++  margin-bottom: -5px;
++  margin-right: 0;
+ }
+ 
+ #donation form {
+-    margin: 15px;
++  margin: 15px;
+ }
+ 
+ #paypal {
+-    width: 100px;
+-    height: 25px;
+-    border-radius: 20px;
+-    background-color: rgb(255, 196, 57);
+-    font-size: 0.9em;
+-    font-weight: 600;
++  width: 100px;
++  height: 25px;
++  border-radius: 20px;
++  background-color: rgb(255, 196, 57);
++  font-size: 0.9em;
++  font-weight: 600;
+ }
+ 
+ footer {
+-    width: 100%;
+-    margin-top: auto;
+-    padding: 10px;
+-    display: flex;
+-    flex-direction: column;
+-    align-items: center;
+-    background-color: black;
++  width: 100%;
++  margin-top: auto;
++  padding: 10px;
++  display: flex;
++  flex-direction: column;
++  align-items: center;
++  background-color: black;
+ }
+ 
+ footer p {
+-    font-size: 0.8em;
+-    font-weight: 200;
+-    margin: 5px;
++  font-size: 0.8em;
++  font-weight: 200;
++  margin: 5px;
+ }
+ 
+ footer a {
+-    font-weight: 400;
++  font-weight: 400;
+ }
+ 
+ .github {
+-    height: 20px;
+-    margin-left: 5px;
+-    vertical-align: middle;
++  height: 20px;
++  margin-left: 5px;
++  vertical-align: middle;
+ }
+ 
+-
+ /* Scrollbar */
+ 
+ ::-webkit-scrollbar {
+-    width: 12px;
+-    height: 12px;
++  width: 12px;
++  height: 12px;
+ }
+ 
+ ::-webkit-scrollbar-thumb {
+-    background: rgb(43, 43, 43);
++  background: rgb(43, 43, 43);
+ }
+ 
+ ::-webkit-scrollbar-thumb:hover {
+-    background: rgb(77, 77, 77);
++  background: rgb(77, 77, 77);
+ }
+ 
+ ::-webkit-scrollbar-track {
+-    background: black;
+-}
+\ No newline at end of file
++  background: black;
++}
+diff --git a/styles/variant_SmallCaps.css b/styles/variant_SmallCaps.css
+index b478bab..fc87814 100644
+--- a/styles/variant_SmallCaps.css
++++ b/styles/variant_SmallCaps.css
+@@ -1,3 +1,3 @@
+ #example {
+-    font-variant: small-caps;
+-}
+\ No newline at end of file
++  font-variant: small-caps;
++}
+diff --git a/v2/index.html b/v2/index.html
+index 03c139a..6a45feb 100644
+--- a/v2/index.html
++++ b/v2/index.html
+@@ -1,29 +1,54 @@
+ <!DOCTYPE html>
+ <html>
+-
+-<head>
+-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
++  <head>
++    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+     <title>jChat &bull;&nbsp;</title>
+-    <link rel="stylesheet" href="styles/style.css">
++    <link rel="stylesheet" href="styles/style.css" />
++
++    <link rel="preconnect" href="https://fonts.gstatic.com" />
++    <link
++      href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Comfortaa:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Press+Start+2P&family=Wallpoet&display=swap"
++      rel="stylesheet"
++    />
+ 
+-    <link rel="preconnect" href="https://fonts.gstatic.com">
+-    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Comfortaa:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,900&family=Press+Start+2P&family=Wallpoet&display=swap"
+-        rel="stylesheet">
++    <script
++      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"
++      integrity="sha512-J9QfbPuFlqGD2CYVCa6zn8/7PEgZnGpM5qtFOBZgwujjDnG5w5Fjx46YzqvIh/ORstcj7luStvvIHkisQi5SKw=="
++      crossorigin="anonymous"
++      referrerpolicy="no-referrer"
++    ></script>
++    <script
++      src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"
++      integrity="sha512-B4skI5FiLurS86aioJx9VfozI1wjqrn6aTdJH+YQUmCZum/ZibPBTX55k5d9XM6EsKePDInkLVrN7vPmJxc1qA=="
++      crossorigin="anonymous"
++      referrerpolicy="no-referrer"
++    ></script>
++    <script
++      src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js"
++      integrity="sha512-+aXA9mgbUvFe0ToTlbt8/3vT7+nOgUmFw29wfFCsGoh8AZMRSU0p4WtOvC1vkF2JBrndPN2TuNZsHPAKPPxe8Q=="
++      crossorigin="anonymous"
++      referrerpolicy="no-referrer"
++    ></script>
++    <script
++      type="text/javascript"
++      src="https://unpkg.com/twemoji@14.0.2/dist/twemoji.min.js"
++    ></script>
+ 
+-    <script src="jquery.min.js"></script>
+-    <script src="irc-message.js"></script>
+-    <script src="reconnecting-websocket.min.js"></script>
+-    <script src="twemoji.min.js"></script>
+-    <script src='tinycolor.js'></script>
+-    <script src="credentials.js"></script>
+-    <script src="../settings.js"></script>
++    <script src="/credentials.js"></script>
+     <script src="utils.js"></script>
+     <script src="script.js"></script>
++  </head>
+ 
+-</head>
++  <body>
++    <script>
++      const hash = window.location.hash;
+ 
+-<body>
+-    <div id="chat_container"></div>
+-</body>
++      // When in browser preview mode, make background black
++      if (hash.includes('preview')) {
++        document.body.classList.add('preview-body');
++      }
++    </script>
+ 
+-</html>
+\ No newline at end of file
++    <div id="chat_container"></div>
++  </body>
++</html>
+diff --git a/v2/script.js b/v2/script.js
+index 8b69758..4439ebf 100644
+--- a/v2/script.js
++++ b/v2/script.js
+@@ -1,558 +1,871 @@
+-(function($) { // Thanks to BrunoLM (https://stackoverflow.com/a/3855394)
+-    $.QueryString = (function(paramsArray) {
+-        let params = {};
++const URL = '127.0.0.1';
++const PORT = '8080';
++
++const fonts = [
++  'BalooTammudu',
++  'SegoeUI',
++  'Roboto',
++  'Lato',
++  'NotoSans',
++  'SourceCodePro',
++  'Impact',
++  'Comfortaa',
++  'DancingScript',
++  'IndieFlower',
++  'PressStart2P',
++  'Wallpoet',
++];
++
++const sizes = ['small', 'medium', 'large'];
++
++const strokes = ['thin', 'medium', 'thick', 'thicker'];
++
++const shadows = ['small', 'medium', 'large'];
++
++function parseIRC(data) {
++  var message = {
++    raw: data,
++    tags: {},
++    prefix: null,
++    command: null,
++    params: [],
++  };
++
++  // position and nextspace are used by the parser as a reference.
++  var position = 0;
++  var nextspace = 0;
++
++  // The first thing we check for is IRCv3.2 message tags.
++  // http://ircv3.atheme.org/specification/message-tags-3.2
++
++  if (data.charCodeAt(0) === 64) {
++    var nextspace = data.indexOf(' ');
++
++    if (nextspace === -1) {
++      // Malformed IRC message.
++      return null;
++    }
+ 
+-        for (let i = 0; i < paramsArray.length; ++i) {
+-            let param = paramsArray[i]
+-                .split('=', 2);
++    // Tags are split by a semi colon.
++    var rawTags = data.slice(1, nextspace).split(';');
+ 
+-            if (param.length !== 2)
+-                continue;
++    for (var i = 0; i < rawTags.length; i++) {
++      // Tags delimited by an equals sign are key=value tags.
++      // If there's no equals, we assign the tag a value of true.
++      var tag = rawTags[i];
++      var pair = tag.split('=');
++      message.tags[pair[0]] = pair[1] || true;
++    }
+ 
+-            params[param[0]] = decodeURIComponent(param[1].replace(/\+/g, " "));
+-        }
++    position = nextspace + 1;
++  }
+ 
+-        return params;
+-    })(window.location.search.substr(1).split('&'))
+-})(jQuery);
++  // Skip any trailing whitespace.
++  while (data.charCodeAt(position) === 32) {
++    position++;
++  }
+ 
+-Chat = {
+-    info: {
+-        channel: null,
+-        animate: ('animate' in $.QueryString ? ($.QueryString.animate.toLowerCase() === 'true') : false),
+-        showBots: ('bots' in $.QueryString ? ($.QueryString.bots.toLowerCase() === 'true') : false),
+-        hideCommands: ('hide_commands' in $.QueryString ? ($.QueryString.hide_commands.toLowerCase() === 'true') : false),
+-        hideBadges: ('hide_badges' in $.QueryString ? ($.QueryString.hide_badges.toLowerCase() === 'true') : false),
+-        fade: ('fade' in $.QueryString ? parseInt($.QueryString.fade) : false),
+-        size: ('size' in $.QueryString ? parseInt($.QueryString.size) : 3),
+-        font: ('font' in $.QueryString ? parseInt($.QueryString.font) : 0),
+-        stroke: ('stroke' in $.QueryString ? parseInt($.QueryString.stroke) : false),
+-        shadow: ('shadow' in $.QueryString ? parseInt($.QueryString.shadow) : false),
+-        smallCaps: ('small_caps' in $.QueryString ? ($.QueryString.small_caps.toLowerCase() === 'true') : false),
+-        emotes: {},
+-        badges: {},
+-        userBadges: {},
+-        ffzapBadges: null,
+-        bttvBadges: null,
+-        seventvBadges: null,
+-        chatterinoBadges: null,
+-        cheers: {},
+-        lines: [],
+-        blockedUsers: ('block' in $.QueryString ? $.QueryString.block.toLowerCase().split(',') : false),
+-        bots: ['streamelements', 'streamlabs', 'nightbot', 'moobot', 'fossabot']
+-    },
+-
+-    loadEmotes: function(channelID) {
+-        Chat.info.emotes = {};
+-        // Load BTTV, FFZ and 7TV emotes
+-        ['emotes/global', 'users/twitch/' + encodeURIComponent(channelID)].forEach(endpoint => {
+-            $.getJSON('https://api.betterttv.net/3/cached/frankerfacez/' + endpoint).done(function(res) {
+-                res.forEach(emote => {
+-                    if (emote.images['4x']) {
+-                        var imageUrl = emote.images['4x'];
+-                        var upscale = false;
+-                    } else {
+-                        var imageUrl = emote.images['2x'] || emote.images['1x'];
+-                        var upscale = true;
+-                    }
+-                    Chat.info.emotes[emote.code] = {
+-                        id: emote.id,
+-                        image: imageUrl,
+-                        upscale: upscale
+-                    };
+-                });
+-            });
+-        });
++  // Extract the message's prefix if present. Prefixes are prepended
++  // with a colon.
+ 
+-        ['emotes/global', 'users/twitch/' + encodeURIComponent(channelID)].forEach(endpoint => {
+-            $.getJSON('https://api.betterttv.net/3/cached/' + endpoint).done(function(res) {
+-                if (!Array.isArray(res)) {
+-                    res = res.channelEmotes.concat(res.sharedEmotes);
+-                }
+-                res.forEach(emote => {
+-                    Chat.info.emotes[emote.code] = {
+-                        id: emote.id,
+-                        image: 'https://cdn.betterttv.net/emote/' + emote.id + '/3x',
+-                        zeroWidth: ["5e76d338d6581c3724c0f0b2", "5e76d399d6581c3724c0f0b8", "567b5b520e984428652809b6", "5849c9a4f52be01a7ee5f79d", "567b5c080e984428652809ba", "567b5dc00e984428652809bd", "58487cc6f52be01a7ee5f205", "5849c9c8f52be01a7ee5f79e"].includes(emote.id) // "5e76d338d6581c3724c0f0b2" => cvHazmat, "5e76d399d6581c3724c0f0b8" => cvMask, "567b5b520e984428652809b6" => SoSnowy, "5849c9a4f52be01a7ee5f79d" => IceCold, "567b5c080e984428652809ba" => CandyCane, "567b5dc00e984428652809bd" => ReinDeer, "58487cc6f52be01a7ee5f205" => SantaHat, "5849c9c8f52be01a7ee5f79e" => TopHat
+-                    };
+-                });
+-            });
+-        });
++  if (data.charCodeAt(position) === 58) {
++    nextspace = data.indexOf(' ', position);
+ 
+-        ['emotes/global', 'users/' + encodeURIComponent(channelID) + '/emotes'].forEach(endpoint => {
+-            $.getJSON('https://api.7tv.app/v2/' + endpoint).done(function(res) {
+-                res.forEach(emote => {
+-                    Chat.info.emotes[emote.name] = {
+-                        id: emote.id,
+-                        image: emote.urls[emote.urls.length - 1][1],
+-                        zeroWidth: emote.visibility_simple.includes("ZERO_WIDTH")
+-                    };
+-                });
+-            });
+-        });
+-    },
++    // If there's nothing after the prefix, deem this message to be
++    // malformed.
++    if (nextspace === -1) {
++      // Malformed IRC message.
++      return null;
++    }
+ 
+-    load: function(callback) {
+-        TwitchAPI('https://api.twitch.tv/v5/users?login=' + Chat.info.channel).done(function(res) {
+-            Chat.info.channelID = res.users[0]._id;
+-            Chat.loadEmotes(Chat.info.channelID);
++    message.prefix = data.slice(position + 1, nextspace);
++    position = nextspace + 1;
+ 
+-            // Load CSS
+-            let size = sizes[Chat.info.size - 1];
+-            let font = fonts[Chat.info.font];
++    // Skip any trailing whitespace.
++    while (data.charCodeAt(position) === 32) {
++      position++;
++    }
++  }
+ 
+-            appendCSS('size', size);
+-            appendCSS('font', font);
++  nextspace = data.indexOf(' ', position);
+ 
+-            if (Chat.info.stroke && Chat.info.stroke > 0) {
+-                let stroke = strokes[Chat.info.stroke - 1];
+-                appendCSS('stroke', stroke);
+-            }
+-            if (Chat.info.shadow && Chat.info.shadow > 0) {
+-                let shadow = shadows[Chat.info.shadow - 1];
+-                appendCSS('shadow', shadow);
+-            }
+-            if (Chat.info.smallCaps) {
+-                appendCSS('variant', 'SmallCaps');
+-            }
++  // If there's no more whitespace left, extract everything from the
++  // current position to the end of the string as the command.
++  if (nextspace === -1) {
++    if (data.length > position) {
++      message.command = data.slice(position);
++      return message;
++    }
+ 
+-            // Load badges
+-            TwitchAPI('https://badges.twitch.tv/v1/badges/global/display').done(function(global) {
+-                Object.entries(global.badge_sets).forEach(badge => {
+-                    Object.entries(badge[1].versions).forEach(v => {
+-                        Chat.info.badges[badge[0] + ':' + v[0]] = v[1].image_url_4x;
+-                    });
+-                });
+-                TwitchAPI('https://badges.twitch.tv/v1/badges/channels/' + encodeURIComponent(Chat.info.channelID) + '/display').done(function(channel) {
+-                    Object.entries(channel.badge_sets).forEach(badge => {
+-                        Object.entries(badge[1].versions).forEach(v => {
+-                            Chat.info.badges[badge[0] + ':' + v[0]] = v[1].image_url_4x;
+-                        });
+-                    });
+-                    $.getJSON('https://api.frankerfacez.com/v1/_room/id/' + encodeURIComponent(Chat.info.channelID)).done(function(res) {
+-                        if (res.room.moderator_badge) {
+-                            Chat.info.badges['moderator:1'] = 'https://cdn.frankerfacez.com/room-badge/mod/' + Chat.info.channel + '/4/rounded';
+-                        }
+-                        if (res.room.vip_badge) {
+-                            Chat.info.badges['vip:1'] = 'https://cdn.frankerfacez.com/room-badge/vip/' + Chat.info.channel + '/4';
+-                        }
+-                    });
+-                });
+-            });
++    return null;
++  }
+ 
+-            if (!Chat.info.hideBadges) {
+-                $.getJSON('https://api.ffzap.com/v1/supporters')
+-                    .done(function(res) {
+-                        Chat.info.ffzapBadges = res;
+-                    })
+-                    .fail(function() {
+-                        Chat.info.ffzapBadges = [];
+-                    });
+-                $.getJSON('https://api.betterttv.net/3/cached/badges')
+-                    .done(function(res) {
+-                        Chat.info.bttvBadges = res;
+-                    })
+-                    .fail(function() {
+-                        Chat.info.bttvBadges = [];
+-                    });
+-
+-                $.getJSON('https://api.7tv.app/v2/badges?user_identifier=login')
+-                    .done(function(res) {
+-                        Chat.info.seventvBadges = res.badges;
+-                    })
+-                    .fail(function() {
+-                        Chat.info.seventvBadges = [];
+-                    });
+-
+-                $.getJSON('https://api.chatterino.com/badges')
+-                    .done(function(res) {
+-                        Chat.info.chatterinoBadges = res.badges;
+-                    })
+-                    .fail(function() {
+-                        Chat.info.chatterinoBadges = [];
+-                    });
+-            }
++  // Else, the command is the current position up to the next space. After
++  // that, we expect some parameters.
++  message.command = data.slice(position, nextspace);
+ 
+-            // Load cheers images
+-            TwitchAPI("https://api.twitch.tv/v5/bits/actions?channel_id=" + Chat.info.channelId).done(function(res) {
+-                res.actions.forEach(action => {
+-                    Chat.info.cheers[action.prefix] = {}
+-                    action.tiers.forEach(tier => {
+-                        Chat.info.cheers[action.prefix][tier.min_bits] = {
+-                            image: tier.images.dark.animated['4'],
+-                            color: tier.color
+-                        };
+-                    });
+-                });
+-            });
++  position = nextspace + 1;
+ 
+-            callback(true);
+-        });
+-    },
+-
+-    update: setInterval(function() {
+-        if (Chat.info.lines.length > 0) {
+-            var lines = Chat.info.lines.join('');
+-
+-            if (Chat.info.animate) {
+-                var $auxDiv = $('<div></div>', { class: "hidden" }).appendTo("#chat_container");
+-                $auxDiv.append(lines);
+-                var auxHeight = $auxDiv.height();
+-                $auxDiv.remove();
+-
+-                var $animDiv = $('<div></div>');
+-                $('#chat_container').append($animDiv);
+-                $animDiv.animate({ "height": auxHeight }, 150, function() {
+-                    $(this).remove();
+-                    $('#chat_container').append(lines);
+-                });
++  // Skip any trailing whitespace.
++  while (data.charCodeAt(position) === 32) {
++    position++;
++  }
++
++  while (position < data.length) {
++    nextspace = data.indexOf(' ', position);
++
++    // If the character is a colon, we've got a trailing parameter.
++    // At this point, there are no extra params, so we push everything
++    // from after the colon to the end of the string, to the params array
++    // and break out of the loop.
++    if (data.charCodeAt(position) === 58) {
++      message.params.push(data.slice(position + 1));
++      break;
++    }
++
++    // If we still have some whitespace...
++    if (nextspace !== -1) {
++      // Push whatever's between the current position and the next
++      // space to the params array.
++      message.params.push(data.slice(position, nextspace));
++      position = nextspace + 1;
++
++      // Skip any trailing whitespace and continue looping.
++      while (data.charCodeAt(position) === 32) {
++        position++;
++      }
++
++      continue;
++    }
++
++    // If we don't have any more whitespace and the param isn't trailing,
++    // push everything remaining to the params array.
++    if (nextspace === -1) {
++      message.params.push(data.slice(position));
++      break;
++    }
++  }
++  return message;
++}
++
++(function ($) {
++  // Thanks to BrunoLM (https://stackoverflow.com/a/3855394)
++  $.QueryString = (function (paramsArray) {
++    let params = {};
++
++    for (let i = 0; i < paramsArray.length; ++i) {
++      let param = paramsArray[i].split('=', 2);
++
++      if (param.length !== 2) continue;
++
++      params[param[0]] = decodeURIComponent(param[1].replace(/\+/g, ' '));
++    }
++
++    return params;
++  })(window.location.search.substr(1).split('&'));
++})(jQuery);
++
++const Chat = {
++  info: {
++    channel: null,
++    animate:
++      'animate' in $.QueryString
++        ? $.QueryString.animate.toLowerCase() === 'true'
++        : false,
++    showBots:
++      'bots' in $.QueryString
++        ? $.QueryString.bots.toLowerCase() === 'true'
++        : false,
++    hideCommands:
++      'hide_commands' in $.QueryString
++        ? $.QueryString.hide_commands.toLowerCase() === 'true'
++        : false,
++    hideBadges:
++      'hide_badges' in $.QueryString
++        ? $.QueryString.hide_badges.toLowerCase() === 'true'
++        : false,
++    fade: 'fade' in $.QueryString ? parseInt($.QueryString.fade) : false,
++    size: 'size' in $.QueryString ? parseInt($.QueryString.size) : 3,
++    font: 'font' in $.QueryString ? parseInt($.QueryString.font) : 0,
++    stroke: 'stroke' in $.QueryString ? parseInt($.QueryString.stroke) : false,
++    shadow: 'shadow' in $.QueryString ? parseInt($.QueryString.shadow) : false,
++    smallCaps:
++      'small_caps' in $.QueryString
++        ? $.QueryString.small_caps.toLowerCase() === 'true'
++        : false,
++    emotes: {},
++    badges: {},
++    userBadges: {},
++    ffzapBadges: null,
++    bttvBadges: null,
++    seventvBadges: null,
++    chatterinoBadges: null,
++    cheers: {},
++    lines: [],
++    blockedUsers:
++      'block' in $.QueryString
++        ? $.QueryString.block.toLowerCase().split(',')
++        : false,
++    bots: ['streamelements', 'streamlabs', 'nightbot', 'moobot', 'fossabot'],
++  },
++
++  loadEmotes: function (channelID) {
++    Chat.info.emotes = {};
++    // Load BTTV, FFZ and 7TV emotes
++    ['emotes/global', 'users/twitch/' + encodeURIComponent(channelID)].forEach(
++      (endpoint) => {
++        $.getJSON(
++          'https://api.betterttv.net/3/cached/frankerfacez/' + endpoint,
++        ).done(function (res) {
++          res.forEach((emote) => {
++            if (emote.images['4x']) {
++              var imageUrl = emote.images['4x'];
++              var upscale = false;
+             } else {
+-                $('#chat_container').append(lines);
+-            }
+-            Chat.info.lines = [];
+-            var linesToDelete = $('.chat_line').length - 100;
+-            while (linesToDelete > 0) {
+-                $('.chat_line').eq(0).remove();
+-                linesToDelete--;
++              var imageUrl = emote.images['2x'] || emote.images['1x'];
++              var upscale = true;
+             }
+-        } else if (Chat.info.fade) {
+-            var messageTime = $('.chat_line').eq(0).data('time');
+-            if ((Date.now() - messageTime) / 1000 >= Chat.info.fade) {
+-                $('.chat_line').eq(0).fadeOut(function() {
+-                    $(this).remove();
+-                });
+-            }
+-        }
+-    }, 200),
+-
+-    loadUserBadges: function(nick, userId) {
+-        Chat.info.userBadges[nick] = [];
+-        $.getJSON('https://api.frankerfacez.com/v1/user/' + nick).always(function(res) {
+-            if (res.badges) {
+-                Object.entries(res.badges).forEach(badge => {
+-                    var userBadge = {
+-                        description: badge[1].title,
+-                        url: 'https:' + badge[1].urls['4'],
+-                        color: badge[1].color
+-                    };
+-                    if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
+-                });
++            Chat.info.emotes[emote.code] = {
++              id: emote.id,
++              image: imageUrl,
++              upscale: upscale,
++            };
++          });
++        });
++      },
++    );
++
++    ['emotes/global', 'users/twitch/' + encodeURIComponent(channelID)].forEach(
++      (endpoint) => {
++        $.getJSON('https://api.betterttv.net/3/cached/' + endpoint).done(
++          function (res) {
++            if (!Array.isArray(res)) {
++              res = res.channelEmotes.concat(res.sharedEmotes);
+             }
+-            Chat.info.ffzapBadges.forEach(user => {
+-                if (user.id.toString() === userId) {
+-                    var color = '#755000';
+-                    if (user.tier == 2) color = (user.badge_color || '#755000');
+-                    else if (user.tier == 3) {
+-                        if (user.badge_is_colored == 0) color = (user.badge_color || '#755000');
+-                        else color = false;
+-                    }
+-                    var userBadge = {
+-                        description: 'FFZ:AP Badge',
+-                        url: 'https://api.ffzap.com/v1/user/badge/' + userId + '/3',
+-                        color: color
+-                    };
+-                    if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
+-                }
++            res.forEach((emote) => {
++              Chat.info.emotes[emote.code] = {
++                id: emote.id,
++                image: 'https://cdn.betterttv.net/emote/' + emote.id + '/3x',
++                zeroWidth: [
++                  '5e76d338d6581c3724c0f0b2',
++                  '5e76d399d6581c3724c0f0b8',
++                  '567b5b520e984428652809b6',
++                  '5849c9a4f52be01a7ee5f79d',
++                  '567b5c080e984428652809ba',
++                  '567b5dc00e984428652809bd',
++                  '58487cc6f52be01a7ee5f205',
++                  '5849c9c8f52be01a7ee5f79e',
++                ].includes(emote.id), // "5e76d338d6581c3724c0f0b2" => cvHazmat, "5e76d399d6581c3724c0f0b8" => cvMask, "567b5b520e984428652809b6" => SoSnowy, "5849c9a4f52be01a7ee5f79d" => IceCold, "567b5c080e984428652809ba" => CandyCane, "567b5dc00e984428652809bd" => ReinDeer, "58487cc6f52be01a7ee5f205" => SantaHat, "5849c9c8f52be01a7ee5f79e" => TopHat
++              };
+             });
+-            Chat.info.bttvBadges.forEach(user => {
+-                if (user.name === nick) {
+-                    var userBadge = {
+-                        description: user.badge.description,
+-                        url: user.badge.svg
+-                    };
+-                    if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
+-                }
++          },
++        );
++      },
++    );
++
++    [
++      'emotes/global',
++      'users/' + encodeURIComponent(channelID) + '/emotes',
++    ].forEach((endpoint) => {
++      $.getJSON('https://api.7tv.app/v2/' + endpoint).done(function (res) {
++        res.forEach((emote) => {
++          Chat.info.emotes[emote.name] = {
++            id: emote.id,
++            image: emote.urls[emote.urls.length - 1][1],
++            zeroWidth: emote.visibility_simple.includes('ZERO_WIDTH'),
++          };
++        });
++      });
++    });
++  },
++
++  load: function (callback) {
++    console.log('jChat: Loading...');
++    TwitchAPI(
++      'https://api.twitch.tv/helix/users?login=' + Chat.info.channel,
++    ).done(function (res) {
++      console.log(res);
++      Chat.info.channelID = res.data[0].id;
++      Chat.loadEmotes(Chat.info.channelID);
++
++      // Load CSS
++      let size = sizes[Chat.info.size - 1];
++      let font = fonts[Chat.info.font];
++
++      appendCSS('size', size);
++      appendCSS('font', font);
++
++      if (Chat.info.stroke && Chat.info.stroke > 0) {
++        let stroke = strokes[Chat.info.stroke - 1];
++        appendCSS('stroke', stroke);
++      }
++      if (Chat.info.shadow && Chat.info.shadow > 0) {
++        let shadow = shadows[Chat.info.shadow - 1];
++        appendCSS('shadow', shadow);
++      }
++      if (Chat.info.smallCaps) {
++        appendCSS('variant', 'SmallCaps');
++      }
++
++      // Load badges
++      TwitchAPI('https://badges.twitch.tv/v1/badges/global/display').done(
++        function (global) {
++          Object.entries(global.badge_sets).forEach((badge) => {
++            Object.entries(badge[1].versions).forEach((v) => {
++              Chat.info.badges[badge[0] + ':' + v[0]] = v[1].image_url_4x;
+             });
+-            Chat.info.seventvBadges.forEach(badge => {
+-                badge.users.forEach(user => {
+-                    if (user === nick) {
+-                        var userBadge = {
+-                            description: badge.tooltip,
+-                            url: badge.urls[2][1]
+-                        };
+-                        if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
+-                    }
+-                });
++          });
++          TwitchAPI(
++            'https://badges.twitch.tv/v1/badges/channels/' +
++              encodeURIComponent(Chat.info.channelID) +
++              '/display',
++          ).done(function (channel) {
++            Object.entries(channel.badge_sets).forEach((badge) => {
++              Object.entries(badge[1].versions).forEach((v) => {
++                Chat.info.badges[badge[0] + ':' + v[0]] = v[1].image_url_4x;
++              });
+             });
+-            Chat.info.chatterinoBadges.forEach(badge => {
+-                badge.users.forEach(user => {
+-                    if (user === userId) {
+-                        var userBadge = {
+-                            description: badge.tooltip,
+-                            url: badge.image3 || badge.image2 || badge.image1
+-                        };
+-                        if (!Chat.info.userBadges[nick].includes(userBadge)) Chat.info.userBadges[nick].push(userBadge);
+-                    }
+-                });
++            $.getJSON(
++              'https://api.frankerfacez.com/v1/_room/id/' +
++                encodeURIComponent(Chat.info.channelID),
++            ).done(function (res) {
++              if (res.room.moderator_badge) {
++                Chat.info.badges['moderator:1'] =
++                  'https://cdn.frankerfacez.com/room-badge/mod/' +
++                  Chat.info.channel +
++                  '/4/rounded';
++              }
++              if (res.room.vip_badge) {
++                Chat.info.badges['vip:1'] =
++                  'https://cdn.frankerfacez.com/room-badge/vip/' +
++                  Chat.info.channel +
++                  '/4';
++              }
+             });
++          });
++        },
++      );
++
++      if (!Chat.info.hideBadges) {
++        $.getJSON('https://api.ffzap.com/v1/supporters')
++          .done(function (res) {
++            Chat.info.ffzapBadges = res;
++          })
++          .fail(function () {
++            Chat.info.ffzapBadges = [];
++          });
++        $.getJSON('https://api.betterttv.net/3/cached/badges')
++          .done(function (res) {
++            Chat.info.bttvBadges = res;
++          })
++          .fail(function () {
++            Chat.info.bttvBadges = [];
++          });
++
++        $.getJSON('https://api.7tv.app/v2/badges?user_identifier=login')
++          .done(function (res) {
++            Chat.info.seventvBadges = res.badges;
++          })
++          .fail(function () {
++            Chat.info.seventvBadges = [];
++          });
++
++        $.getJSON('https://api.chatterino.com/badges')
++          .done(function (res) {
++            Chat.info.chatterinoBadges = res.badges;
++          })
++          .fail(function () {
++            Chat.info.chatterinoBadges = [];
++          });
++      }
++
++      // Load cheers images
++      TwitchAPI(
++        'https://api.twitch.tv/helix/bits/cheermotes?broadcaster_id=' +
++          Chat.info.channelId,
++      ).done(function (res) {
++        res.data.forEach((action) => {
++          Chat.info.cheers[action.prefix] = {};
++          action.tiers.forEach((tier) => {
++            Chat.info.cheers[action.prefix][tier.min_bits] = {
++              image: tier.images.dark.animated['4'],
++              color: tier.color,
++            };
++          });
+         });
+-    },
+-
+-    write: function(nick, info, message) {
+-        if (info) {
+-            var $chatLine = $('<div></div>');
+-            $chatLine.addClass('chat_line');
+-            $chatLine.attr('data-nick', nick);
+-            $chatLine.attr('data-time', Date.now());
+-            $chatLine.attr('data-id', info.id);
+-            var $userInfo = $('<span></span>');
+-            $userInfo.addClass('user_info');
+-
+-            // Writing badges
+-            if (Chat.info.hideBadges) {
+-                if (typeof(info.badges) === 'string') {
+-                    info.badges.split(',').forEach(badge => {
+-                        var $badge = $('<img/>');
+-                        $badge.addClass('badge');
+-                        badge = badge.split('/');
+-                        $badge.attr('src', Chat.info.badges[badge[0] + ':' + badge[1]]);
+-                        $userInfo.append($badge);
+-                    });
+-                }
+-            } else {
+-                var badges = [];
+-                const priorityBadges = ['predictions', 'admin', 'global_mod', 'staff', 'twitchbot', 'broadcaster', 'moderator', 'vip'];
+-                if (typeof(info.badges) === 'string') {
+-                    info.badges.split(',').forEach(badge => {
+-                        badge = badge.split('/');
+-                        var priority = (priorityBadges.includes(badge[0]) ? true : false);
+-                        badges.push({
+-                            description: badge[0],
+-                            url: Chat.info.badges[badge[0] + ':' + badge[1]],
+-                            priority: priority
+-                        });
+-                    });
+-                }
+-                var $modBadge;
+-                badges.forEach(badge => {
+-                    if (badge.priority) {
+-                        var $badge = $('<img/>');
+-                        $badge.addClass('badge');
+-                        $badge.attr('src', badge.url);
+-                        if (badge.description === 'moderator') $modBadge = $badge;
+-                        $userInfo.append($badge);
+-                    }
+-                });
+-                if (Chat.info.userBadges[nick]) {
+-                    Chat.info.userBadges[nick].forEach(badge => {
+-                        var $badge = $('<img/>');
+-                        $badge.addClass('badge');
+-                        if (badge.color) $badge.css('background-color', badge.color);
+-                        if (badge.description === 'Bot' && info.mod === '1') {
+-                            $badge.css('background-color', 'rgb(0, 173, 3)');
+-                            $modBadge.remove();
+-                        }
+-                        $badge.attr('src', badge.url);
+-                        $userInfo.append($badge);
+-                    });
+-                }
+-                badges.forEach(badge => {
+-                    if (!badge.priority) {
+-                        var $badge = $('<img/>');
+-                        $badge.addClass('badge');
+-                        $badge.attr('src', badge.url);
+-                        $userInfo.append($badge);
+-                    }
+-                });
+-            }
+-
+-            // Writing username
+-            var $username = $('<span></span>');
+-            $username.addClass('nick');
+-            if (typeof(info.color) === 'string') {
+-                if (tinycolor(info.color).getBrightness() <= 50) var color = tinycolor(info.color).lighten(30);
+-                else var color = info.color;
+-            } else {
+-                const twitchColors = ["#FF0000", "#0000FF", "#008000", "#B22222", "#FF7F50", "#9ACD32", "#FF4500", "#2E8B57", "#DAA520", "#D2691E", "#5F9EA0", "#1E90FF", "#FF69B4", "#8A2BE2", "#00FF7F"];
+-                var color = twitchColors[nick.charCodeAt(0) % 15];
++      });
++
++      callback(true);
++    });
++  },
++
++  update: setInterval(function () {
++    if (Chat.info.lines.length > 0) {
++      var lines = Chat.info.lines.join('');
++
++      if (Chat.info.animate) {
++        var $auxDiv = $('<div></div>', { class: 'hidden' }).appendTo(
++          '#chat_container',
++        );
++        $auxDiv.append(lines);
++        var auxHeight = $auxDiv.height();
++        $auxDiv.remove();
++
++        var $animDiv = $('<div></div>');
++        $('#chat_container').append($animDiv);
++        $animDiv.animate({ height: auxHeight }, 150, function () {
++          $(this).remove();
++          $('#chat_container').append(lines);
++        });
++      } else {
++        $('#chat_container').append(lines);
++      }
++      Chat.info.lines = [];
++      var linesToDelete = $('.chat_line').length - 100;
++      while (linesToDelete > 0) {
++        $('.chat_line').eq(0).remove();
++        linesToDelete--;
++      }
++    } else if (Chat.info.fade) {
++      var messageTime = $('.chat_line').eq(0).data('time');
++      if ((Date.now() - messageTime) / 1000 >= Chat.info.fade) {
++        $('.chat_line')
++          .eq(0)
++          .fadeOut(function () {
++            $(this).remove();
++          });
++      }
++    }
++  }, 200),
++
++  loadUserBadges: function (nick, userId) {
++    Chat.info.userBadges[nick] = [];
++    $.getJSON('https://api.frankerfacez.com/v1/user/' + nick).always(function (
++      res,
++    ) {
++      if (res.badges) {
++        Object.entries(res.badges).forEach((badge) => {
++          var userBadge = {
++            description: badge[1].title,
++            url: 'https:' + badge[1].urls['4'],
++            color: badge[1].color,
++          };
++          if (!Chat.info.userBadges[nick].includes(userBadge))
++            Chat.info.userBadges[nick].push(userBadge);
++        });
++      }
++      Chat.info.ffzapBadges.forEach((user) => {
++        if (user.id.toString() === userId) {
++          var color = '#755000';
++          if (user.tier == 2) color = user.badge_color || '#755000';
++          else if (user.tier == 3) {
++            if (user.badge_is_colored == 0)
++              color = user.badge_color || '#755000';
++            else color = false;
++          }
++          var userBadge = {
++            description: 'FFZ:AP Badge',
++            url: 'https://api.ffzap.com/v1/user/badge/' + userId + '/3',
++            color: color,
++          };
++          if (!Chat.info.userBadges[nick].includes(userBadge))
++            Chat.info.userBadges[nick].push(userBadge);
++        }
++      });
++      Chat.info.bttvBadges.forEach((user) => {
++        if (user.name === nick) {
++          var userBadge = {
++            description: user.badge.description,
++            url: user.badge.svg,
++          };
++          if (!Chat.info.userBadges[nick].includes(userBadge))
++            Chat.info.userBadges[nick].push(userBadge);
++        }
++      });
++      Chat.info.seventvBadges.forEach((badge) => {
++        badge.users.forEach((user) => {
++          if (user === nick) {
++            var userBadge = {
++              description: badge.tooltip,
++              url: badge.urls[2][1],
++            };
++            if (!Chat.info.userBadges[nick].includes(userBadge))
++              Chat.info.userBadges[nick].push(userBadge);
++          }
++        });
++      });
++      Chat.info.chatterinoBadges.forEach((badge) => {
++        badge.users.forEach((user) => {
++          if (user === userId) {
++            var userBadge = {
++              description: badge.tooltip,
++              url: badge.image3 || badge.image2 || badge.image1,
++            };
++            if (!Chat.info.userBadges[nick].includes(userBadge))
++              Chat.info.userBadges[nick].push(userBadge);
++          }
++        });
++      });
++    });
++  },
++
++  write: function (nick, info, message) {
++    if (info) {
++      var $chatLine = $('<div></div>');
++      $chatLine.addClass('chat_line');
++      $chatLine.attr('data-nick', nick);
++      $chatLine.attr('data-time', Date.now());
++      $chatLine.attr('data-id', info.id);
++      var $userInfo = $('<span></span>');
++      $userInfo.addClass('user_info');
++
++      // Writing badges
++      if (Chat.info.hideBadges) {
++        if (typeof info.badges === 'string') {
++          info.badges.split(',').forEach((badge) => {
++            var $badge = $('<img/>');
++            $badge.addClass('badge');
++            badge = badge.split('/');
++            $badge.attr('src', Chat.info.badges[badge[0] + ':' + badge[1]]);
++            $userInfo.append($badge);
++          });
++        }
++      } else {
++        var badges = [];
++        const priorityBadges = [
++          'predictions',
++          'admin',
++          'global_mod',
++          'staff',
++          'twitchbot',
++          'broadcaster',
++          'moderator',
++          'vip',
++        ];
++        if (typeof info.badges === 'string') {
++          info.badges.split(',').forEach((badge) => {
++            badge = badge.split('/');
++            var priority = priorityBadges.includes(badge[0]) ? true : false;
++            badges.push({
++              description: badge[0],
++              url: Chat.info.badges[badge[0] + ':' + badge[1]],
++              priority: priority,
++            });
++          });
++        }
++        var $modBadge;
++        badges.forEach((badge) => {
++          if (badge.priority) {
++            var $badge = $('<img/>');
++            $badge.addClass('badge');
++            $badge.attr('src', badge.url);
++            if (badge.description === 'moderator') $modBadge = $badge;
++            $userInfo.append($badge);
++          }
++        });
++        if (Chat.info.userBadges[nick]) {
++          Chat.info.userBadges[nick].forEach((badge) => {
++            var $badge = $('<img/>');
++            $badge.addClass('badge');
++            if (badge.color) $badge.css('background-color', badge.color);
++            if (badge.description === 'Bot' && info.mod === '1') {
++              $badge.css('background-color', 'rgb(0, 173, 3)');
++              $modBadge.remove();
+             }
+-            $username.css('color', color);
+-            $username.html(info['display-name'] ? info['display-name'] : nick);
+-            $userInfo.append($username);
+-
+-            // Writing message
+-            var $message = $('<span></span>');
+-            $message.addClass('message');
+-            if (/^\x01ACTION.*\x01$/.test(message)) {
+-                $message.css('color', color);
+-                message = message.replace(/^\x01ACTION/, '').replace(/\x01$/, '').trim();
+-                $userInfo.append('<span>&nbsp;</span>');
+-            } else {
+-                $userInfo.append('<span class="colon">:</span>');
++            $badge.attr('src', badge.url);
++            $userInfo.append($badge);
++          });
++        }
++        badges.forEach((badge) => {
++          if (!badge.priority) {
++            var $badge = $('<img/>');
++            $badge.addClass('badge');
++            $badge.attr('src', badge.url);
++            $userInfo.append($badge);
++          }
++        });
++      }
++
++      // Writing username
++      var $username = $('<span></span>');
++      $username.addClass('nick');
++      if (typeof info.color === 'string') {
++        if (tinycolor(info.color).getBrightness() <= 50)
++          var color = tinycolor(info.color).lighten(30);
++        else var color = info.color;
++      } else {
++        const twitchColors = [
++          '#FF0000',
++          '#0000FF',
++          '#008000',
++          '#B22222',
++          '#FF7F50',
++          '#9ACD32',
++          '#FF4500',
++          '#2E8B57',
++          '#DAA520',
++          '#D2691E',
++          '#5F9EA0',
++          '#1E90FF',
++          '#FF69B4',
++          '#8A2BE2',
++          '#00FF7F',
++        ];
++        var color = twitchColors[nick.charCodeAt(0) % 15];
++      }
++      $username.css('color', color);
++      $username.html(info['display-name'] ? info['display-name'] : nick);
++      $userInfo.append($username);
++
++      // Writing message
++      var $message = $('<span></span>');
++      $message.addClass('message');
++      if (/^\x01ACTION.*\x01$/.test(message)) {
++        $message.css('color', color);
++        message = message
++          .replace(/^\x01ACTION/, '')
++          .replace(/\x01$/, '')
++          .trim();
++        $userInfo.append('<span>&nbsp;</span>');
++      } else {
++        $userInfo.append('<span class="colon">:</span>');
++      }
++      $chatLine.append($userInfo);
++
++      // Replacing emotes and cheers
++      var replacements = {};
++      if (typeof info.emotes === 'string') {
++        info.emotes.split('/').forEach((emoteData) => {
++          var twitchEmote = emoteData.split(':');
++          var indexes = twitchEmote[1].split(',')[0].split('-');
++          var emojis = new RegExp('[\u1000-\uFFFF]+', 'g');
++          var aux = message.replace(emojis, ' ');
++          var emoteCode = aux.substr(indexes[0], indexes[1] - indexes[0] + 1);
++          replacements[emoteCode] =
++            '<img class="emote" src="https://static-cdn.jtvnw.net/emoticons/v2/' +
++            twitchEmote[0] +
++            '/default/dark/3.0" />';
++        });
++      }
++
++      Object.entries(Chat.info.emotes).forEach((emote) => {
++        if (message.search(escapeRegExp(emote[0])) > -1) {
++          if (emote[1].upscale)
++            replacements[emote[0]] =
++              '<img class="emote upscale" src="' + emote[1].image + '" />';
++          else if (emote[1].zeroWidth)
++            replacements[emote[0]] =
++              '<img class="emote" data-zw="true" src="' +
++              emote[1].image +
++              '" />';
++          else
++            replacements[emote[0]] =
++              '<img class="emote" src="' + emote[1].image + '" />';
++        }
++      });
++
++      message = escapeHtml(message);
++
++      if (info.bits && parseInt(info.bits) > 0) {
++        var bits = parseInt(info.bits);
++        var parsed = false;
++        for (cheerType of Object.entries(Chat.info.cheers)) {
++          var regex = new RegExp(cheerType[0] + '\\d+\\s*', 'ig');
++          if (message.search(regex) > -1) {
++            message = message.replace(regex, '');
++
++            if (!parsed) {
++              var closest = 1;
++              for (cheerTier of Object.keys(cheerType[1])
++                .map(Number)
++                .sort((a, b) => a - b)) {
++                if (bits >= cheerTier) closest = cheerTier;
++                else break;
++              }
++              message =
++                '<img class="cheer_emote" src="' +
++                cheerType[1][closest].image +
++                '" /><span class="cheer_bits" style="color: ' +
++                cheerType[1][closest].color +
++                ';">' +
++                bits +
++                '</span> ' +
++                message;
++              parsed = true;
+             }
+-            $chatLine.append($userInfo);
+-
+-            // Replacing emotes and cheers
+-            var replacements = {};
+-            if (typeof(info.emotes) === 'string') {
+-                info.emotes.split('/').forEach(emoteData => {
+-                    var twitchEmote = emoteData.split(':');
+-                    var indexes = twitchEmote[1].split(',')[0].split('-');
+-                    var emojis = new RegExp('[\u1000-\uFFFF]+', 'g');
+-                    var aux = message.replace(emojis, ' ');
+-                    var emoteCode = aux.substr(indexes[0], indexes[1] - indexes[0] + 1);
+-                    replacements[emoteCode] = '<img class="emote" src="https://static-cdn.jtvnw.net/emoticons/v2/' + twitchEmote[0] + '/default/dark/3.0" />';
++          }
++        }
++      }
++
++      var replacementKeys = Object.keys(replacements);
++      replacementKeys.sort(function (a, b) {
++        return b.length - a.length;
++      });
++
++      replacementKeys.forEach((replacementKey) => {
++        var regex = new RegExp(
++          '(?<!\\S)(' + escapeRegExp(replacementKey) + ')(?!\\S)',
++          'g',
++        );
++        message = message.replace(regex, replacements[replacementKey]);
++      });
++
++      message = twemoji.parse(message);
++      $message.html(message);
++
++      // Writing zero-width emotes
++      messageNodes = $message.children();
++      messageNodes.each(function (i) {
++        if (
++          i != 0 &&
++          $(this).data('zw') &&
++          ($(messageNodes[i - 1]).hasClass('emote') ||
++            $(messageNodes[i - 1]).hasClass('emoji')) &&
++          !$(messageNodes[i - 1]).data('zw')
++        ) {
++          var $container = $('<span></span>');
++          $container.addClass('zero-width_container');
++          $(this).addClass('zero-width');
++          $(this).before($container);
++          $container.append(messageNodes[i - 1], this);
++        }
++      });
++      $message.html($message.html().trim());
++      $chatLine.append($message);
++      Chat.info.lines.push($chatLine.wrap('<div>').parent().html());
++    }
++  },
++
++  clearChat: function (nick) {
++    setTimeout(function () {
++      $('.chat_line[data-nick=' + nick + ']').remove();
++    }, 200);
++  },
++
++  clearMessage: function (id) {
++    setTimeout(function () {
++      $('.chat_line[data-id=' + id + ']').remove();
++    }, 200);
++  },
++
++  connect: function (channel) {
++    console.log('jChat: Connecting...');
++    Chat.info.channel = channel;
++    var title = $(document).prop('title');
++    $(document).prop('title', title + Chat.info.channel);
++
++    Chat.load(function () {
++      console.log('jChat: Connecting to IRC server...');
++      var socket = new ReconnectingWebSocket(`ws://${URL}:${PORT}/ws/`, null, {
++        reconnectInterval: 2000,
++      });
++
++      socket.onopen = function () {
++        console.log('jChat: Connected');
++        socket.send('PASS blah\r\n');
++        socket.send(
++          'NICK justinfan' + Math.floor(Math.random() * 99999) + '\r\n',
++        );
++        socket.send('CAP REQ :twitch.tv/commands twitch.tv/tags\r\n');
++        socket.send('JOIN #' + Chat.info.channel + '\r\n');
++      };
++
++      socket.onclose = function () {
++        console.log('jChat: Disconnected');
++      };
++
++      function onMessage(data) {
++        // Temp for testing in order to figure out what the Twitch API sends so we can emulate it.
++        console.log(data.data);
++
++        data.data.split('\r\n').forEach((line) => {
++          if (!line) return;
++          var message = parseIRC(line);
++          console.log(JSON.stringify(message));
++          if (!message.command) return;
++
++          switch (message.command) {
++            case 'PING':
++              socket.send('PONG ' + message.params[0]);
++              return;
++            case 'JOIN':
++              console.log('jChat: Joined channel #' + Chat.info.channel);
++              return;
++            case 'CLEARMSG':
++              if (message.tags)
++                Chat.clearMessage(message.tags['target-msg-id']);
++              return;
++            case 'CLEARCHAT':
++              if (message.params[1]) Chat.clearChat(message.params[1]);
++              return;
++            case 'PRIVMSG':
++              // if (message.params[0] !== '#' + channel || !message.params[1])
++              //   return console.log('jChat: Invalid PRIVMSG');
++              var nick = message.prefix.split('@')[0].split('!')[0];
++
++              if (
++                message.params[1].toLowerCase() === '!refreshoverlay' &&
++                typeof message.tags.badges === 'string'
++              ) {
++                var flag = false;
++                message.tags.badges.split(',').forEach((badge) => {
++                  badge = badge.split('/');
++                  if (badge[0] === 'moderator' || badge[0] === 'broadcaster') {
++                    flag = true;
++                    return console.log('jChat: mod or broadcaster');
++                  }
+                 });
+-            }
+-
+-            Object.entries(Chat.info.emotes).forEach(emote => {
+-                if (message.search(escapeRegExp(emote[0])) > -1) {
+-                    if (emote[1].upscale) replacements[emote[0]] = '<img class="emote upscale" src="' + emote[1].image + '" />';
+-                    else if (emote[1].zeroWidth) replacements[emote[0]] = '<img class="emote" data-zw="true" src="' + emote[1].image + '" />';
+-                    else replacements[emote[0]] = '<img class="emote" src="' + emote[1].image + '" />';
+-                }
+-            });
+-
+-            message = escapeHtml(message);
+-
+-            if (info.bits && parseInt(info.bits) > 0) {
+-                var bits = parseInt(info.bits);
+-                var parsed = false;
+-                for (cheerType of Object.entries(Chat.info.cheers)) {
+-                    var regex = new RegExp(cheerType[0] + "\\d+\\s*", 'ig');
+-                    if (message.search(regex) > -1) {
+-                        message = message.replace(regex, '');
+-
+-                        if (!parsed) {
+-                            var closest = 1;
+-                            for (cheerTier of Object.keys(cheerType[1]).map(Number).sort((a, b) => a - b)) {
+-                                if (bits >= cheerTier) closest = cheerTier;
+-                                else break;
+-                            }
+-                            message = '<img class="cheer_emote" src="' + cheerType[1][closest].image + '" /><span class="cheer_bits" style="color: ' + cheerType[1][closest].color + ';">' + bits + '</span> ' + message;
+-                            parsed = true;
+-                        }
+-                    }
++                if (flag) {
++                  Chat.loadEmotes(Chat.info.channelID);
++                  console.log('jChat: Refreshing emotes...');
++                  return;
+                 }
+-            }
+-
+-            var replacementKeys = Object.keys(replacements);
+-            replacementKeys.sort(function(a, b) {
+-                return b.length - a.length;
+-            });
+-
+-            replacementKeys.forEach(replacementKey => {
+-                var regex = new RegExp("(?<!\\S)(" + escapeRegExp(replacementKey) + ")(?!\\S)", 'g');
+-                message = message.replace(regex, replacements[replacementKey]);
+-            });
+-
+-            message = twemoji.parse(message);
+-            $message.html(message);
+-
+-            // Writing zero-width emotes
+-            messageNodes = $message.children();
+-            messageNodes.each(function(i) {
+-                if (i != 0 && $(this).data('zw') && ($(messageNodes[i - 1]).hasClass('emote') || $(messageNodes[i - 1]).hasClass('emoji')) && !$(messageNodes[i - 1]).data('zw')) {
+-                    var $container = $('<span></span>');
+-                    $container.addClass('zero-width_container');
+-                    $(this).addClass('zero-width');
+-                    $(this).before($container);
+-                    $container.append(messageNodes[i - 1], this);
+-                }
+-            });
+-            $message.html($message.html().trim());
+-            $chatLine.append($message);
+-            Chat.info.lines.push($chatLine.wrap('<div>').parent().html());
+-        }
+-    },
+-
+-    clearChat: function(nick) {
+-        setTimeout(function() {
+-            $('.chat_line[data-nick=' + nick + ']').remove();
+-        }, 200);
+-    },
+-
+-    clearMessage: function(id) {
+-        setTimeout(function() {
+-            $('.chat_line[data-id=' + id + ']').remove();
+-        }, 200);
+-    },
+-
+-    connect: function(channel) {
+-        Chat.info.channel = channel;
+-        var title = $(document).prop('title');
+-        $(document).prop('title', title + Chat.info.channel);
+-
+-        Chat.load(function() {
+-            console.log('jChat: Connecting to IRC server...');
+-            var socket = new ReconnectingWebSocket('wss://irc-ws.chat.twitch.tv', 'irc', { reconnectInterval: 2000 });
+-
+-            socket.onopen = function() {
+-                console.log('jChat: Connected');
+-                socket.send('PASS blah\r\n');
+-                socket.send('NICK justinfan' + Math.floor(Math.random() * 99999) + '\r\n');
+-                socket.send('CAP REQ :twitch.tv/commands twitch.tv/tags\r\n');
+-                socket.send('JOIN #' + Chat.info.channel + '\r\n');
+-            };
++              }
++
++              if (Chat.info.hideCommands) {
++                if (/^!.+/.test(message.params[1]))
++                  return console.log('jChat: Was command');
++              }
++
++              if (!Chat.info.showBots) {
++                if (Chat.info.bots.includes(nick))
++                  return console.log('jChat: Hiding bot');
++              }
++
++              if (Chat.info.blockedUsers) {
++                if (Chat.info.blockedUsers.includes(nick))
++                  return console.log('jChat: Hiding blocked user');
++              }
++
++              if (!Chat.info.hideBadges) {
++                if (
++                  Chat.info.bttvBadges &&
++                  Chat.info.seventvBadges &&
++                  Chat.info.chatterinoBadges &&
++                  Chat.info.ffzapBadges &&
++                  !Chat.info.userBadges[nick]
++                )
++                  Chat.loadUserBadges(nick, message.tags['user-id']);
++              }
++
++              Chat.write(nick, message.tags, message.params[1]);
++              return console.log('jChat: Written');
++          }
++
++          socket.send('Gotcha: ' + message.command);
++        });
++      }
+ 
+-            socket.onclose = function() {
+-                console.log('jChat: Disconnected');
+-            };
++      window.onMessage = onMessage;
+ 
+-            socket.onmessage = function(data) {
+-                data.data.split('\r\n').forEach(line => {
+-                    if (!line) return;
+-                    var message = window.parseIRC(line);
+-                    if (!message.command) return;
+-
+-                    switch (message.command) {
+-                        case "PING":
+-                            socket.send('PONG ' + message.params[0]);
+-                            return;
+-                        case "JOIN":
+-                            console.log('jChat: Joined channel #' + Chat.info.channel);
+-                            return;
+-                        case "CLEARMSG":
+-                            if (message.tags) Chat.clearMessage(message.tags['target-msg-id']);
+-                            return;
+-                        case "CLEARCHAT":
+-                            if (message.params[1]) Chat.clearChat(message.params[1]);
+-                            return;
+-                        case "PRIVMSG":
+-                            if (message.params[0] !== '#' + channel || !message.params[1]) return;
+-                            var nick = message.prefix.split('@')[0].split('!')[0];
+-
+-                            if (message.params[1].toLowerCase() === "!refreshoverlay" && typeof(message.tags.badges) === 'string') {
+-                                var flag = false;
+-                                message.tags.badges.split(',').forEach(badge => {
+-                                    badge = badge.split('/');
+-                                    if (badge[0] === "moderator" || badge[0] === "broadcaster") {
+-                                        flag = true;
+-                                        return;
+-                                    }
+-                                });
+-                                if (flag) {
+-                                    Chat.loadEmotes(Chat.info.channelID);
+-                                    console.log('jChat: Refreshing emotes...');
+-                                    return;
+-                                }
+-                            }
+-
+-                            if (Chat.info.hideCommands) {
+-                                if (/^!.+/.test(message.params[1])) return;
+-                            }
+-
+-                            if (!Chat.info.showBots) {
+-                                if (Chat.info.bots.includes(nick)) return;
+-                            }
+-
+-                            if (Chat.info.blockedUsers) {
+-                                if (Chat.info.blockedUsers.includes(nick)) return;
+-                            }
+-
+-                            if (!Chat.info.hideBadges) {
+-                                if (Chat.info.bttvBadges && Chat.info.seventvBadges && Chat.info.chatterinoBadges && Chat.info.ffzapBadges && !Chat.info.userBadges[nick]) Chat.loadUserBadges(nick, message.tags['user-id']);
+-                            }
+-
+-                            Chat.write(nick, message.tags, message.params[1]);
+-                            return;
+-                    }
+-                });
+-            };
+-        });
+-    }
++      socket.onmessage = onMessage;
++    });
++  },
+ };
+ 
+-$(document).ready(function() {
+-    Chat.connect($.QueryString.channel ? $.QueryString.channel.toLowerCase() : 'giambaj');
+-});
+\ No newline at end of file
++$(document).ready(function () {
++  console.log('Document is ready');
++  Chat.connect(
++    $.QueryString.channel ? $.QueryString.channel.toLowerCase() : 'giambaj',
++  );
++});
+diff --git a/v2/styles/font_BalooTammudu.css b/v2/styles/font_BalooTammudu.css
+index eb14261..d6e96bc 100644
+--- a/v2/styles/font_BalooTammudu.css
++++ b/v2/styles/font_BalooTammudu.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Baloo Tammudu 2', cursive;
+-}
+\ No newline at end of file
++  font-family: "Baloo Tammudu 2", cursive;
++}
+diff --git a/v2/styles/font_Comfortaa.css b/v2/styles/font_Comfortaa.css
+index 2e95441..6fe5db5 100644
+--- a/v2/styles/font_Comfortaa.css
++++ b/v2/styles/font_Comfortaa.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Comfortaa', cursive;
+-}
+\ No newline at end of file
++  font-family: "Comfortaa", cursive;
++}
+diff --git a/v2/styles/font_DancingScript.css b/v2/styles/font_DancingScript.css
+index 26747e6..2f7b450 100644
+--- a/v2/styles/font_DancingScript.css
++++ b/v2/styles/font_DancingScript.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Dancing Script', cursive;
+-}
+\ No newline at end of file
++  font-family: "Dancing Script", cursive;
++}
+diff --git a/v2/styles/font_Impact.css b/v2/styles/font_Impact.css
+index 2da9b34..41b9905 100644
+--- a/v2/styles/font_Impact.css
++++ b/v2/styles/font_Impact.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Impact', sans-serif;
+-}
+\ No newline at end of file
++  font-family: "Impact", sans-serif;
++}
+diff --git a/v2/styles/font_IndieFlower.css b/v2/styles/font_IndieFlower.css
+index 7e7d8c9..1f21559 100644
+--- a/v2/styles/font_IndieFlower.css
++++ b/v2/styles/font_IndieFlower.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Indie Flower', cursive;
+-}
+\ No newline at end of file
++  font-family: "Indie Flower", cursive;
++}
+diff --git a/v2/styles/font_Lato.css b/v2/styles/font_Lato.css
+index b321422..b67763c 100644
+--- a/v2/styles/font_Lato.css
++++ b/v2/styles/font_Lato.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Lato', sans-serif;
+-}
+\ No newline at end of file
++  font-family: "Lato", sans-serif;
++}
+diff --git a/v2/styles/font_NotoSans.css b/v2/styles/font_NotoSans.css
+index 84a2a88..b00ccbe 100644
+--- a/v2/styles/font_NotoSans.css
++++ b/v2/styles/font_NotoSans.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Noto Sans JP', sans-serif;
+-}
+\ No newline at end of file
++  font-family: "Noto Sans JP", sans-serif;
++}
+diff --git a/v2/styles/font_PressStart2P.css b/v2/styles/font_PressStart2P.css
+index 3a40393..875d1fc 100644
+--- a/v2/styles/font_PressStart2P.css
++++ b/v2/styles/font_PressStart2P.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Press Start 2P', cursive;
+-}
+\ No newline at end of file
++  font-family: "Press Start 2P", cursive;
++}
+diff --git a/v2/styles/font_Roboto.css b/v2/styles/font_Roboto.css
+index 7964540..b192e22 100644
+--- a/v2/styles/font_Roboto.css
++++ b/v2/styles/font_Roboto.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Roboto', sans-serif;
+-}
+\ No newline at end of file
++  font-family: "Roboto", sans-serif;
++}
+diff --git a/v2/styles/font_SegoeUI.css b/v2/styles/font_SegoeUI.css
+index 9c931a5..9518dbf 100644
+--- a/v2/styles/font_SegoeUI.css
++++ b/v2/styles/font_SegoeUI.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Segoe UI', sans-serif;
+-}
+\ No newline at end of file
++  font-family: "Segoe UI", sans-serif;
++}
+diff --git a/v2/styles/font_SourceCodePro.css b/v2/styles/font_SourceCodePro.css
+index 9372273..25d5538 100644
+--- a/v2/styles/font_SourceCodePro.css
++++ b/v2/styles/font_SourceCodePro.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Source Code Pro', monospace;
+-}
+\ No newline at end of file
++  font-family: "Source Code Pro", monospace;
++}
+diff --git a/v2/styles/font_Wallpoet.css b/v2/styles/font_Wallpoet.css
+index 9d1d2e2..bc3f976 100644
+--- a/v2/styles/font_Wallpoet.css
++++ b/v2/styles/font_Wallpoet.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-family: 'Wallpoet', cursive;
+-}
+\ No newline at end of file
++  font-family: "Wallpoet", cursive;
++}
+diff --git a/v2/styles/shadow_large.css b/v2/styles/shadow_large.css
+index 30c4909..b9cbf0f 100644
+--- a/v2/styles/shadow_large.css
++++ b/v2/styles/shadow_large.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    text-shadow: 2px 2px 6px black;
+-}
+\ No newline at end of file
++  text-shadow: 2px 2px 6px black;
++}
+diff --git a/v2/styles/shadow_medium.css b/v2/styles/shadow_medium.css
+index 511b03c..1b65c49 100644
+--- a/v2/styles/shadow_medium.css
++++ b/v2/styles/shadow_medium.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    text-shadow: 2px 2px 4px black;
+-}
+\ No newline at end of file
++  text-shadow: 2px 2px 4px black;
++}
+diff --git a/v2/styles/shadow_small.css b/v2/styles/shadow_small.css
+index 738d063..e5eafbd 100644
+--- a/v2/styles/shadow_small.css
++++ b/v2/styles/shadow_small.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    text-shadow: 2px 2px 2px black;
+-}
+\ No newline at end of file
++  text-shadow: 2px 2px 2px black;
++}
+diff --git a/v2/styles/size_large.css b/v2/styles/size_large.css
+index b032d9d..e635940 100644
+--- a/v2/styles/size_large.css
++++ b/v2/styles/size_large.css
+@@ -1,47 +1,47 @@
+ #chat_container {
+-    font-size: 48px;
++  font-size: 48px;
+ }
+ 
+ .chat_line {
+-    line-height: 75px;
++  line-height: 75px;
+ }
+ 
+ .badge {
+-    width: 40px;
+-    height: 40px;
+-    margin-right: 5px;
+-    margin-bottom: 8px;
++  width: 40px;
++  height: 40px;
++  margin-right: 5px;
++  margin-bottom: 8px;
+ }
+ 
+ .badge:last-of-type {
+-    margin-right: 8px;
++  margin-right: 8px;
+ }
+ 
+ .colon {
+-    margin-right: 20px;
++  margin-right: 20px;
+ }
+ 
+ .cheer_bits {
+-    font-weight: 500;
+-    margin-left: 5px;
+-    margin-right: 10px;
++  font-weight: 500;
++  margin-left: 5px;
++  margin-right: 10px;
+ }
+ 
+ .cheer_emote {
+-    max-height: 60px;
+-    margin-bottom: -15px;
++  max-height: 60px;
++  margin-bottom: -15px;
+ }
+ 
+ .emote {
+-    max-width: 180px;
+-    max-height: 60px;
+-    margin-right: -4px;
++  max-width: 180px;
++  max-height: 60px;
++  margin-right: -4px;
+ }
+ 
+ .upscale {
+-    height: 60px;
++  height: 60px;
+ }
+ 
+ .emoji {
+-    height: 55px;
+-}
+\ No newline at end of file
++  height: 55px;
++}
+diff --git a/v2/styles/size_medium.css b/v2/styles/size_medium.css
+index 6a73b45..83f8140 100644
+--- a/v2/styles/size_medium.css
++++ b/v2/styles/size_medium.css
+@@ -1,47 +1,47 @@
+ #chat_container {
+-    font-size: 34px;
++  font-size: 34px;
+ }
+ 
+ .chat_line {
+-    line-height: 55px;
++  line-height: 55px;
+ }
+ 
+ .badge {
+-    width: 28px;
+-    height: 28px;
+-    margin-right: 4px;
+-    margin-bottom: 6px;
++  width: 28px;
++  height: 28px;
++  margin-right: 4px;
++  margin-bottom: 6px;
+ }
+ 
+ .badge:last-of-type {
+-    margin-right: 6px;
++  margin-right: 6px;
+ }
+ 
+ .colon {
+-    margin-right: 14px;
++  margin-right: 14px;
+ }
+ 
+ .cheer_bits {
+-    font-weight: 600;
+-    margin-left: 4px;
+-    margin-right: 7px;
++  font-weight: 600;
++  margin-left: 4px;
++  margin-right: 7px;
+ }
+ 
+ .cheer_emote {
+-    max-height: 42px;
+-    margin-bottom: -10px;
++  max-height: 42px;
++  margin-bottom: -10px;
+ }
+ 
+ .emote {
+-    max-width: 128px;
+-    max-height: 42px;
+-    margin-right: -3px;
++  max-width: 128px;
++  max-height: 42px;
++  margin-right: -3px;
+ }
+ 
+ .upscale {
+-    height: 42px;
++  height: 42px;
+ }
+ 
+ .emoji {
+-    height: 39px;
+-}
+\ No newline at end of file
++  height: 39px;
++}
+diff --git a/v2/styles/size_small.css b/v2/styles/size_small.css
+index d43b6d5..8b93ac1 100644
+--- a/v2/styles/size_small.css
++++ b/v2/styles/size_small.css
+@@ -1,47 +1,47 @@
+ #chat_container {
+-    font-size: 20px;
++  font-size: 20px;
+ }
+ 
+ .chat_line {
+-    line-height: 30px;
++  line-height: 30px;
+ }
+ 
+ .badge {
+-    width: 16px;
+-    height: 16px;
+-    margin-right: 2px;
+-    margin-bottom: 3px;
++  width: 16px;
++  height: 16px;
++  margin-right: 2px;
++  margin-bottom: 3px;
+ }
+ 
+ .badge:last-of-type {
+-    margin-right: 3px;
++  margin-right: 3px;
+ }
+ 
+ .colon {
+-    margin-right: 8px;
++  margin-right: 8px;
+ }
+ 
+ .cheer_bits {
+-    font-weight: 700;
+-    margin-left: 2px;
+-    margin-right: 4px;
++  font-weight: 700;
++  margin-left: 2px;
++  margin-right: 4px;
+ }
+ 
+ .cheer_emote {
+-    max-height: 25px;
+-    margin-bottom: -6px;
++  max-height: 25px;
++  margin-bottom: -6px;
+ }
+ 
+ .emote {
+-    max-width: 75px;
+-    max-height: 25px;
+-    margin-right: -2px;
++  max-width: 75px;
++  max-height: 25px;
++  margin-right: -2px;
+ }
+ 
+ .upscale {
+-    height: 25px;
++  height: 25px;
+ }
+ 
+ .emoji {
+-    height: 22px;
+-}
+\ No newline at end of file
++  height: 22px;
++}
+diff --git a/v2/styles/stroke_medium.css b/v2/styles/stroke_medium.css
+index f365d7d..f65eec6 100644
+--- a/v2/styles/stroke_medium.css
++++ b/v2/styles/stroke_medium.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    -webkit-text-stroke: 2px black;
+-}
+\ No newline at end of file
++  -webkit-text-stroke: 2px black;
++}
+diff --git a/v2/styles/stroke_thick.css b/v2/styles/stroke_thick.css
+index 81971fc..d4fe83c 100644
+--- a/v2/styles/stroke_thick.css
++++ b/v2/styles/stroke_thick.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    -webkit-text-stroke: 3px black;
+-}
+\ No newline at end of file
++  -webkit-text-stroke: 3px black;
++}
+diff --git a/v2/styles/stroke_thicker.css b/v2/styles/stroke_thicker.css
+index 2bf5187..c04d2ce 100644
+--- a/v2/styles/stroke_thicker.css
++++ b/v2/styles/stroke_thicker.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    -webkit-text-stroke: 4px black;
+-}
+\ No newline at end of file
++  -webkit-text-stroke: 4px black;
++}
+diff --git a/v2/styles/stroke_thin.css b/v2/styles/stroke_thin.css
+index 7d3261e..277823d 100644
+--- a/v2/styles/stroke_thin.css
++++ b/v2/styles/stroke_thin.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    -webkit-text-stroke: 1px black;
+-}
+\ No newline at end of file
++  -webkit-text-stroke: 1px black;
++}
+diff --git a/v2/styles/style.css b/v2/styles/style.css
+index 3d14194..e011700 100644
+--- a/v2/styles/style.css
++++ b/v2/styles/style.css
+@@ -1,55 +1,59 @@
+ body {
+-    margin: 0;
+-    overflow: hidden;
+-    height: 100vh;
+-    position: relative;
++  margin: 0;
++  overflow: hidden;
++  height: 100vh;
++  position: relative;
++}
++
++.preview-body {
++  background-color: #000;
+ }
+ 
+ #chat_container {
+-    width: calc(100% - 20px);
+-    padding: 10px;
+-    position: absolute;
+-    bottom: 0;
+-    overflow: hidden;
+-    background-color: transparent;
+-    color: white;
+-    font-weight: 800;
+-    word-break: break-word;
++  width: calc(100% - 20px);
++  padding: 10px;
++  position: absolute;
++  bottom: 0;
++  overflow: hidden;
++  background-color: transparent;
++  color: white;
++  font-weight: 800;
++  word-break: break-word;
+ }
+ 
+ .user_info {
+-    display: inline-block;
++  display: inline-block;
+ }
+ 
+ .badge {
+-    vertical-align: middle;
+-    border-radius: 10%;
++  vertical-align: middle;
++  border-radius: 10%;
+ }
+ 
+ .zero-width_container {
+-    display: inline-flex;
+-    align-items: center;
+-    justify-content: center;
+-    vertical-align: middle;
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  vertical-align: middle;
+ }
+ 
+ .cheer_bits {
+-    font-size: 0.6em;
+-    -webkit-text-stroke: 1px black;
++  font-size: 0.6em;
++  -webkit-text-stroke: 1px black;
+ }
+ 
+ .emote {
+-    vertical-align: middle;
++  vertical-align: middle;
+ }
+ 
+ .zero-width {
+-    position: absolute;
++  position: absolute;
+ }
+ 
+ .emoji {
+-    vertical-align: middle;
++  vertical-align: middle;
+ }
+ 
+ .hidden {
+-    display: none;
+-}
+\ No newline at end of file
++  display: none;
++}
+diff --git a/v2/styles/variant_SmallCaps.css b/v2/styles/variant_SmallCaps.css
+index f806c9e..27cd4ae 100644
+--- a/v2/styles/variant_SmallCaps.css
++++ b/v2/styles/variant_SmallCaps.css
+@@ -1,3 +1,3 @@
+ #chat_container {
+-    font-variant: small-caps;
+-}
+\ No newline at end of file
++  font-variant: small-caps;
++}
+diff --git a/v2/utils.js b/v2/utils.js
+index 4415fee..c975d17 100644
+--- a/v2/utils.js
++++ b/v2/utils.js
+@@ -1,23 +1,31 @@
+ function appendCSS(type, name) {
+-    $("<link/>", {
+-        rel: "stylesheet",
+-        type: "text/css",
+-        class: `chat_${type}`,
+-        href: `styles/${type}_${name}.css`
+-    }).appendTo("head");
++  $('<link/>', {
++    rel: 'stylesheet',
++    type: 'text/css',
++    class: `chat_${type}`,
++    href: `styles/${type}_${name}.css`,
++  }).appendTo('head');
+ }
+ 
+-function escapeRegExp(string) { // Thanks to coolaj86 and Darren Cook (https://stackoverflow.com/a/6969486)
+-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
++function escapeRegExp(string) {
++  // Thanks to coolaj86 and Darren Cook (https://stackoverflow.com/a/6969486)
++  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+ }
+ 
+ function escapeHtml(message) {
+-    return message
+-        .replace(/&/g, "&amp;")
+-        .replace(/(<)(?!3)/g, "&lt;")
+-        .replace(/(>)(?!\()/g, "&gt;");
++  return message
++    .replace(/&/g, '&amp;')
++    .replace(/(<)(?!3)/g, '&lt;')
++    .replace(/(>)(?!\()/g, '&gt;');
+ }
+ 
+ function TwitchAPI(url) {
+-    return $.getJSON(url + (url.search(/\?/) > -1 ? '&' : '?') + 'client_id=' + client_id);
+-}
+\ No newline at end of file
++  return $.ajax({
++    beforeSend: function (request) {
++      request.setRequestHeader('Client-Id', client_id);
++      request.setRequestHeader('Authorization', `Bearer ${credentials}`);
++    },
++    dataType: 'json',
++    url: url + (url.search(/\?/) > -1 ? '&' : '?') + 'client_id=' + client_id,
++  });
++}
