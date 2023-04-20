@@ -1,10 +1,18 @@
 .PHONY: build
 
-init:
-	python3 scripts/setup.py
+setup: update apply
+
+update:
+	git submodule update --init --recursive
+
+apply:
+	cd chat && git apply ../patches/jChat.patch
 
 patch:
-	python3 scripts/patch.py
+	cd chat && git diff > ../patches/jChat.patch
+
+unpatch:
+	cd chat && git reset --hard
 
 build:
 	cargo build --release
