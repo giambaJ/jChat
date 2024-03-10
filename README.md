@@ -1,7 +1,12 @@
-# [![](https://www.giambaj.it/twitch/jchat/img/peepoHappysmall.png)](#) jChat [![GitHub version](https://img.shields.io/badge/release-v2.3.4-blue)](#) [![Website giambaj.it](https://img.shields.io/website-up-down-green-red/https/giambaj.it.svg)](https://www.giambaj.it/twitch/jchat/) [![GitHub license](https://img.shields.io/github/license/giambaJ/jChat)](https://github.com/giambaJ/jChat/blob/main/LICENSE)
+# Forked from [jChat](https://github.com/giambaJ/jChat). Used [jChat-Hyped](https://github.com/ThatHypedPerson/jChat-hyped) to handle new Twitch API login.
 
-**jChat** is an overlay that allows you to show your Twitch chat on screen with OBS, XSplit, and any other streaming software that supports browser sources. It supports your [**BetterTTV**](https://betterttv.com/), [**FrankerFaceZ**](https://www.frankerfacez.com/) and [**7TV**](https://7tv.app/) emotes, always at the best available quality. You have many options to customize your chat, like enabling a smooth animation for new messages, or fading old ones after some time. If you have a chat full of !gamble addicts, you can choose to hide bots and commands messages. It also comes with many fonts and styling options that can be combined as desired.
-### The app is up and running on the [**website**](https://www.giambaj.it/twitch/jchat/).
+To use, create a file called `credentials.js` inside the v2 folder and place inside your Twitch Oauth Token like this:
+```js
+const credentials = 'YOUR_OAUTH_HERE';
+```
+
+To obtain a token, either register a custom application inside Twitch or use one of the many services that provide you with an Oauth token like [https://twitchapps.com/tmi/](https://twitchapps.com/tmi/).
+
 ## Features
 - 7TV, BTTV and FFZ emotes support
 - Custom channel badges
